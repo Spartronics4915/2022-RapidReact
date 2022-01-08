@@ -1,6 +1,6 @@
-package com.spartronics4915.frc.commands;
+package com.spartronics4915.frc2022.commands;
 
-import com.spartronics4915.frc.subsystems.ExampleSubsystem;
+import com.spartronics4915.frc2022.subsystems.ExampleSubsystem;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
