@@ -1,0 +1,23 @@
+{
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "java.server.launchMode": "Standard",
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"files.trimTrailingWhitespace": true,
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "bin/": true,
+        "build/": true,
+        "**/.classpath": true,
+        "**/.gradle": true,
+        "**/.project": true,
+        "**/.factorypath": true,
+        "**/*~": true
+    }
+}
