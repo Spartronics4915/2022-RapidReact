@@ -1,4 +1,4 @@
-package com.spartronics4915.frc.subsystems;
+package com.spartronics4915.frc2022.subsystems;
 
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
@@ -34,4 +34,6 @@ public class ExampleSubsystem extends SpartronicsSubsystem
     /** This method will be called once per scheduler run during simulation. */
     @Override
     public void simulationPeriodic() {}
+
+    public void outputTelemetry() {}
 }
