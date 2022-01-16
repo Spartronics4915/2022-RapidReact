@@ -2,7 +2,9 @@ package com.spartronics4915.frc2022.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.hardware.motors.SpartronicsMax;
+import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 /**
@@ -21,7 +23,7 @@ public class Intake extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mMotor = SpartronicsMax.makeMotor(1);
+            mMotor = SpartronicsMax.makeMotor(Constants.Intake.kSparkMaxId);
         }
         catch (Exception exception)
         {
