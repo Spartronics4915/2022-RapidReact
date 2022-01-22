@@ -8,7 +8,7 @@ import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 public class Intake extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-
+    
     /** Creates a new Intake. */
     public Intake()
     {
