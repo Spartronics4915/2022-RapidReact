@@ -2,7 +2,7 @@ import edu.wpi.first.gradlerio.deploy.roborio.RoboRIO
 
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2022.1.1"
+    id "edu.wpi.first.GradleRIO" version "2022.2.1"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -47,9 +47,10 @@ wpi.java.debugJni = false
 // Set this to true to enable desktop support.
 def includeDesktopSupport = false
 
-// Tell Gradle to check JitPack (in this case, for SpartronicsLib)
+// Maven central needed for JUnit
 repositories {
-    maven { url 'https://jitpack.io' }
+    mavenCentral()
+    maven {url "https://jitpack.io/"}
 }
 
 // Defining my dependencies. In this case, WPILib (+ friends), and vendor libraries.
@@ -75,7 +76,14 @@ dependencies {
     // This is how we can use SpartronicsLib without including it in the codebase
     implementation "com.github.Spartronics4915:SpartronicsLib:master-SNAPSHOT"
 
-    testImplementation 'junit:junit:4.12'
+    implementation("gov.nist.math:jama:1.0.3")
+    implementation("org.ejml:ejml-simple:0.38")
+    implementation("org.apache.commons:commons-math3:3.6.1")
+    implementation("com.fazecast:jSerialComm:2.4.1")
+
+    testImplementation("org.knowm.xchart:xchart:3.2.2")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:5.3.2")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.3.2")
 }
 
 // Simulation configuration (e.g. environment variables).
@@ -95,3 +103,18 @@ jar {
 deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
+
+test {
+    useJUnitPlatform {
+        // Some tests only work if you have the right stuff plugged in
+        // Pass -PallTests if you want tests with the excluded tag
+        if (!project.hasProperty("allTests")) {
+            excludeTags "hardwareDependant"
+        }
+    }
+    systemProperty 'java.awt.headless', 'true'
+    testLogging {
+        events "PASSED", "SKIPPED", "FAILED"
+        exceptionFormat "full"
+    }
+}
