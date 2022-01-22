@@ -34,7 +34,7 @@ std::mutex tbcMutex;
  *   Camera X -> Robot Y * -1
  *   Camera Quaternion -> Counter-clockwise Euler angles (currently just yaw)
  * 
- * For ease of use, all coordinates that come out of this wrapper are in this "robot standard" coordinate system.
+ * For ease of use, all coodrinates that come out of this wrapper are in this "robot standard" coordinate system.
  */
 
 // We do this so we don't have to fiddle with files
@@ -109,7 +109,6 @@ jlong Java_com_spartronics4915_lib_hardware_sensors_T265Camera_newCamera(JNIEnv 
 
         // Get the currently used device
         auto profile = config.resolve(*pipeline);
-
         auto device = profile.get_device();
         if (!device.is<rs2::tm2>())
         {
@@ -131,6 +130,12 @@ jlong Java_com_spartronics4915_lib_hardware_sensors_T265Camera_newCamera(JNIEnv 
             throw std::runtime_error("Selected device does not support wheel odometry inputs");
         if (!pose)
             throw std::runtime_error("Selected device does not have a pose sensor");
+
+        // Ensure that pipeline->start(...) chooses the devices we just got
+        auto poseSerial = pose->get_info(RS2_CAMERA_INFO_SERIAL_NUMBER);
+        auto odomSerial = pose->get_info(RS2_CAMERA_INFO_SERIAL_NUMBER);
+        config.enable_device(poseSerial);
+        config.enable_device(odomSerial);
 
         // Import the relocalization map, if the path is nonempty
         auto pathNativeStr = env->GetStringUTFChars(mapPath, 0);
@@ -155,12 +160,12 @@ jlong Java_com_spartronics4915_lib_hardware_sensors_T265Camera_newCamera(JNIEnv 
 
         devAndSensors = new deviceAndSensors(pipeline, odom, pose, globalThis);
 
-       auto consumerCallback = [jvm, devAndSensors](const rs2::frame &frame) {
+        auto consumerCallback = [jvm, devAndSensors](const rs2::frame &frame) {
             JNIEnv *env = nullptr;
             try
             {
                 // Attaching the thread is expensive... TODO: Cache env?
-                int error = jvm->AttachCurrentThread(reinterpret_cast<void **>(&env), nullptr);
+                int error = jvm->AttachCurrentThread((void **)&env, nullptr);
                 if (error)
                     throw std::runtime_error("Couldn't attach callback thread to jvm");
 
@@ -168,17 +173,12 @@ jlong Java_com_spartronics4915_lib_hardware_sensors_T265Camera_newCamera(JNIEnv 
                 // rotation is a quaternion so we must convert to an euler angle (yaw)
                 auto yaw = 2 * atan2f(poseData.rotation.y, poseData.rotation.w);
 
-                auto callbackMethodID = env->GetMethodID(holdingClass, "consumePoseUpdate", "(FFFFFFI)V");
+                auto callbackMethodID = env->GetMethodID(holdingClass, "consumePoseUpdate", "(FFFFFI)V");
                 if (!callbackMethodID)
                     throw std::runtime_error("consumePoseUpdate method doesn't exist");
 
                 auto velocityMagnitude = hypotf(-poseData.velocity.z, -poseData.velocity.x);
-                env->CallVoidMethod(
-                        devAndSensors->globalThis, callbackMethodID,
-                        -poseData.translation.z, -poseData.translation.x, yaw,
-                        -poseData.velocity.z, -poseData.velocity.x, poseData.angular_velocity.y,
-                        poseData.tracker_confidence
-                );
+                env->CallVoidMethod(devAndSensors->globalThis, callbackMethodID, -poseData.translation.z, -poseData.translation.x, yaw, velocityMagnitude, poseData.angular_velocity.y, poseData.tracker_confidence);
 
                 std::lock_guard<std::mutex> lock(devAndSensors->frameNumMutex);
                 devAndSensors->lastRecvdFrameNum = frame.get_frame_number();
@@ -192,7 +192,7 @@ jlong Java_com_spartronics4915_lib_hardware_sensors_T265Camera_newCamera(JNIEnv 
                 if (env)
                     env->ThrowNew(exception, e.what());
                 else
-                    std::cerr << "Exception in frame consumer callback could not be thrown in Java code. Exception was: " << e.what() << "\n";
+                    std::cerr << "Exception in frame consumer callback could not be thrown in Java code. Exception was: " << e.what() << std::endl;
             }
         };
 
@@ -220,13 +220,9 @@ void Java_com_spartronics4915_lib_hardware_sensors_T265Camera_sendOdometryRaw(JN
         ensureCache(env, thisObj);
 
         auto devAndSensors = getDeviceFromClass(env, thisObj);
-        if (!devAndSensors->isRunning)
-            return;
-            // throw std::runtime_error("Can't send odometry data when the device isn't running");
-
         // jints are 32 bit and are signed so we have to be careful
         if (sensorId > UINT8_MAX || sensorId < 0)
-            env->ThrowNew(exception, "sensorId is out of range of a 8-bit unsigned integer");
+            env->ThrowNew(exception, "sensorId is out of range of a 32-bit unsigned integer (is it negative?)");
 
         std::lock_guard<std::mutex> lock(devAndSensors->frameNumMutex);
         devAndSensors->wheelOdometrySensor->send_wheel_odometry(sensorId, devAndSensors->lastRecvdFrameNum, rs2_vector{.x = -yVel, .y = 0.0, .z = -xVel});
@@ -252,9 +248,6 @@ void Java_com_spartronics4915_lib_hardware_sensors_T265Camera_exportRelocalizati
 
         // Get data from sensor and write
         auto devAndSensors = getDeviceFromClass(env, thisObj);
-        if (!devAndSensors->isRunning)
-            throw std::runtime_error("Can't export a relocalization map when the device isn't running (have you already exported?)");
-
         devAndSensors->pipeline->stop();
         devAndSensors->isRunning = false;
 
@@ -270,11 +263,10 @@ void Java_com_spartronics4915_lib_hardware_sensors_T265Camera_exportRelocalizati
 
         auto data = devAndSensors->poseSensor->export_localization_map();
         file.write(reinterpret_cast<const char *>(data.begin().base()), data.size());
-        file.close();
 
         env->ReleaseStringUTFChars(savePath, pathNativeStr);
 
-        std::cout << "[SpartronicsLib] Relocalization map exported\n";
+        // File automatically get closed at end of scope
 
         // TODO: Camera never gets started again...
         // If we try to call pipeline->start() it doesn't work. Bug in librealsense?
@@ -366,9 +358,6 @@ void Java_com_spartronics4915_lib_hardware_sensors_T265Camera_cleanup(JNIEnv *en
 
             toBeCleaned.pop_back();
         }
-        
-        // We use std::endl because we *want* to flush the buffer
-        // (The program is about to exit and messages get lost)
         std::cout << "[SpartronicsLib] T265 native wrapper gracefully shut down" << std::endl;
     }
     catch (std::exception &e)
@@ -379,7 +368,7 @@ void Java_com_spartronics4915_lib_hardware_sensors_T265Camera_cleanup(JNIEnv *en
         }
         else
         {
-            std::cerr << e.what() << "\n";
+            std::cerr << e.what() << std::endl;
         }
     }
 }
