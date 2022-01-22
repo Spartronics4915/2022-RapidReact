@@ -1,5 +1,6 @@
 package com.spartronics4915.frc2022.subsystems;
 
+import com.revrobotics.CANSparkMax;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 /**
@@ -8,6 +9,7 @@ import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 public class Launcher extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
+    private CANSparkMax mLauncherMotor;
 
     /** Creates a new Launcher. */
     public Launcher()

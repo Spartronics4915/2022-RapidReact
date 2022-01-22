@@ -49,4 +49,9 @@ public final class Constants
         public static final double kLinearResponseCurveExponent = 5.0 / 3.0;
         public static final double kJoystickDeadzoneSize = 0.1;
     }
+    public static class Intake {
+        public static final int kSparkMaxId = 1;
+        public static final double kP = 1;
+        public static final double kD = 1;
+    }
 }
