@@ -1,8 +1,5 @@
 package com.spartronics4915.frc2022.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 /**
@@ -12,8 +9,6 @@ public class Intake extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
 
-    private CANSparkMax mIntakeMotor;
-
     /** Creates a new Intake. */
     public Intake()
     {
@@ -21,7 +16,6 @@ public class Intake extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mIntakeMotor = new CANSparkMax(Constants.Intake.kSparkMaxId,MotorType.kBrushless);
         }
         catch (Exception exception)
         {

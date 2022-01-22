@@ -5,12 +5,12 @@ import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 /**
  * Detailed description of Conveyer.
  */
-public class Conveyor2 extends SpartronicsSubsystem
+public class Conveyor extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
 
     /** Creates a new Conveyer. */
-    public Conveyor2()
+    public Conveyor()
     {
         boolean success = true;
         try
