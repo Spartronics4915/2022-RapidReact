@@ -16,6 +16,7 @@ import com.spartronics4915.lib.util.TriFunction;
  */
 public final class Constants
 {
+    public static final int kTestMotorId = 1;
     public static final class Drive { // TODO: Everything is a stand in value
         // hardware IDs
         public static final int kPigeonID = -1;
@@ -49,11 +50,17 @@ public final class Constants
         public static final double kLinearResponseCurveExponent = 5.0 / 3.0;
         public static final double kJoystickDeadzoneSize = 0.1;
     }
-    public static class Intake {
-        public static final int kSparkMaxId = 1;
-        public static final double kP = 1;
-        public static final double kD = 1;
+
+    public static final class Intake {
+        public static final int kMotorId = 0;
+        public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
+        public static final double kHarvestSpeed = 0.8; //I stole this from Infinite Recharge
+        public static final double kEjectSpeed = -0.8; // Stole this from IR too, I don't know if these numbers are good
     }
 
-    // bite me github (need to fix problems)
+    public static final class OIConstants {
+        public static final int kArcadeStickPort = 1;
+        public static final int kStartIntakeButton = 2;
+
+    }
 }
