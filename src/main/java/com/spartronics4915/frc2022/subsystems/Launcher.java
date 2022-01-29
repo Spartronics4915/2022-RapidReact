@@ -2,6 +2,11 @@ package com.spartronics4915.frc2022.subsystems;
 
 import com.revrobotics.CANSparkMax;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
+import com.spartronics4915.lib.hardware.motors.SpartronicsEncoder;
+import com.spartronics4915.lib.hardware.motors.SpartronicsMax;
+import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
+import com.spartronics4915.lib.hardware.motors.SpartronicsSRX;
+import com.spartronics4915.lib.hardware.motors.SpartronicsSimulatedMotor;
 
 /**
  * Detailed description of Launcher.
@@ -9,12 +14,13 @@ import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 public class Launcher extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-    private CANSparkMax mLauncherMotor;
+    private SpartronicsMotor mFlywheelMasterMotor;
 
     /** Creates a new Launcher. */
     public Launcher()
     {
         boolean success = true;
+        mFlywheelMasterMotor = SpartronicsMax.makeMotor(kFlywheelMasterId);
         try
         {
             // ...and constructed here.
@@ -28,6 +34,9 @@ public class Launcher extends SpartronicsSubsystem
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
+    public void voidMethod() {
+        mLauncherMotor;
+    }
 
     /** This method will be called once per scheduler run. */
     @Override
