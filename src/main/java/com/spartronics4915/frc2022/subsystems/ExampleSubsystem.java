@@ -21,11 +21,11 @@ public class ExampleSubsystem extends SpartronicsSubsystem
     /** Creates a new ExampleSubsystem. */
     public ExampleSubsystem()
     {
-        mFlywheelMasterMotor = SpartronicsMax.makeMotor(Constants.ExampleSubystem.kFlywheelMasterId);
         boolean success = true;
         try
         {
             // ...and constructed here.
+            mFlywheelMasterMotor = SpartronicsMax.makeMotor(Constants.ExampleSubsystem.kFlywheelMasterId);
         }
         catch (Exception exception)
         {
