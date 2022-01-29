@@ -74,7 +74,9 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     // This is how we can use SpartronicsLib without including it in the codebase
-    implementation "com.github.Spartronics4915:SpartronicsLib:master-SNAPSHOT"
+	// ** Removing this as we've copied the code in, and this pulls in old, ancient code **
+	// rsg 01.28.22
+    //implementation "com.github.Spartronics4915:SpartronicsLib:master-SNAPSHOT"
 
     implementation("gov.nist.math:jama:1.0.3")
     implementation("org.ejml:ejml-simple:0.38")
