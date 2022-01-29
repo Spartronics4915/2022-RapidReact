@@ -2,7 +2,6 @@ package com.spartronics4915.lib.math.threedim.ejml;
 
 import org.ejml.data.DMatrix3; // Vec3
 import org.ejml.data.DMatrix3x3; // Vec3
-import org.ejml.dense.fixed.CommonOps_DDF3;
 import org.ejml.dense.fixed.NormOps_DDF3;
 
 
