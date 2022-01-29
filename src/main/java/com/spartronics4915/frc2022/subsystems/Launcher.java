@@ -8,6 +8,9 @@ import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.hardware.motors.SpartronicsSRX;
 import com.spartronics4915.lib.hardware.motors.SpartronicsSimulatedMotor;
 
+import static com.spartronics4915.frc2022.Constants.Launcher.*;
+
+
 /**
  * Detailed description of Launcher.
  */
@@ -20,10 +23,10 @@ public class Launcher extends SpartronicsSubsystem
     public Launcher()
     {
         boolean success = true;
-        mFlywheelMasterMotor = SpartronicsMax.makeMotor(kFlywheelMasterId);
         try
         {
             // ...and constructed here.
+            mFlywheelMasterMotor = SpartronicsMax.makeMotor(kFlywheelMasterId);
         }
         catch (Exception exception)
         {
@@ -34,8 +37,8 @@ public class Launcher extends SpartronicsSubsystem
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
-    public void voidMethod() {
-        mLauncherMotor;
+    public void funnyFlywheel() {
+        mFlywheelMasterMotor.setPercentOutput(0.1);
     }
 
     /** This method will be called once per scheduler run. */
