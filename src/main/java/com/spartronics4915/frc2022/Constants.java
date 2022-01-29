@@ -61,6 +61,7 @@ public final class Constants
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
         public static final int kStartIntakeButton = 2;
+        public static final int kStopIntakeButton = 3;
 
     }
 }

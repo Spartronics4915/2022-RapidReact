@@ -1,5 +1,4 @@
 package com.spartronics4915.frc2022.subsystems;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.spartronics4915.frc2022.Constants;
@@ -22,7 +21,7 @@ public class Intake extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-           mMotor = new CANSparkMax(Constants.kTestMotorId, MotorType.kBrushless);
+           mMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
         }
         catch (Exception exception)
         {
@@ -43,12 +42,13 @@ public class Intake extends SpartronicsSubsystem
         logInfo("running");
     }
 
-    public void stop() {
+    public void stopIntake() {
         mMotor.set(0);
+        logInfo("stopped");
     }
 
-    public void printSomething(){
-        logInfo("Button is pressed");
+    public void eject(){
+        mMotor.set(-0.3);
     }
 
     /** This method will be called once per scheduler run. */

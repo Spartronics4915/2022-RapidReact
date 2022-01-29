@@ -48,6 +48,8 @@ public class RobotContainer
     private void configureButtonBindings() {
         new JoystickButton(mArcadeController, OIConstants.kStartIntakeButton)
                                 .whenPressed(new InstantCommand(mIntake::startIntake, mIntake));
+        new JoystickButton(mArcadeController, OIConstants.kStopIntakeButton)
+                                .whenPressed(new InstantCommand(mIntake::stopIntake, mIntake));
     }
 
     /**
