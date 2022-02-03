@@ -44,6 +44,10 @@ public class RobotContainer
                                 .whenPressed(new InstantCommand(mLauncher::testStartFlywheel, mLauncher));
     new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
                                 .whenPressed(new InstantCommand(mLauncher::testStopFlywheel, mLauncher));
+    new JoystickButton(mArcadeController, OIConstants.kStartFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStartSpin, mLauncher));
+    new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStopSpin, mLauncher));
     }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.

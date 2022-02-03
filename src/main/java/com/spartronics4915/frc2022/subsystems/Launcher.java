@@ -17,8 +17,9 @@ import static com.spartronics4915.frc2022.Constants.Launcher.*;
 public class Launcher extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-    private SpartronicsMotor mFlywheelMasterMotor;
+    private SpartronicsMotor mFlywheelMotor;
     private SpartronicsEncoder mFlywheelEncoder;
+    private SpartronicsMotor mSpinMotor;
 
     /** Creates a new Launcher. */
     public Launcher()
@@ -27,7 +28,8 @@ public class Launcher extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mFlywheelMasterMotor = SpartronicsMax.makeMotor(kFlywheelMasterId);
+            mFlywheelMotor = SpartronicsMax.makeMotor(kFlywheelMotorId);
+            mSpinMotor = SpartronicsMax.makeMotor(kSpinMotorId);
         }
         catch (Exception exception)
         {
@@ -36,21 +38,27 @@ public class Launcher extends SpartronicsSubsystem
         }
         logInitialized(success);
 
-       // mFlywheelMasterMotor.setVelocityGains(kP, 0, 0, 0); // ref value is 0.00036
-        mFlywheelMasterMotor.setVelocityGains(kP, kS, kV, kA);
+       // mFlywheelMotor.setVelocityGains(kP, 0, 0, 0); // ref value is 0.00036
+        mFlywheelMotor.setVelocityGains(Flywheel.kP, Flywheel.kS, Flywheel.kV, Flywheel.kA);
  
-        mFlywheelMasterMotor.setOutputInverted(false);
-        mFlywheelEncoder = mFlywheelMasterMotor.getEncoder();
+        mFlywheelMotor.setOutputInverted(false);
+        mFlywheelEncoder = mFlywheelMotor.getEncoder();
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
     public void testStartFlywheel() {
-        mFlywheelMasterMotor.setVelocity(kFlywheelRPS);
-        //mFlywheelMasterMotor.setPercentOutput(0.5);
+        mFlywheelMotor.setVelocity(kFlywheelRPS);
+        // mFlywheelMotor.setPercentOutput(0.5);
     }
     public void testStopFlywheel() {
-        mFlywheelMasterMotor.setVelocity(0);
-        //mFlywheelMasterMotor.setPercentOutput(0);
+        mFlywheelMotor.setVelocity(0);
+        // mFlywheelMotor.setBrakeMode(true);
+    }
+    public void testStartSpin() {
+        mSpinMotor.setPercentOutput(kSpinMotorSpeed);
+    } 
+    public void testStopSpin() {
+        mSpinMotor.setPercentOutput(0);
     }
 
     /** This method will be called once per scheduler run. */
