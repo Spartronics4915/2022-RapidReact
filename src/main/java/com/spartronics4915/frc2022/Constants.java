@@ -61,10 +61,17 @@ public final class Constants
     }
     public static class Launcher {
         public static final int kFlywheelMasterId = 1;
+        public static final double kP = 0.03;
+        public static final double kS = 0.0286; // 0.0654;
+        public static final double kV = 7.86; // 7.18;
+        public static final double kA = 5.16;
+        public static final double kFlywheelRPS = 5;
     }
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
-        public static final int kSpinFlywheelButton = 4;
+        public static final int kStartFlywheelButton = 4;
+        public static final int kStopFlywheelButton = 5;
     }
 
 }
+// owo whats this

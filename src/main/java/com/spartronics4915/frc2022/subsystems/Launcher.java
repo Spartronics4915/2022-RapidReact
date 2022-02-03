@@ -18,6 +18,7 @@ public class Launcher extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
     private SpartronicsMotor mFlywheelMasterMotor;
+    private SpartronicsEncoder mFlywheelEncoder;
 
     /** Creates a new Launcher. */
     public Launcher()
@@ -34,11 +35,22 @@ public class Launcher extends SpartronicsSubsystem
             success = false;
         }
         logInitialized(success);
+
+       // mFlywheelMasterMotor.setVelocityGains(kP, 0, 0, 0); // ref value is 0.00036
+        mFlywheelMasterMotor.setVelocityGains(kP, kS, kV, kA);
+ 
+        mFlywheelMasterMotor.setOutputInverted(false);
+        mFlywheelEncoder = mFlywheelMasterMotor.getEncoder();
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
-    public void funnyFlywheel() {
-        mFlywheelMasterMotor.setPercentOutput(0.1);
+    public void testStartFlywheel() {
+        mFlywheelMasterMotor.setVelocity(kFlywheelRPS);
+        //mFlywheelMasterMotor.setPercentOutput(0.5);
+    }
+    public void testStopFlywheel() {
+        mFlywheelMasterMotor.setVelocity(0);
+        //mFlywheelMasterMotor.setPercentOutput(0);
     }
 
     /** This method will be called once per scheduler run. */

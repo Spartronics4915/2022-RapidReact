@@ -40,8 +40,10 @@ public class RobotContainer
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
-    new JoystickButton(mArcadeController, OIConstants.kSpinFlywheelButton)
-                                .whenPressed(new InstantCommand(mLauncher::funnyFlywheel, mLauncher));
+    new JoystickButton(mArcadeController, OIConstants.kStartFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStartFlywheel, mLauncher));
+    new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStopFlywheel, mLauncher));
     }
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
