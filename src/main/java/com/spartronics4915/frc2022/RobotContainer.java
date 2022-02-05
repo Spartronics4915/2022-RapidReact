@@ -4,6 +4,8 @@ import com.spartronics4915.frc2022.Constants.OIConstants;
 import com.spartronics4915.frc2022.commands.ExampleCommand;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.ExampleSubsystem;
+import com.spartronics4915.frc2022.subsystems.Launcher;
+import com.spartronics4915.frc2022.Constants.OIConstants;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -24,7 +26,10 @@ public class RobotContainer
     // The robot's subsystems and commands are defined here...
     public final ExampleSubsystem mExampleSubsystem;
     public final ExampleCommand mAutoCommand;
+    
+    public final Launcher mLauncher;
     public final Conveyor mConveyor;
+  
     public static final Joystick mArcadeController = new Joystick(OIConstants.kArcadeStickPort);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -33,15 +38,29 @@ public class RobotContainer
         // ...and constructed here.
         mExampleSubsystem = new ExampleSubsystem();
         mAutoCommand = new ExampleCommand(mExampleSubsystem);
+        mLauncher = new Launcher();
         mConveyor = new Conveyor();
+
         configureButtonBindings();
     }
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
-        new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
+    new JoystickButton(mArcadeController, OIConstants.kStartFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStartFlywheel, mLauncher));
+    new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStopFlywheel, mLauncher));
+    
+    //TODO: need spin buttons separate from the start flywheel buttons?
+    new JoystickButton(mArcadeController, OIConstants.kStartFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStartSpin, mLauncher));
+    new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
+                                .whenPressed(new InstantCommand(mLauncher::testStopSpin, mLauncher));
+    }
+     
+    new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
         .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
-new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
+    new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
         .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
     }
 
@@ -54,4 +73,5 @@ new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
     {
         return mAutoCommand;
     }
+    
 }
