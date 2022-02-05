@@ -29,8 +29,8 @@ public class Intake extends SpartronicsSubsystem
            mIntakeMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
            mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.kIntakeSolenoidId);
            //setting starting values
-           //mIntakeArm.set(false);
-           mIntakeMotor.set(0);
+           //mIntakeArm.set(true);
+           //mIntakeMotor.set(0);
         }
         catch (Exception exception)
         {
@@ -47,14 +47,14 @@ public class Intake extends SpartronicsSubsystem
     }-not sure if I need this code*/ 
 
     public void startIntake(){
-        mIntakeArm.set(true);
+        mIntakeArm.set(false);
         showArmState();
         mIntakeMotor.set(0.3);
         //logInfo("intake running"); - not sure if we need this could be too much for driver to pay attention to
     }
 
     public void stopIntake() {
-        mIntakeArm.set(false); 
+        mIntakeArm.set(true); 
         showArmState();
         mIntakeMotor.set(0);
         //logInfo("intake stopped"); - not sure if we need this, same as above
