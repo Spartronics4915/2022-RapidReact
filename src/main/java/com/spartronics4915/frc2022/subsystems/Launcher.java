@@ -1,6 +1,7 @@
 package com.spartronics4915.frc2022.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 /**
@@ -18,6 +19,7 @@ public class Launcher extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
+            // mLauncherMotor = new CANSparkMax(Constants.Launcher.kSparkMaxId, type)
         }
         catch (Exception exception)
         {
