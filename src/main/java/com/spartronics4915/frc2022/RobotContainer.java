@@ -50,6 +50,8 @@ public class RobotContainer
                                 .whenPressed(new InstantCommand(mIntake::startIntake, mIntake));
         new JoystickButton(mArcadeController, OIConstants.kStopIntakeButton)
                                 .whenPressed(new InstantCommand(mIntake::stopIntake, mIntake));
+        /*new JoystickButton(mArcadeController, OIConstants.kCheckIntakeStateButton)
+                                .whenPressed(new InstantCommand(mIntake::showArmState, mIntake));*/
     }
 
     /**
