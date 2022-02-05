@@ -29,12 +29,8 @@ public class Launcher extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-<<<<<<< HEAD
-            // mLauncherMotor = new CANSparkMax(Constants.Launcher.kSparkMaxId, type)
-=======
             mFlywheelMotor = SpartronicsMax.makeMotor(kFlywheelMotorId);
             mSpinMotor = SpartronicsMax.makeMotor(kSpinMotorId);
->>>>>>> 8fccc48989070d00cca469aa4bc53ae4a873a3eb
         }
         catch (Exception exception)
         {
