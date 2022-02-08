@@ -61,7 +61,7 @@ public final class Constants
     }
     public static class Launcher {
         public static final int kFlywheelMotorId = 1;
-        public static final double kFlywheelRPS = 5;
+        // public static final double kFlywheelRPS = 5;
         
         public static class Flywheel {
             public static final double kP = 0.03;
