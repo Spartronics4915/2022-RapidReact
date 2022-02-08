@@ -5,7 +5,7 @@ import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 import com.spartronics4915.lib.hardware.motors.SpartronicsEncoder;
 import com.spartronics4915.lib.hardware.motors.SpartronicsMax;
 import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
-import com.spartronics4915.lib.hardware.motors.SpartronicsSRX;
+import com.spartronics4915.lib.hardware.motors.SpartronicsFalcon;
 import com.spartronics4915.lib.hardware.motors.SpartronicsSimulatedMotor;
 
 import static com.spartronics4915.frc2022.Constants.Launcher.*;
