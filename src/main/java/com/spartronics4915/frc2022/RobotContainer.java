@@ -5,6 +5,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.spartronics4915.frc2022.Constants.OIConstants;
 import com.spartronics4915.frc2022.commands.ExampleCommand;
+import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.ExampleSubsystem;
 
 import edu.wpi.first.wpilibj.GenericHID;
@@ -28,7 +29,7 @@ public class RobotContainer
     public final ExampleSubsystem mExampleSubsystem;
     public final ExampleCommand mAutoCommand;
     public final Intake mIntake;
-
+    public final Conveyor mConveyor;
     public static final Joystick mArcadeController = new Joystick(OIConstants.kArcadeStickPort);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -38,20 +39,22 @@ public class RobotContainer
         mExampleSubsystem = new ExampleSubsystem();
         mAutoCommand = new ExampleCommand(mExampleSubsystem);
         mIntake = new Intake();
-
-
-
+        mConveyor = new Conveyor();
         configureButtonBindings();
     }
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
         new JoystickButton(mArcadeController, OIConstants.kStartIntakeButton)
-                                .whenPressed(new InstantCommand(mIntake::startIntake, mIntake));
+            .whenPressed(new InstantCommand(mIntake::startIntake, mIntake));
         new JoystickButton(mArcadeController, OIConstants.kStopIntakeButton)
-                                .whenPressed(new InstantCommand(mIntake::stopIntake, mIntake));
+            .whenPressed(new InstantCommand(mIntake::stopIntake, mIntake));
         /*new JoystickButton(mArcadeController, OIConstants.kCheckIntakeStateButton)
-                                .whenPressed(new InstantCommand(mIntake::showArmState, mIntake));*/
+            .whenPressed(new InstantCommand(mIntake::showArmState, mIntake));*/
+        new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
+            .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
+        new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
+            .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
     }
 
     /**

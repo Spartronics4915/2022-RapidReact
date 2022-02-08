@@ -58,9 +58,21 @@ public final class Constants
         public static final double kEjectSpeed = -0.8; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 1;
     }
-
+    public static class ExampleSubsystem {
+        public static final int kFlywheelMasterId = 2;
+        public static final double kHighRPS = 90.0;
+        public static final double kLowRPS = 40.0;
+    }
+    public static class Conveyor {
+    
+        public static final int kSparkMaxId = 1;
+        public static final double kP = 1;
+        public static final double kD = 1;
+    }
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
+        public static final int kStartConveyorButton = 1;
+        public static final int kStopConveyorButton = 4;
         public static final int kStartIntakeButton = 2;
         public static final int kStopIntakeButton = 3;
         //public static final int kCheckIntakeStateButton = 4;
