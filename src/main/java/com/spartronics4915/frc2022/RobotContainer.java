@@ -56,7 +56,7 @@ public class RobotContainer
                                 .whenPressed(new InstantCommand(mLauncher::testStartSpin, mLauncher));
     new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
                                 .whenPressed(new InstantCommand(mLauncher::testStopSpin, mLauncher));
-    }
+    
      
     new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
         .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
