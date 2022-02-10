@@ -80,6 +80,14 @@ public final class Constants
         //     public static final double kA = 5.16;
         // }
     }
+    public static final class Climber
+    {
+        public static final int kClimberMotorId = 1; // we dk
+        public static final double kClimberMotorSpeed = 1.0;
+        public static final int kExtendedLimitSwitchId = 1;
+        public static final int kRetractedLimitSwitchId = 1;
+    }
+
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
         

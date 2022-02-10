@@ -1,6 +1,12 @@
 package com.spartronics4915.frc2022.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+
+import static com.spartronics4915.frc2022.Constants.Climber.*;
 
 /**
  * Detailed description of Climber.
@@ -8,6 +14,9 @@ import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 public class Climber extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
+    private TalonFX mClimberMotor;
+    private DigitalInput mExtendedLimitSwitch;
+    private DigitalInput mRetractedLimitSwitch;
 
     /** Creates a new Climber. */
     public Climber()
@@ -16,6 +25,9 @@ public class Climber extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
+            mClimberMotor = new TalonFX(kClimberMotorId);
+            mExtendedLimitSwitch = new DigitalInput(kExtendedLimitSwitchId);
+            mRetractedLimitSwitch = new DigitalInput(kRetractedLimitSwitchId);
         }
         catch (Exception exception)
         {
@@ -26,6 +38,20 @@ public class Climber extends SpartronicsSubsystem
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
+    public void setMotor(double speed)
+    {
+        mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
+    }
+
+    public boolean isExtended()
+    {
+        return mExtendedLimitSwitch.get();
+    }
+
+    public boolean isRetracted()
+    {
+        return mRetractedLimitSwitch.get();
+    }
 
     /** This method will be called once per scheduler run. */
     @Override
