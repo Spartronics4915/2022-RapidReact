@@ -58,7 +58,7 @@ public class ClimberCommands //TODO: BUTTON
         @Override
         public void end(boolean interrupted)
         {
-            mClimber.setMotor(0);
+            mClimber.setMotor(0);//owo raid shadow legends.
         }
 
         @Override
