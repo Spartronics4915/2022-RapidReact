@@ -2,12 +2,10 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Climber.*;
 import com.spartronics4915.frc2022.subsystems.Climber;
-
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class ClimberCommands //TODO: BUTTON
+public class ClimberCommands //TODO: BUTTON CONTROL
 {
     private final Climber mClimber;
 
@@ -58,7 +56,7 @@ public class ClimberCommands //TODO: BUTTON
         @Override
         public void end(boolean interrupted)
         {
-            mClimber.setMotor(0);//owo raid shadow legends.
+            mClimber.setMotor(0);
         }
 
         @Override
