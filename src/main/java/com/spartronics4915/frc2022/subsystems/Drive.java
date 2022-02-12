@@ -2,6 +2,7 @@ package com.spartronics4915.frc2022.subsystems;
 
 import com.spartronics4915.lib.hardware.motors.SensorModel;
 import com.spartronics4915.lib.hardware.sensors.SpartronicsPigeon;
+import com.spartronics4915.lib.hardware.sensors.SpartronicsXRS450;
 import com.spartronics4915.lib.subsystems.drive.AbstractDrive;
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
@@ -24,7 +25,7 @@ public class Drive extends AbstractDrive
                 SensorModel.fromWheelDiameter(kWheelDiameter, kNativeUnitsPerRevolution),
                 kRightFollowerMotorID
             ),
-            new SpartronicsPigeon(kPigeonID)
+            new SpartronicsXRS450()
         );
 
         // output inversion

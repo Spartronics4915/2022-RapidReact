@@ -20,14 +20,14 @@ public final class Constants
     public static final class Drive { // TODO: Everything is a stand in value
         // hardware IDs
         public static final int kPigeonID = -1;
-        public static final int kLeftMotorID = -1;
-        public static final int kRightMotorID = -1;
-        public static final int kLeftFollowerMotorID = -1;
-        public static final int kRightFollowerMotorID = -1;
+        public static final int kLeftMotorID = 3;
+        public static final int kRightMotorID = 1;
+        public static final int kLeftFollowerMotorID = 4;
+        public static final int kRightFollowerMotorID = 2;
 
         // sensor models
-        public static final double kWheelDiameter = Double.NaN;
-        public static final double kNativeUnitsPerRevolution = Double.NaN;
+        public static final double kWheelDiameter = 0.1524; // in meters
+        public static final double kNativeUnitsPerRevolution = 1;
 
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
@@ -98,6 +98,8 @@ public final class Constants
         public static final int kStopFlywheelButton = 5;
         public static final int kStartSpinButton = 6;
         public static final int kStopSpinButton = 7;
+
+        public static final int kJoystickPort = 0;
     }
 
 }
