@@ -17,9 +17,9 @@ import com.spartronics4915.lib.util.TriFunction;
 public final class Constants
 {
     public static final int kTestMotorId = 1;
-    public static final class Drive { // TODO: Everything is a stand in value
+    public static final class Drive { // TODO: some is a stand in value
         // hardware IDs
-        public static final int kPigeonID = -1;
+        public static final int kPigeonID = 10;
         public static final int kLeftMotorID = 3;
         public static final int kRightMotorID = 1;
         public static final int kLeftFollowerMotorID = 4;
@@ -34,9 +34,9 @@ public final class Constants
 
         // output inversion
         public static final boolean kLeftOutputInverted = false;
-        public static final boolean kRightOutputInverted = false;
+        public static final boolean kRightOutputInverted = true;
         public static final boolean kLeftFollowerOutputInverted = false;
-        public static final boolean kRightFollowerOutputInverted = false;
+        public static final boolean kRightFollowerOutputInverted = true;
 
         // PID
         public static final double kP = 1;

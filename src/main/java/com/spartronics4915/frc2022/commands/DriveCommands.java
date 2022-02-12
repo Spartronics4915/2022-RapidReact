@@ -2,6 +2,7 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 import com.spartronics4915.frc2022.subsystems.Drive;
+import com.spartronics4915.lib.util.Logger;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -20,6 +21,8 @@ public class DriveCommands
         mJoystick = joystick;
         mInvertJoystickY = true; // convention is to invert joystick y
         mSlowMode = false;
+        
+        mDrive.setDefaultCommand(new TeleOpCommand());
     }
 
     public class TeleOpCommand extends CommandBase
@@ -41,6 +44,7 @@ public class DriveCommands
             // get -1 to 1 values for X and Y of the joystick
             double x = mJoystick.getX();
             double y = mJoystick.getY();
+            Logger.info(x + ", " + y);
 
             if (mSlowMode) {
                 x *= kSlowModeMultiplier;

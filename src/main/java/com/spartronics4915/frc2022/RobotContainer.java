@@ -25,12 +25,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    public final ExampleSubsystem mExampleSubsystem;
-    public final ExampleCommand mAutoCommand;
+    //public final ExampleSubsystem mExampleSubsystem;
+    //public final ExampleCommand mAutoCommand;
     public final DriveCommands mDriveCommands;
     
-    public final Launcher mLauncher;
-    public final Conveyor mConveyor;
+    //public final Launcher mLauncher;
+    //public final Conveyor mConveyor;
     public final Drive mDrive;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
@@ -40,14 +40,14 @@ public class RobotContainer
     public RobotContainer()
     {
         // ...and constructed here.
-        mExampleSubsystem = new ExampleSubsystem();
-        mAutoCommand = new ExampleCommand(mExampleSubsystem);
+        //mExampleSubsystem = new ExampleSubsystem();
+        //mAutoCommand = new ExampleCommand(mExampleSubsystem);
 
-        mLauncher = new Launcher();
-        mConveyor = new Conveyor();
+        //mLauncher = new Launcher();
+        //mConveyor = new Conveyor();
 
         mDrive = new Drive();
-        mDriveCommands = new DriveCommands(mDrive, mArcadeController);
+        mDriveCommands = new DriveCommands(mDrive, mDriverController);
 
         configureButtonBindings();
     }
@@ -66,10 +66,10 @@ public class RobotContainer
     //         .whenPressed(new InstantCommand(mLauncher::testStopSpin, mLauncher));
     
      
-        new JoystickButton(mArcadeController, Constants.OIConstants.kStartConveyorButton)
-            .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
-        new JoystickButton(mArcadeController, Constants.OIConstants.kStopConveyorButton)
-            .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
+        // new JoystickButton(mArcadeController, Constants.OIConstants.kStartConveyorButton)
+        //     .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
+        // new JoystickButton(mArcadeController, Constants.OIConstants.kStopConveyorButton)
+        //     .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
     }
 
     /**
@@ -79,7 +79,7 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        return mAutoCommand;
+        return null; // -0
     }
     
 }
