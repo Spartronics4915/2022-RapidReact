@@ -14,6 +14,8 @@ public class ClimberCommands //TODO: BUTTON CONTROL
         mClimber = climber;
     }
 
+    //TODO: Replace with commands controlled by drivers. Should be handled  in RobotContainer i believe?
+    /*
     public class ExtendCommand extends CommandBase
     {
         public ExtendCommand()
@@ -36,10 +38,11 @@ public class ClimberCommands //TODO: BUTTON CONTROL
         @Override
         public boolean isFinished()
         {
-            return mClimber.isExtended();
+            return true;
         }
     }
-
+    */
+    /*
     public class RetractCommand extends CommandBase
     {
         public RetractCommand()
@@ -62,7 +65,8 @@ public class ClimberCommands //TODO: BUTTON CONTROL
         @Override
         public boolean isFinished()
         {
-            return mClimber.isRetracted();
+            return true;
         }
     }
+    */
 }
