@@ -15,8 +15,6 @@ public class Climber extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
     private TalonFX mClimberMotor;
-    private DigitalInput mExtendedLimitSwitch;
-    private DigitalInput mRetractedLimitSwitch;
 
     /** Creates a new Climber. */
     public Climber()
@@ -26,8 +24,6 @@ public class Climber extends SpartronicsSubsystem
         {
             // ...and constructed here.
             mClimberMotor = new TalonFX(kClimberMotorId);
-            mExtendedLimitSwitch = new DigitalInput(kExtendedLimitSwitchId);
-            mRetractedLimitSwitch = new DigitalInput(kRetractedLimitSwitchId);
         }
         catch (Exception exception)
         {
@@ -41,16 +37,6 @@ public class Climber extends SpartronicsSubsystem
     public void setMotor(double speed)
     {
         mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
-    }
-
-    public boolean isExtended()
-    {
-        return mExtendedLimitSwitch.get();
-    }
-
-    public boolean isRetracted()
-    {
-        return mRetractedLimitSwitch.get();
     }
 
     /** This method will be called once per scheduler run. */
