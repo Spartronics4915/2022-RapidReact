@@ -4,8 +4,6 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-
 import static com.spartronics4915.frc2022.Constants.Climber.*;
 
 /**

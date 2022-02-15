@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 
-public class ClimberCommands //TODO: BUTTON CONTROL
+public class ClimberCommands
 {
     private final Climber mClimber;
     private final Joystick mArcadeController;
@@ -33,15 +33,15 @@ public class ClimberCommands //TODO: BUTTON CONTROL
         }
 
         @Override
-        public void end(boolean interrupted)
-        {
-            mClimber.setMotor(0);
-        }
-
-        @Override
         public boolean isFinished()
         {
             return !mArcadeController.getRawButton(kClimberExtendButton);
+        }
+
+        @Override
+        public void end(boolean interrupted)
+        {
+            mClimber.setMotor(0);
         }
     }
 
@@ -59,15 +59,15 @@ public class ClimberCommands //TODO: BUTTON CONTROL
         }
 
         @Override
-        public void end(boolean interrupted)
-        {
-            mClimber.setMotor(0);
-        }
-
-        @Override
         public boolean isFinished()
         {
             return !mArcadeController.getRawButton(kClimberRetractButton);
+        }
+
+        @Override
+        public void end(boolean interrupted)
+        {
+            mClimber.setMotor(0);
         }
     }
 }
