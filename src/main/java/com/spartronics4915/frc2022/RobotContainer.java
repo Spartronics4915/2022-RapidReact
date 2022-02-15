@@ -54,17 +54,6 @@ public class RobotContainer
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
-    //     new JoystickButton(mArcadeController, Constants.OIConstants.kStartFlywheelButton)
-    //         .whenPressed(new InstantCommand(mLauncher::testStartFlywheel, mLauncher));
-    //     new JoystickButton(mArcadeController, Constants.OIConstants.kStopFlywheelButton)
-    //         .whenPressed(new InstantCommand(mLauncher::testStopFlywheel, mLauncher));
-    
-    // //TODO: need spin buttons separate from the start flywheel buttons?
-    //     new JoystickButton(mArcadeController, Constants.OIConstants.kStartFlywheelButton)
-    //         .whenPressed(new InstantCommand(mLauncher::testStartSpin, mLauncher));
-    //     new JoystickButton(mArcadeController, Constants.OIConstants.kStopFlywheelButton)
-    //         .whenPressed(new InstantCommand(mLauncher::testStopSpin, mLauncher));
-    
      
         // new JoystickButton(mArcadeController, Constants.OIConstants.kStartConveyorButton)
         //     .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
