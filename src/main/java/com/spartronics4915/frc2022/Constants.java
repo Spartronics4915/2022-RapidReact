@@ -69,6 +69,25 @@ public final class Constants
         public static final double kP = 1;
         public static final double kD = 1;
     }
+    public static class Launcher {
+        public static final int kFlywheelMotorId = 1;
+        public static final double kFlywheelRPS = 5;
+        
+        public static class Flywheel {
+            public static final double kP = 0.03;
+            public static final double kS = 0.0286; // 0.0654;
+            public static final double kV = 7.86; // 7.18;
+            public static final double kA = 5.16;
+        }
+        public static final int kSpinMotorId = 3;
+        public static final double kSpinMotorSpeed = 0.1;
+        // public static class Spin {
+        //     public static final double kP = 0.03;
+        //     public static final double kS = 0.0286; // 0.0654;
+        //     public static final double kV = 7.86; // 7.18;
+        //     public static final double kA = 5.16;
+        // }
+    }
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
         public static final int kStartConveyorButton = 1;
@@ -76,6 +95,10 @@ public final class Constants
         public static final int kStartIntakeButton = 2;
         public static final int kStopIntakeButton = 3;
         //public static final int kCheckIntakeStateButton = 4;
-
+        public static final int kStartFlywheelButton = 5;
+        public static final int kStopFlywheelButton = 6;
+        public static final int kStartSpinButton = 7;
+        public static final int kStopSpinButton = 8;
     }
+
 }

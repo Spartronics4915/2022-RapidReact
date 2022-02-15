@@ -17,8 +17,10 @@ public class Intake extends SpartronicsSubsystem
     // The subsystem's hardware is defined here...
    //SpartronicsMotor mIntakeMotor;
     private CANSparkMax mIntakeMotor;
-    private Solenoid mIntakeArm;
-    private DigitalInput switchState;
+    //private Solenoid mIntakeArm;
+
+    private boolean mToggleState;
+    //private DigitalInput switchState;
 
     /** Creates a new Intake.
      * @param SpartronicsMax */
@@ -29,7 +31,8 @@ public class Intake extends SpartronicsSubsystem
         {
             // ...and constructed here.
            mIntakeMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
-           mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.kIntakeSolenoidId);
+           //mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.kIntakeSolenoidId);
+           mToggleState = false;
            //switchState = new DigitalInput(0);
            //setting starting values
            //mIntakeArm.set(true);
@@ -50,15 +53,17 @@ public class Intake extends SpartronicsSubsystem
     }-not sure if I need this code*/ 
 
    public void startIntake(){
-        mIntakeArm.set(true);
-        showArmState();
+        //mIntakeArm.set(true);
+        //showArmState();
+        toggleIntake();
         mIntakeMotor.set(0.3);
         //logInfo("intake running"); - not sure if we need this could be too much for driver to pay attention to
     }
 
     public void stopIntake() {
-        mIntakeArm.set(false); 
-        showArmState();
+        //mIntakeArm.set(false); 
+        //showArmState();
+        toggleIntake();
         mIntakeMotor.set(0);
         //logInfo("intake stopped"); - not sure if we need this, same as above
     }
@@ -67,19 +72,20 @@ public class Intake extends SpartronicsSubsystem
         mIntakeMotor.set(-0.3);
     }
 
-    public void extendPneumatics(){
-        //mIntakeArm.set(true);
-    }
-
-    public void showArmState(){
+    /*public void showArmState(){
         Boolean arm = mIntakeArm.get();
         logInfo("current arm state:" + arm.toString());
-    }
+    }*/
 
+    public boolean toggleIntake() {
+        mToggleState = !mToggleState;
+        return mToggleState;
+    }
+    
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
-        /*if(switchState.get()){
+       /* if(switchState.get()){
             mIntakeMotor.set(.5);
         } else {
             mIntakeMotor.set(0);
