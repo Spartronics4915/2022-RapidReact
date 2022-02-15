@@ -16,6 +16,7 @@ import com.spartronics4915.lib.util.TriFunction;
  */
 public final class Constants
 {
+    public static final int kTestMotorId = 1;
     public static final class Drive { // TODO: Everything is a stand in value
         // hardware IDs
         public static final int kPigeonID = -1;
@@ -54,7 +55,8 @@ public final class Constants
         public static final double kHighRPS = 90.0;
         public static final double kLowRPS = 40.0;
     }
-    public static class Intake {
+    public static class Conveyor {
+    
         public static final int kSparkMaxId = 1;
         public static final double kP = 1;
         public static final double kD = 1;
@@ -80,6 +82,10 @@ public final class Constants
     }
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
+        
+      public static final int kStartConveyorButton = 2;
+        public static final int kStopConveyorButton = 3;
+        
         public static final int kStartFlywheelButton = 4;
         public static final int kStopFlywheelButton = 5;
         public static final int kStartSpinButton = 6;
@@ -87,4 +93,3 @@ public final class Constants
     }
 
 }
-// owo whats this
