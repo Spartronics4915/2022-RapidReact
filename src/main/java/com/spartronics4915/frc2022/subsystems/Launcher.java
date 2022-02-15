@@ -46,7 +46,7 @@ public class Launcher extends SpartronicsSubsystem
         logInitialized(success);
 
        // mFlywheelMotor.setVelocityGains(kP, 0, 0, 0); // ref value is 0.00036
-        mFlywheelMotor.setVelocityGains(Flywheel.kP, Flywheel.kS, Flywheel.kV, Flywheel.kA);
+        mFlywheelMotor.setVelocityGains(Flywheel.kP, 0, 0, 0);//, Flywheel.kS, Flywheel.kV, Flywheel.kA);
  
         mFlywheelMotor.setOutputInverted(false);
         mFlywheelEncoder = mFlywheelMotor.getEncoder();
@@ -100,8 +100,8 @@ public class Launcher extends SpartronicsSubsystem
     public void periodic() {
         // if (enableFlywheel = true)
         // mFlywheelMotor.setVelocity(FlywheelRPS);
-        mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0) / 90);
-
+        mFlywheelMotor.setVelocity((double) SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider",  1));
+        SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelMotor.getEncoder().getVelocity());
     }
 
     /** This method will be called once per scheduler run during simulation. */
