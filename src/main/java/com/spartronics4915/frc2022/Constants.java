@@ -17,26 +17,26 @@ import com.spartronics4915.lib.util.TriFunction;
 public final class Constants
 {
     public static final int kTestMotorId = 1;
-    public static final class Drive { // TODO: Everything is a stand in value
+    public static final class Drive { // TODO: some is a stand in value
         // hardware IDs
-        public static final int kPigeonID = -1;
-        public static final int kLeftMotorID = -1;
-        public static final int kRightMotorID = -1;
-        public static final int kLeftFollowerMotorID = -1;
-        public static final int kRightFollowerMotorID = -1;
+        public static final int kPigeonID = 10;
+        public static final int kLeftMotorID = 3;
+        public static final int kRightMotorID = 1;
+        public static final int kLeftFollowerMotorID = 4;
+        public static final int kRightFollowerMotorID = 2;
 
         // sensor models
-        public static final double kWheelDiameter = Double.NaN;
-        public static final double kNativeUnitsPerRevolution = Double.NaN;
+        public static final double kWheelDiameter = 0.1524; // in meters
+        public static final double kNativeUnitsPerRevolution = 1;
 
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
 
         // output inversion
         public static final boolean kLeftOutputInverted = false;
-        public static final boolean kRightOutputInverted = false;
+        public static final boolean kRightOutputInverted = true;
         public static final boolean kLeftFollowerOutputInverted = false;
-        public static final boolean kRightFollowerOutputInverted = false;
+        public static final boolean kRightFollowerOutputInverted = true;
 
         // PID
         public static final double kP = 1;
@@ -80,6 +80,12 @@ public final class Constants
         //     public static final double kA = 5.16;
         // }
     }
+    public static final class Climber
+    {
+        public static final int kClimberMotorId = 1; // we dk
+        public static final double kClimberMotorSpeed = 1.0;
+    }
+
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
         
@@ -90,6 +96,8 @@ public final class Constants
         public static final int kStopFlywheelButton = 5;
         public static final int kStartSpinButton = 6;
         public static final int kStopSpinButton = 7;
+
+        public static final int kJoystickPort = 0;
     }
 
 }
