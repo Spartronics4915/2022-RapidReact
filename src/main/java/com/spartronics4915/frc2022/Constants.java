@@ -84,8 +84,6 @@ public final class Constants
     {
         public static final int kClimberMotorId = -1; // we dk
         public static final double kClimberMotorSpeed = 1.0;
-        // public static final int kExtendButtonId = -1;
-        // public static final int kRetractButtonId = -1;
         public static final boolean kIsInverted = false;
     }
 
