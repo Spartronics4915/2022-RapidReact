@@ -53,6 +53,11 @@ public class RobotContainer
             .whenPressed(mClimberCommands.new ExtendCommand());
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
             .whenPressed(mClimberCommands.new RetractCommand());
+     
+        // new JoystickButton(mArcadeController, Constants.OIConstants.kStartConveyorButton)
+        //     .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
+        // new JoystickButton(mArcadeController, Constants.OIConstants.kStopConveyorButton)
+        //     .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
     }
 
     /**
