@@ -82,14 +82,15 @@ public final class Constants
     }
     public static final class Climber
     {
-        public static final int kClimberMotorId = 1; // we dk
+        public static final int kClimberMotorId = -1; // we dk
         public static final double kClimberMotorSpeed = 1.0;
+        public static final boolean kIsInverted = false;
     }
 
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
         
-      public static final int kStartConveyorButton = 2;
+        public static final int kStartConveyorButton = 2;
         public static final int kStopConveyorButton = 3;
         
         public static final int kStartFlywheelButton = 4;
@@ -98,6 +99,9 @@ public final class Constants
         public static final int kStopSpinButton = 7;
 
         public static final int kJoystickPort = 0;
+
+        public static final int kClimberExtendButton = -1;
+        public static final int kClimberRetractButton = -1;
     }
 
 }
