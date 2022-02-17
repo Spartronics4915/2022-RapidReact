@@ -63,13 +63,13 @@ public final class Constants
     }
     public static class Launcher {
         public static final int kFlywheelMotorId = 1;
-        public static final double kFlywheelRPS = 5;
+        // public static final double kFlywheelRPS = 5;
         
         public static class Flywheel {
-            public static final double kP = 0.03;
-            public static final double kS = 0.0286; // 0.0654;
-            public static final double kV = 7.86; // 7.18;
-            public static final double kA = 5.16;
+            public static final double kP = 0.062237;
+            public static final double kS = 0.084234; // 0.0654;
+            public static final double kV = 0.12112; // 7.18;
+            public static final double kA = 0.00295;
         }
         public static final int kSpinMotorId = 3;
         public static final double kSpinMotorSpeed = 0.1;
@@ -82,14 +82,15 @@ public final class Constants
     }
     public static final class Climber
     {
-        public static final int kClimberMotorId = 1; // we dk
+        public static final int kClimberMotorId = -1; // we dk
         public static final double kClimberMotorSpeed = 1.0;
+        public static final boolean kIsInverted = false;
     }
 
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
         
-      public static final int kStartConveyorButton = 2;
+        public static final int kStartConveyorButton = 2;
         public static final int kStopConveyorButton = 3;
         
         public static final int kStartFlywheelButton = 4;
@@ -98,6 +99,9 @@ public final class Constants
         public static final int kStopSpinButton = 7;
 
         public static final int kJoystickPort = 0;
+
+        public static final int kClimberExtendButton = -1;
+        public static final int kClimberRetractButton = -1;
     }
 
 }
