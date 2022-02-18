@@ -4,11 +4,14 @@ import com.spartronics4915.frc2022.subsystems.Intake;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.spartronics4915.frc2022.Constants.OIConstants;
+import com.spartronics4915.frc2022.Constants;
+import com.spartronics4915.frc2022.commands.DriveCommands;
 import com.spartronics4915.frc2022.commands.ExampleCommand;
+import com.spartronics4915.frc2022.commands.IntakeCommands;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
+import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.frc2022.subsystems.ExampleSubsystem;
 import com.spartronics4915.frc2022.subsystems.Launcher;
-import com.spartronics4915.frc2022.Constants.OIConstants;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,33 +31,42 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    public final ExampleSubsystem mExampleSubsystem;
-    public final ExampleCommand mAutoCommand;
+    //public final ExampleSubsystem mExampleSubsystem;
+    //public final ExampleCommand mAutoCommand;
+    //public final DriveCommands mDriveCommands;
     public final Intake mIntake;
+    public final IntakeCommands mIntakeCommands;
+    
     //public final Launcher mLauncher;
     //public final Conveyor mConveyor;
+    //public final Drive mDrive;
   
-    public static final Joystick mArcadeController = new Joystick(OIConstants.kArcadeStickPort);
+    public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
+    public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
         // ...and constructed here.
-        mExampleSubsystem = new ExampleSubsystem();
-        mAutoCommand = new ExampleCommand(mExampleSubsystem);
+        //mExampleSubsystem = new ExampleSubsystem();
+        //mAutoCommand = new ExampleCommand(mExampleSubsystem);
         mIntake = new Intake();
+        mIntakeCommands = new IntakeCommands(mIntake, mArcadeController);
         //mLauncher = new Launcher();
         //mConveyor = new Conveyor();
+
+        //mDrive = new Drive();
+        //mDriveCommands = new DriveCommands(mDrive, mDriverController);
 
         configureButtonBindings();
     }
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
-        new JoystickButton(mArcadeController, OIConstants.kStartIntakeButton)
-            .whenPressed(new InstantCommand(mIntake::startIntake, mIntake));
-        new JoystickButton(mArcadeController, OIConstants.kStopIntakeButton)
-            .whenPressed(new InstantCommand(mIntake::stopIntake, mIntake));
+        new JoystickButton(mArcadeController, OIConstants.kToggleIntakeButton)
+            .whenPressed(mIntakeCommands.new ToggleIntake());
+        new JoystickButton(mArcadeController, OIConstants.kHoldToEjectIntakeButton)
+            .whileHeld(mIntakeCommands.new EjectIntake());
         /*new JoystickButton(mArcadeController, OIConstants.kCheckIntakeStateButton)
             .whenPressed(new InstantCommand(mIntake::showArmState, mIntake));
         new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
@@ -83,7 +95,7 @@ public class RobotContainer
      */
     /*public Command getAutonomousCommand;
     {
-        return mAutoCommand;
+        return null; // -0
     }*/
     
 }

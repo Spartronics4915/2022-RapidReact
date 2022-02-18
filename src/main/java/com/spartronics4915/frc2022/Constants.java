@@ -17,26 +17,26 @@ import com.spartronics4915.lib.util.TriFunction;
 public final class Constants
 {
     public static final int kTestMotorId = 1;
-    public static final class Drive { // TODO: Everything is a stand in value
+    public static final class Drive { // TODO: some is a stand in value
         // hardware IDs
-        public static final int kPigeonID = -1;
-        public static final int kLeftMotorID = -1;
-        public static final int kRightMotorID = -1;
-        public static final int kLeftFollowerMotorID = -1;
-        public static final int kRightFollowerMotorID = -1;
+        public static final int kPigeonID = 10;
+        public static final int kLeftMotorID = 3;
+        public static final int kRightMotorID = 1;
+        public static final int kLeftFollowerMotorID = 4;
+        public static final int kRightFollowerMotorID = 2;
 
         // sensor models
-        public static final double kWheelDiameter = Double.NaN;
-        public static final double kNativeUnitsPerRevolution = Double.NaN;
+        public static final double kWheelDiameter = 0.1524; // in meters
+        public static final double kNativeUnitsPerRevolution = 1;
 
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
 
         // output inversion
         public static final boolean kLeftOutputInverted = false;
-        public static final boolean kRightOutputInverted = false;
+        public static final boolean kRightOutputInverted = true;
         public static final boolean kLeftFollowerOutputInverted = false;
-        public static final boolean kRightFollowerOutputInverted = false;
+        public static final boolean kRightFollowerOutputInverted = true;
 
         // PID
         public static final double kP = 1;
@@ -52,14 +52,14 @@ public final class Constants
     }
 
     public static final class Intake {
-        public static final int kIntakeMotorId = 0;
+        public static final int kIntakeMotorId = 1;
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
-        public static final double kHarvestSpeed = 0.8; //I stole this from Infinite Recharge
-        public static final double kEjectSpeed = -0.8; // Stole this from IR too, I don't know if these numbers are good
+        public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
+        public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 1;
     }
     public static class ExampleSubsystem {
-        public static final int kFlywheelMasterId = 2;
+        public static final int kFlywheelMasterId = 5;
         public static final double kHighRPS = 90.0;
         public static final double kLowRPS = 40.0;
     }
@@ -70,7 +70,7 @@ public final class Constants
         public static final double kD = 1;
     }
     public static class Launcher {
-        public static final int kFlywheelMotorId = 1;
+        public static final int kFlywheelMotorId = 6;
         public static final double kFlywheelRPS = 5;
         
         public static class Flywheel {
@@ -88,17 +88,24 @@ public final class Constants
         //     public static final double kA = 5.16;
         // }
     }
+    public static final class Climber
+    {
+        public static final int kClimberMotorId = 1; // we dk
+        public static final double kClimberMotorSpeed = 1.0;
+    }
+
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
         public static final int kStartConveyorButton = 1;
         public static final int kStopConveyorButton = 4;
-        public static final int kStartIntakeButton = 2;
-        public static final int kStopIntakeButton = 3;
+        public static final int kToggleIntakeButton = 2;
+        public static final int kHoldToEjectIntakeButton = 3;
         //public static final int kCheckIntakeStateButton = 4;
         public static final int kStartFlywheelButton = 5;
         public static final int kStopFlywheelButton = 6;
         public static final int kStartSpinButton = 7;
         public static final int kStopSpinButton = 8;
+        public static final int kJoystickPort = 0;
     }
 
 }

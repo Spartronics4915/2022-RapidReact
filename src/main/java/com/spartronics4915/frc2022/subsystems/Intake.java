@@ -1,13 +1,15 @@
 package com.spartronics4915.frc2022.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.simulation.SimHooks;
+
+import static com.spartronics4915.frc2022.Constants.Intake.*;
+
 
 /**
  * Detailed description of Intake.
@@ -17,7 +19,7 @@ public class Intake extends SpartronicsSubsystem
     // The subsystem's hardware is defined here...
    //SpartronicsMotor mIntakeMotor;
     private CANSparkMax mIntakeMotor;
-    //private Solenoid mIntakeArm;
+    private Solenoid mIntakeArm;
 
     private boolean mToggleState;
     //private DigitalInput switchState;
@@ -30,8 +32,8 @@ public class Intake extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-           mIntakeMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
-           //mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, Constants.Intake.kIntakeSolenoidId);
+           mIntakeMotor = new CANSparkMax(kIntakeMotorId,MotorType.kBrushless);
+           mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, kIntakeSolenoidId);
            mToggleState = false;
            //switchState = new DigitalInput(0);
            //setting starting values
@@ -47,29 +49,27 @@ public class Intake extends SpartronicsSubsystem
     }
 
     //Subsystem methods - actions the robot can take - should be placed here.
-   /* public void setSpeed(double speed) {
-        mIntakeMotor.set(speed);
-        logInfo("running");
-    }-not sure if I need this code*/ 
 
    public void startIntake(){
-        //mIntakeArm.set(true);
+        mIntakeArm.set(true);
         //showArmState();
-        toggleIntake();
-        mIntakeMotor.set(0.3);
+        mIntakeMotor.set(kHarvestSpeed);
         //logInfo("intake running"); - not sure if we need this could be too much for driver to pay attention to
     }
 
     public void stopIntake() {
-        //mIntakeArm.set(false); 
+        mIntakeArm.set(false); 
         //showArmState();
-        toggleIntake();
         mIntakeMotor.set(0);
         //logInfo("intake stopped"); - not sure if we need this, same as above
     }
 
     public void eject(){
-        mIntakeMotor.set(-0.3);
+        mIntakeMotor.set(kEjectSpeed);
+    }
+
+    public void stopIntakeMotor(){
+        mIntakeMotor.set(0);
     }
 
     /*public void showArmState(){
