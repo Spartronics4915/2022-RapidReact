@@ -50,8 +50,16 @@ public final class Constants
         public static final double kLinearResponseCurveExponent = 5.0 / 3.0;
         public static final double kJoystickDeadzoneSize = 0.1;
     }
+
+    public static final class Intake {
+        public static final int kIntakeMotorId = 1;
+        public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
+        public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
+        public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
+        public static final int kIntakeSolenoidId = 1;
+    }
     public static class ExampleSubsystem {
-        public static final int kFlywheelMasterId = 2;
+        public static final int kFlywheelMasterId = 5;
         public static final double kHighRPS = 90.0;
         public static final double kLowRPS = 40.0;
     }
@@ -89,6 +97,14 @@ public final class Constants
 
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
+        //public static final int kStartConveyorButton = 1;
+        //public static final int kStopConveyorButton = 4;
+        public static final int kToggleIntakeButton = 2;
+        public static final int kHoldToEjectIntakeButton = 3;
+        //public static final int kStartFlywheelButton = 5;
+        //public static final int kStopFlywheelButton = 6;
+        //public static final int kStartSpinButton = 7;
+        //public static final int kStopSpinButton = 8;
         
         public static final int kStartConveyorButton = 2;
         public static final int kStopConveyorButton = 3;
