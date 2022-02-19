@@ -6,12 +6,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.spartronics4915.frc2022.Constants.OIConstants;
 import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.frc2022.commands.DriveCommands;
-import com.spartronics4915.frc2022.commands.ExampleCommand;
 import com.spartronics4915.frc2022.commands.IntakeCommands;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Drive;
-import com.spartronics4915.frc2022.subsystems.ExampleSubsystem;
 import com.spartronics4915.frc2022.subsystems.Launcher;
+import com.spartronics4915.frc2022.subsystems.Climber;
+import com.spartronics4915.frc2022.commands.ClimberCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -31,15 +31,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    //public final ExampleSubsystem mExampleSubsystem;
-    //public final ExampleCommand mAutoCommand;
-    //public final DriveCommands mDriveCommands;
+    public final DriveCommands mDriveCommands;
+    public final ClimberCommands mClimberCommands;
+    
+    public final Drive mDrive;
+    public final Climber mClimber;
+
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
-    
-    //public final Launcher mLauncher;
-    //public final Conveyor mConveyor;
-    //public final Drive mDrive;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -55,8 +54,11 @@ public class RobotContainer
         //mLauncher = new Launcher();
         //mConveyor = new Conveyor();
 
-        //mDrive = new Drive();
-        //mDriveCommands = new DriveCommands(mDrive, mDriverController);
+        mDrive = new Drive();
+        mDriveCommands = new DriveCommands(mDrive, mDriverController);
+
+        mClimber = new Climber();
+        mClimberCommands = new ClimberCommands(mClimber, mArcadeController);
 
         configureButtonBindings();
     }
@@ -67,9 +69,7 @@ public class RobotContainer
             .whenPressed(mIntakeCommands.new ToggleIntake());
         new JoystickButton(mArcadeController, OIConstants.kHoldToEjectIntakeButton)
             .whileHeld(mIntakeCommands.new EjectIntake());
-        /*new JoystickButton(mArcadeController, OIConstants.kCheckIntakeStateButton)
-            .whenPressed(new InstantCommand(mIntake::showArmState, mIntake));
-        new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
+        /*new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
             .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
         new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
             .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
@@ -86,6 +86,15 @@ public class RobotContainer
         .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
         new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
         .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));*/
+        new JoystickButton(mArcadeController, Constants.OIConstants.kClimberExtendButton)
+            .whenPressed(mClimberCommands.new ExtendCommand());
+        new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
+            .whenPressed(mClimberCommands.new RetractCommand());
+     
+        // new JoystickButton(mArcadeController, Constants.OIConstants.kStartConveyorButton)
+        //     .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
+        // new JoystickButton(mArcadeController, Constants.OIConstants.kStopConveyorButton)
+        //     .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
     }
 
     /**
@@ -97,5 +106,4 @@ public class RobotContainer
     {
         return null; // -0
     }*/
-    
 }
