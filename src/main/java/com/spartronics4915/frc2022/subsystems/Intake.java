@@ -17,7 +17,6 @@ import static com.spartronics4915.frc2022.Constants.Intake.*;
 public class Intake extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-   //SpartronicsMotor mIntakeMotor;
     private CANSparkMax mIntakeMotor;
     private Solenoid mIntakeArm;
 
