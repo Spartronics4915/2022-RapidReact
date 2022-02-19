@@ -1,27 +1,30 @@
 package com.spartronics4915.frc2022.subsystems;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import com.spartronics4915.frc2022.Constants;
+import com.spartronics4915.lib.hardware.motors.SpartronicsMax;
+import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
-import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 /**
- * Detailed description of Conveyer.
+ * Detailed description of ExampleSubsystem.
  */
-public class Conveyor extends SpartronicsSubsystem
+public class ExampleSubsystem extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-    private CANSparkMax mMotor;
+    private SpartronicsMotor mFlywheelMasterMotor;
+    private double mTargetRPS;
 
-    /** Creates a new Conveyer. */
-    public Conveyor()
+    private SimpleMotorFeedforward mFeedforwardCalculator;
+
+    /** Creates a new ExampleSubsystem. */
+    public ExampleSubsystem()
     {
         boolean success = true;
         try
         {
             // ...and constructed here.
-            //mMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
         }
         catch (Exception exception)
         {
@@ -32,19 +35,8 @@ public class Conveyor extends SpartronicsSubsystem
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
-public void setSpeed(double speed) {
-        mMotor.set(speed);
-        logInfo("running");
-    }
 
-    public void startConveyor(){
-        mMotor.set(0.3);
-        logInfo("running");
-    }
 
-    public void stopConveyor() {
-        mMotor.set(0);
-        logInfo("stopped");}
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {}
