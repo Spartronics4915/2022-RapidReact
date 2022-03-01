@@ -8,7 +8,7 @@ import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 
 /**
- * Detailed description of ExampleSubsystem. owo owo owo owo owo
+ * Detailed description of ExampleSubsystem.
  */
 public class ExampleSubsystem extends SpartronicsSubsystem
 {
@@ -25,7 +25,6 @@ public class ExampleSubsystem extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mFlywheelMasterMotor = SpartronicsMax.makeMotor(Constants.ExampleSubsystem.kFlywheelMasterId);
         }
         catch (Exception exception)
         {
@@ -37,21 +36,6 @@ public class ExampleSubsystem extends SpartronicsSubsystem
 
     // Subsystem methods - actions the robot can take - should be placed here.
 
-        /**
-     * Sets target RPS for flywheel to given RPS.
-     * Call this in execute() method of a command to have the motor
-     * constantly run at the target RPS.
-     * <p>
-     * Does not allow values greater than 90 RPS (currently, refer to
-     * Constants.Launcher.kMaxRPS).
-     * @param rps RPS you want the flywheel to target
-     */
-    public void runFlywheel(double rps)
-    {
-        mTargetRPS = Math.min(rps, Constants.ExampleSubsystem.kHighRPS);
-        mFlywheelMasterMotor.setVelocity(mTargetRPS,
-            mFeedforwardCalculator.calculate(mTargetRPS / 60.0));
-    }
 
     /** This method will be called once per scheduler run. */
     @Override

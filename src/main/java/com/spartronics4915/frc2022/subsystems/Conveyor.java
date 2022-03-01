@@ -21,7 +21,7 @@ public class Conveyor extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
+            //mMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
         }
         catch (Exception exception)
         {
