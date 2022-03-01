@@ -11,7 +11,7 @@ import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.hardware.motors.SpartronicsSRX;
 import com.spartronics4915.lib.hardware.motors.SpartronicsSimulatedMotor;
 //import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
-g
+
 import static com.spartronics4915.frc2022.Constants.Launcher.*;
 
 
@@ -95,13 +95,18 @@ public class Launcher extends SpartronicsSubsystem
     //         FlywheelRPS = FlywheelRPS - 0.1;
     //     }
     // }
+    public void setMotorSpeed() {
+        mFlywheelMotor.setVelocity(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0));
+        logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+    }
 
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
         // if (enableFlywheel = true)
         // mFlywheelMotor.setVelocity(FlywheelRPS);
-        mFlywheelMotor.setVelocity((double) SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider",  1));
+        //logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+        //mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0));
         SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelMotor.getEncoder().getVelocity());
     }
 

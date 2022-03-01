@@ -59,6 +59,8 @@ public class RobotContainer
         .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
     new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
         .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
+    new JoystickButton(mArcadeController, OIConstants.kChangeMotorSpeedButton)
+        .whenPressed(new InstantCommand(mLauncher::setMotorSpeed, mLauncher));
     }
 
     /**

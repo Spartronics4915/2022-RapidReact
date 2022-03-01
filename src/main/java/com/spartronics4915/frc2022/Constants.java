@@ -86,10 +86,11 @@ public final class Constants
       public static final int kStartConveyorButton = 2;
         public static final int kStopConveyorButton = 3;
         
-        public static final int kStartFlywheelButton = 4;
-        public static final int kStopFlywheelButton = 5;
-        public static final int kStartSpinButton = 6;
-        public static final int kStopSpinButton = 7;
+        // public static final int kStartFlywheelButton = 4;
+        // public static final int kStopFlywheelButton = 5;
+        // public static final int kStartSpinButton = 6;
+        // public static final int kStopSpinButton = 7;
+        public static final int kChangeMotorSpeedButton = 4;
     }
 
 }
