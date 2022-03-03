@@ -50,8 +50,16 @@ public final class Constants
         public static final double kLinearResponseCurveExponent = 5.0 / 3.0;
         public static final double kJoystickDeadzoneSize = 0.1;
     }
+
+    public static final class Intake {
+        public static final int kIntakeMotorId = 1;
+        public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
+        public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
+        public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
+        public static final int kIntakeSolenoidId = 1;
+    }
     public static class ExampleSubsystem {
-        public static final int kFlywheelMasterId = 2;
+        public static final int kFlywheelMasterId = 5;
         public static final double kHighRPS = 90.0;
         public static final double kLowRPS = 40.0;
     }
@@ -63,13 +71,13 @@ public final class Constants
     }
     public static class Launcher {
         public static final int kFlywheelMotorId = 1;
-        public static final double kFlywheelRPS = 5;
+        // public static final double kFlywheelRPS = 5;
         
         public static class Flywheel {
-            public static final double kP = 0.03;
-            public static final double kS = 0.0286; // 0.0654;
-            public static final double kV = 7.86; // 7.18;
-            public static final double kA = 5.16;
+            public static final double kP = 0.062237;
+            public static final double kS = 0.084234; // 0.0654;
+            public static final double kV = 0.12112; // 7.18;
+            public static final double kA = 0.00295;
         }
         public static final int kSpinMotorId = 3;
         public static final double kSpinMotorSpeed = 0.1;
@@ -94,19 +102,26 @@ public final class Constants
 
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
-        
-        public static final int kStartConveyorButton = 2;
-        public static final int kStopConveyorButton = 3;
-        
-        public static final int kStartFlywheelButton = 4;
-        public static final int kStopFlywheelButton = 5;
-        public static final int kStartSpinButton = 6;
-        public static final int kStopSpinButton = 7;
-
         public static final int kJoystickPort = 0;
 
-        public static final int kClimberExtendButton = -1;
-        public static final int kClimberRetractButton = -1;
+        public static final int kConveyorReverseBothButton = 3;
+        public static final int kConveyorReverseBottomButton = 4;
+        public static final int kConveyorReverseTopButton = 5;
+
+        public static final int kLauncherShootButton = 6;
+        public static final int kLauncherToggleButton = 8;
+        
+        public static final int kIntakeToggleButton = 2;
+        public static final int kIntakeReverseButton = 1;
+        
+        public static final int kClimberExtendButton = 9;
+        public static final int kClimberRetractButton = 10;
+
+    }
+
+    public static final class Trajectory {
+        public static final double kMaxVelocity = 2;
+        public static final double kMaxAcceleration = .05;
     }
 
 }
