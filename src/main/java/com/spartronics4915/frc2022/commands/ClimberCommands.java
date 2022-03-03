@@ -21,6 +21,8 @@ public class ClimberCommands
 
     public class ExtendCommand extends CommandBase
     {
+        private int mAccumulator = 0;
+        
         public ExtendCommand()
         {
             addRequirements(mClimber);
@@ -28,8 +30,17 @@ public class ClimberCommands
 
         @Override
         public void initialize()
+        {   
+            mClimber.setSolenoid(true);
+        }
+
+        @Override
+        public void execute()
         {
-            mClimber.setMotor(kClimberMotorSpeed);
+            if (mAccumulator++ == kDelay1) // make work
+            {
+                mClimber.setMotor(kClimberMotorSpeed);
+            }
         }
 
         @Override
@@ -42,11 +53,15 @@ public class ClimberCommands
         public void end(boolean interrupted)
         {
             mClimber.setMotor(0);
+            try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); }
+            mClimber.setSolenoid(false);
         }
     }
 
     public class RetractCommand extends CommandBase
     {
+        private int mAccumulator = 0;
+        
         public RetractCommand()
         {
             addRequirements(mClimber);
@@ -54,20 +69,31 @@ public class ClimberCommands
 
         @Override
         public void initialize()
+        {   
+            mClimber.setSolenoid(true);
+        }
+
+        @Override
+        public void execute()
         {
-            mClimber.setMotor(-kClimberMotorSpeed);
+            if (mAccumulator++ == kDelay1) // make work
+            {
+                mClimber.setMotor(-kClimberMotorSpeed);
+            }
         }
 
         @Override
         public boolean isFinished()
         {
-            return !mArcadeController.getRawButton(kClimberRetractButton);
+            return !mArcadeController.getRawButton(kClimberExtendButton);
         }
 
         @Override
         public void end(boolean interrupted)
         {
             mClimber.setMotor(0);
+            try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); }
+            mClimber.setSolenoid(false);
         }
     }
 }
