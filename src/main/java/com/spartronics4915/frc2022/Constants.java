@@ -56,7 +56,8 @@ public final class Constants
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
         public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
         public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
-        public static final int kIntakeSolenoidId = 1;
+        public static final int kLeftIntakeSolenoidId = 0;
+        public static final int kRightIntakeSolenoidId = 1;
     }
     public static class ExampleSubsystem {
         public static final int kFlywheelMasterId = 5;
