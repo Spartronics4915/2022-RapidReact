@@ -97,27 +97,26 @@ public final class Constants
 
     public static final class OIConstants {
         public static final int kArcadeStickPort = 1;
-        //public static final int kStartConveyorButton = 1;
-        //public static final int kStopConveyorButton = 4;
-        public static final int kToggleIntakeButton = 2;
-        public static final int kHoldToEjectIntakeButton = 3;
-        //public static final int kStartFlywheelButton = 5;
-        //public static final int kStopFlywheelButton = 6;
-        //public static final int kStartSpinButton = 7;
-        //public static final int kStopSpinButton = 8;
-        
-        public static final int kStartConveyorButton = 2;
-        public static final int kStopConveyorButton = 3;
-        
-        public static final int kStartFlywheelButton = 4;
-        public static final int kStopFlywheelButton = 5;
-        public static final int kStartSpinButton = 6;
-        public static final int kStopSpinButton = 7;
-
         public static final int kJoystickPort = 0;
 
-        public static final int kClimberExtendButton = -1;
-        public static final int kClimberRetractButton = -1;
+        public static final int kConveyorReverseBothButton = 3;
+        public static final int kConveyorReverseBottomButton = 4;
+        public static final int kConveyorReverseTopButton = 5;
+
+        public static final int kLauncherShootButton = 6;
+        public static final int kLauncherToggleButton = 8;
+        
+        public static final int kIntakeToggleButton = 2;
+        public static final int kIntakeReverseButton = 1;
+        
+        public static final int kClimberExtendButton = 9;
+        public static final int kClimberRetractButton = 10;
+
+    }
+
+    public static final class Trajectory {
+        public static final double kMaxVelocity = 2;
+        public static final double kMaxAcceleration = .05;
     }
 
 }
