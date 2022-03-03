@@ -65,9 +65,9 @@ public class RobotContainer
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
-        new JoystickButton(mArcadeController, OIConstants.kToggleIntakeButton)
+        new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
             .whenPressed(mIntakeCommands.new ToggleIntake());
-        new JoystickButton(mArcadeController, OIConstants.kHoldToEjectIntakeButton)
+        new JoystickButton(mArcadeController, OIConstants.kIntakeReverseButton)
             .whileHeld(mIntakeCommands.new EjectIntake());
         /*new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
             .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
