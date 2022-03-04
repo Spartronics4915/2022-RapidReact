@@ -60,7 +60,6 @@ public class ClimberCommands
 
     public class RetractCommand extends CommandBase
     {
-        private int mAccumulator = 0;
         
         public RetractCommand()
         {
@@ -76,10 +75,7 @@ public class ClimberCommands
         @Override
         public void execute()
         {
-            if (mAccumulator++ == kDelay1) // make work
-            {
-                mClimber.setMotor(-kClimberMotorSpeed);
-            }
+            mClimber.setMotor(-kClimberMotorSpeed);
         }
 
         @Override
@@ -92,7 +88,6 @@ public class ClimberCommands
         public void end(boolean interrupted)
         {
             mClimber.setMotor(0);
-            try { Thread.sleep(100); } catch (InterruptedException e) { e.printStackTrace(); }
             mClimber.setSolenoid(false);
         }
     }
