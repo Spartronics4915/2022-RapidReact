@@ -92,12 +92,14 @@ public final class Constants
     {
         public static final int kClimberMotorId = -1; // we dk
         public static final double kClimberMotorSpeed = 1.0;
-        public static final boolean kIsInverted = false;
+        public static final boolean kMotorIsInverted = false;
         public static final int kClimberSolenoidId = -1;
+        public static final boolean kSolenoidIsInverted = false;
         /**
-         * The delay in (0.2ms)s between disengaging the ratchet and starting the motor.
+         * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
+         * engaging the ratchet.
          */
-        public static final int kDelay1 = 100 * 5; // adjust 1st number for ms
+        public static final double kDelay = 0.1; // adjust 1st number for ms
     }
 
     public static final class OIConstants {
