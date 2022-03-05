@@ -122,8 +122,17 @@ public final class Constants
     }
 
     public static final class Trajectory {
+        //TODO: obtén TODOS los valores
         public static final double kMaxVelocity = 2;
         public static final double kMaxAcceleration = .05;
+        
+        //Feedforward constants (will get from SysId)
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+
+        //Robot size (meters)
+        public static final double kTrackWidth = 1; 
     }
 
 }

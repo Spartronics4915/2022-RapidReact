@@ -38,12 +38,7 @@ public class IntakeCommands
         public void execute() {
         }
 
-        // Returns true when the command should end.
-        /*@Override
-        public boolean isFinished()
-        {
-            return !mArcadeController.getRawButton(kHoldToEjectIntakeButton);
-        }*/
+        // Called with WhileHeld so no IsFinished necessary
 
         // Called once the command ends or is interrupted.
         @Override
