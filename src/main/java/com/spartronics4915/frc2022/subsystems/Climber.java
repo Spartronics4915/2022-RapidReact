@@ -1,8 +1,12 @@
 package com.spartronics4915.frc2022.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
+
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
 
 import static com.spartronics4915.frc2022.Constants.Climber.*;
 
@@ -13,6 +17,7 @@ public class Climber extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
     private TalonFX mClimberMotor;
+    private Solenoid mClimberSolenoid;
 
     /** Creates a new Climber. */
     public Climber()
@@ -22,6 +27,10 @@ public class Climber extends SpartronicsSubsystem
         {
             // ...and constructed here.
             mClimberMotor = new TalonFX(kClimberMotorId);
+            mClimberMotor.setInverted(kIsInverted);
+            mClimberMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
+
+            mClimberSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
         }
         catch (Exception exception)
         {
@@ -35,6 +44,11 @@ public class Climber extends SpartronicsSubsystem
     public void setMotor(double speed)
     {
         mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
+    }
+
+    public void setSolenoid(boolean isExtended)
+    {
+        mClimberSolenoid.set(isExtended);
     }
 
     /** This method will be called once per scheduler run. */
