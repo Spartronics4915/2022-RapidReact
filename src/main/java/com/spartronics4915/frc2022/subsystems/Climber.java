@@ -27,7 +27,7 @@ public class Climber extends SpartronicsSubsystem
         {
             // ...and constructed here.
             mClimberMotor = new TalonFX(kClimberMotorId);
-            mClimberMotor.setInverted(kIsInverted);
+            mClimberMotor.setInverted(kMotorIsInverted);
             mClimberMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
 
             mClimberSolenoid = new Solenoid(PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
@@ -48,7 +48,7 @@ public class Climber extends SpartronicsSubsystem
 
     public void setSolenoid(boolean isExtended)
     {
-        mClimberSolenoid.set(isExtended);
+        mClimberSolenoid.set(isExtended != kSolenoidIsInverted);
     }
 
     /** This method will be called once per scheduler run. */
