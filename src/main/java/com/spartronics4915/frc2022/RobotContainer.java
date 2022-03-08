@@ -7,6 +7,7 @@ import com.spartronics4915.frc2022.Constants.OIConstants;
 import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.frc2022.commands.DriveCommands;
 import com.spartronics4915.frc2022.commands.IntakeCommands;
+import com.spartronics4915.frc2022.commands.LauncherCommands;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.frc2022.subsystems.Launcher;
@@ -39,6 +40,9 @@ public class RobotContainer
 
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
+
+    public final Launcher mLauncher;
+    public final LauncherCommands mLauncherCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -51,7 +55,9 @@ public class RobotContainer
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
         mIntake = new Intake();
         mIntakeCommands = new IntakeCommands(mIntake, mArcadeController);
-        //mLauncher = new Launcher();
+
+        mLauncher = new Launcher();
+        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
         //mConveyor = new Conveyor();
 
         mDrive = new Drive();
@@ -69,6 +75,10 @@ public class RobotContainer
             .whenPressed(mIntakeCommands.new ToggleIntake());
         new JoystickButton(mArcadeController, OIConstants.kIntakeReverseButton)
             .whileHeld(mIntakeCommands.new EjectIntake());
+        new JoystickButton(mArcadeController, OIConstants.kLauncherToggleButton)
+            .whenPressed(mLauncherCommands.new ToggleLauncher());
+        new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
+            .whileHeld(mLauncherCommands.new ShootFar());
         /*new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
             .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
         new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)

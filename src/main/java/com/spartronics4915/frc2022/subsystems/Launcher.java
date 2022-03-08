@@ -25,7 +25,7 @@ public class Launcher extends SpartronicsSubsystem
     private SpartronicsMotor mFlywheelMotor;
     private SpartronicsEncoder mFlywheelEncoder;
     private SpartronicsMotor mSpinMotor;
-    
+    private boolean mLauncherToggle = false;
     // public double FlywheelRPS = 0;
     // public boolean editRPS = false;
     // public boolean enableFlywheel = false;
@@ -54,55 +54,32 @@ public class Launcher extends SpartronicsSubsystem
         mFlywheelEncoder = mFlywheelMotor.getEncoder();
     }
 
-    // Subsystem methods - actions the robot can take - should be placed here.
-    // public void testStartFlywheel() {
-    //     mFlywheelMotor.setVelocity(FlywheelRPS);
-    //     // mFlywheelMotor.setPercentOutput(0.5);
-    // }
-    // public void testStopFlywheel() {
-    //     mFlywheelMotor.setVelocity(0);
-    //     // mFlywheelMotor.setBrakeMode(true);
-    // }
-    // public void testStartSpin() {
-    //     mSpinMotor.setPercentOutput(kSpinMotorSpeed);
-    // } 
-    // public void testStopSpin() {
-    //     mSpinMotor.setPercentOutput(0);
-    // }
-    // public void enableFlwheel() {
-    //     enableFlywheel = true;
-    // }
-    // public void disableFlywheel() {
-    //     enableFlywheel = false;
-    // }
-    // public void enableEditRPS() {
-    //     editRPS = true;
-    // }
-    // public void disableEditRPS() {
-    //     editRPS = false;
-    // }
-    // public void resetRPS() {
-    //     if (editRPS = true) {
-    //         FlywheelRPS = 5;
-    //     }
-    // }
-    // public void increaseRPS() {
-    //     if (editRPS = true) {
-    //         FlywheelRPS = FlywheelRPS + 0.1;
-    //     }
-    // }
-    // public void decreaseRPS() {
-    //     if (editRPS = true) {
-    //         FlywheelRPS = FlywheelRPS - 0.1;
-    //     }
-    // }
+    public boolean toggleLauncher() {
+        mLauncherToggle = !mLauncherToggle;
+        return mLauncherToggle;
+    }
+    public double getSliderValue() {
+        return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
+    }
+    public void setMotorSpeed(double launcherVelocity) {
+        mFlywheelMotor.setVelocity(launcherVelocity);
+        // }
+        // else if (mLauncherToggle=false) {
+        //     mFlywheelMotor.setVelocity(0);
+        // }
+        // logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+    }
+    public void setToggleTrue() {
+        mLauncherToggle = true;
+    }
 
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
         // if (enableFlywheel = true)
         // mFlywheelMotor.setVelocity(FlywheelRPS);
-        mFlywheelMotor.setVelocity((double) SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider",  1));
+        //logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+        //mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0));
         SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelMotor.getEncoder().getVelocity());
     }
 

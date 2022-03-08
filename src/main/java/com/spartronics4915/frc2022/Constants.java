@@ -71,7 +71,8 @@ public final class Constants
     }
     public static class Launcher {
         public static final int kFlywheelMotorId = 1;
-        // public static final double kFlywheelRPS = 5;
+        public static final double kFlywheelRPS = 5;
+        public static final double kFlywheelFarRPS = 10;
         
         public static class Flywheel {
             public static final double kP = 0.062237;
@@ -112,6 +113,7 @@ public final class Constants
 
         public static final int kLauncherShootButton = 6;
         public static final int kLauncherToggleButton = 8;
+        public static final int kLauncherShootFarButton = 7;
         
         public static final int kIntakeToggleButton = 2;
         public static final int kIntakeReverseButton = 1;
