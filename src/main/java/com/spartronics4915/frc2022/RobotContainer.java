@@ -76,7 +76,7 @@ public class RobotContainer
         new JoystickButton(mArcadeController, OIConstants.kIntakeReverseButton)
             .whileHeld(mIntakeCommands.new EjectIntake());
         new JoystickButton(mArcadeController, OIConstants.kLauncherToggleButton)
-            .whileHeld(mLauncherCommands.new ToggleLauncher());
+            .whenPressed(mLauncherCommands.new ToggleLauncher());
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
             .whileHeld(mLauncherCommands.new ShootFar());
         /*new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
