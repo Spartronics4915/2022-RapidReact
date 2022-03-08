@@ -25,7 +25,7 @@ public class Launcher extends SpartronicsSubsystem
     private SpartronicsMotor mFlywheelMotor;
     private SpartronicsEncoder mFlywheelEncoder;
     private SpartronicsMotor mSpinMotor;
-    boolean mLauncherToggle = true;
+    private boolean mLauncherToggle = false;
     // public double FlywheelRPS = 0;
     // public boolean editRPS = false;
     // public boolean enableFlywheel = false;
@@ -58,14 +58,19 @@ public class Launcher extends SpartronicsSubsystem
         mLauncherToggle = !mLauncherToggle;
         return mLauncherToggle;
     }
-    public void setMotorSpeed() {
-        if (mLauncherToggle=true) {
-            mFlywheelMotor.setVelocity(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0));
-        }
-        else if (mLauncherToggle=false) {
-            mFlywheelMotor.setVelocity(0);
-        }
-        logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+    public double getSliderValue() {
+        return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
+    }
+    public void setMotorSpeed(double launcherVelocity) {
+        mFlywheelMotor.setVelocity(launcherVelocity);
+        // }
+        // else if (mLauncherToggle=false) {
+        //     mFlywheelMotor.setVelocity(0);
+        // }
+        // logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+    }
+    public void setToggleTrue() {
+        mLauncherToggle = true;
     }
 
     /** This method will be called once per scheduler run. */
