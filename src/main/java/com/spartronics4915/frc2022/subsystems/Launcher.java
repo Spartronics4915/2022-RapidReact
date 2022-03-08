@@ -73,19 +73,4 @@ public class Launcher extends SpartronicsSubsystem
         mLauncherToggle = true;
     }
 
-    /** This method will be called once per scheduler run. */
-    @Override
-    public void periodic() {
-        // if (enableFlywheel = true)
-        // mFlywheelMotor.setVelocity(FlywheelRPS);
-        //logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
-        //mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0));
-        SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelMotor.getEncoder().getVelocity());
-    }
-
-    /** This method will be called once per scheduler run during simulation. */
-    @Override
-    public void simulationPeriodic() {}
-
-    public void outputTelemetry() {}
 }
