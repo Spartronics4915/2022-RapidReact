@@ -25,7 +25,7 @@ public class Launcher extends SpartronicsSubsystem
     private SpartronicsMotor mFlywheelMotor;
     private SpartronicsEncoder mFlywheelEncoder;
     private SpartronicsMotor mSpinMotor;
-    
+    boolean mLauncherToggle = true;
     // public double FlywheelRPS = 0;
     // public boolean editRPS = false;
     // public boolean enableFlywheel = false;
@@ -54,50 +54,17 @@ public class Launcher extends SpartronicsSubsystem
         mFlywheelEncoder = mFlywheelMotor.getEncoder();
     }
 
-    // Subsystem methods - actions the robot can take - should be placed here.
-    // public void testStartFlywheel() {
-    //     mFlywheelMotor.setVelocity(FlywheelRPS);
-    //     // mFlywheelMotor.setPercentOutput(0.5);
-    // }
-    // public void testStopFlywheel() {
-    //     mFlywheelMotor.setVelocity(0);
-    //     // mFlywheelMotor.setBrakeMode(true);
-    // }
-    // public void testStartSpin() {
-    //     mSpinMotor.setPercentOutput(kSpinMotorSpeed);
-    // } 
-    // public void testStopSpin() {
-    //     mSpinMotor.setPercentOutput(0);
-    // }
-    // public void enableFlwheel() {
-    //     enableFlywheel = true;
-    // }
-    // public void disableFlywheel() {
-    //     enableFlywheel = false;
-    // }
-    // public void enableEditRPS() {
-    //     editRPS = true;
-    // }
-    // public void disableEditRPS() {
-    //     editRPS = false;
-    // }
-    // public void resetRPS() {
-    //     if (editRPS = true) {
-    //         FlywheelRPS = 5;
-    //     }
-    // }
-    // public void increaseRPS() {
-    //     if (editRPS = true) {
-    //         FlywheelRPS = FlywheelRPS + 0.1;
-    //     }
-    // }
-    // public void decreaseRPS() {
-    //     if (editRPS = true) {
-    //         FlywheelRPS = FlywheelRPS - 0.1;
-    //     }
-    // }
+    public boolean toggleLauncher() {
+        mLauncherToggle = !mLauncherToggle;
+        return mLauncherToggle;
+    }
     public void setMotorSpeed() {
-        mFlywheelMotor.setVelocity(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0));
+        if (mLauncherToggle=true) {
+            mFlywheelMotor.setVelocity(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0));
+        }
+        else if (mLauncherToggle=false) {
+            mFlywheelMotor.setVelocity(0);
+        }
         logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
     }
 
