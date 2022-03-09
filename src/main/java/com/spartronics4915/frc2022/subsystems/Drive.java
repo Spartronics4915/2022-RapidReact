@@ -47,7 +47,7 @@ public class Drive extends AbstractDrive
         mLeftMotor.getFollower().setStatorCurrentLimit(kMaxStatorCurrent);
         mRightMotor.getFollower().setStatorCurrentLimit(kMaxStatorCurrent);
 
-        mPoseEstimator = new DifferentialDrivePoseEstimator(gyroAngle, initialPoseMeters, stateStdDevs, localMeasurementStdDevs, visionMeasurementStdDevs, nominalDtSeconds)
+
     }
 
     /** This method will be called once per scheduler run. */
