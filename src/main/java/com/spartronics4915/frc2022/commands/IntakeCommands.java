@@ -5,16 +5,19 @@ import com.spartronics4915.frc2022.subsystems.Launcher;
 import static com.spartronics4915.frc2022.Constants.Intake.*;
 import static com.spartronics4915.frc2022.Constants.OIConstants.*;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class IntakeCommands 
 {
     private final Intake mIntake;
+    private final Joystick mArcadeController;
 
-    public IntakeCommands(Intake intake)
+    public IntakeCommands(Intake intake, Joystick arcadeController)
     {
         mIntake = intake;
+        mArcadeController = arcadeController;
     }
 
     public class EjectIntake extends CommandBase 
@@ -56,7 +59,7 @@ public class IntakeCommands
         @Override
         public void initialize() {
             if (mIntake.toggleIntake()) {
-                mIntake.startIntake();
+                mIntake.startIntake(false);
             } else {
                 mIntake.stopIntake();
             }

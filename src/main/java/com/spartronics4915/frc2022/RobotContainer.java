@@ -12,6 +12,7 @@ import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.frc2022.subsystems.Launcher;
 import com.spartronics4915.frc2022.subsystems.Climber;
 import com.spartronics4915.frc2022.commands.ClimberCommands;
+import com.spartronics4915.frc2022.commands.ConveyorCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -39,6 +40,9 @@ public class RobotContainer
 
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
+
+    public final Conveyor mConveyor;
+    public final ConveyorCommands mConveyorCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -60,6 +64,11 @@ public class RobotContainer
         mClimber = new Climber();
         mClimberCommands = new ClimberCommands(mClimber, mArcadeController);
 
+        mConveyor = new Conveyor();
+        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+
+        mConveyor.setDefaultCommand(mConveyorCommands.new FillConveyors());
+
         configureButtonBindings();
     }
 
@@ -69,6 +78,16 @@ public class RobotContainer
             .whenPressed(mIntakeCommands.new ToggleIntake());
         new JoystickButton(mArcadeController, OIConstants.kIntakeReverseButton)
             .whileHeld(mIntakeCommands.new EjectIntake());
+
+        new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
+            .whileHeld(mConveyorCommands.new ReverseBoth())
+            .whenReleased(mConveyorCommands.new FillConveyors());
+        new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBottomButton)
+            .whileHeld(mConveyorCommands.new ReverseBottom())
+            .whenReleased(mConveyorCommands.new FillConveyors());
+            
+        new JoystickButton(mArcadeController, OIConstants.kLauncherShootButton)
+            .whenPressed(mConveyorCommands.new Shoot1() /* or ShootAll() once we're good enough */);
         /*new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
             .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
         new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)

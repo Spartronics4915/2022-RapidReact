@@ -65,9 +65,16 @@ public final class Constants
     }
     public static class Conveyor {
     
-        public static final int kSparkMaxId = 1;
-        public static final double kP = 1;
-        public static final double kD = 1;
+        public static final int kBottomMotorId = 8;
+        public static final int kTopMotorId = 9;
+
+        public static final int kBeamBreakerId = 0;
+
+        public static final double kMotorSpeed = 1.0;
+        
+        public static final double kTopConveyorTime = 2.0;
+        public static final double kBottomConveyorTime = 1.0;
+        
     }
     public static class Launcher {
         public static final int kFlywheelMotorId = 1;

@@ -4,6 +4,7 @@ import static com.spartronics4915.frc2022.Constants.OIConstants.*;
 import static com.spartronics4915.frc2022.Constants.Climber.*;
 import com.spartronics4915.frc2022.subsystems.Climber;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
