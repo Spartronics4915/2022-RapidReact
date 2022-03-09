@@ -5,7 +5,6 @@ import com.spartronics4915.frc2022.subsystems.Launcher;
 import static com.spartronics4915.frc2022.Constants.Intake.*;
 import static com.spartronics4915.frc2022.Constants.OIConstants.*;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
