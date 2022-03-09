@@ -3,9 +3,6 @@ package com.spartronics4915.frc2022.subsystems;
 import com.spartronics4915.lib.hardware.motors.SensorModel;
 import com.spartronics4915.lib.hardware.sensors.SpartronicsPigeon;
 import com.spartronics4915.lib.subsystems.drive.AbstractDrive;
-
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
-
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
 /**
@@ -13,7 +10,6 @@ import static com.spartronics4915.frc2022.Constants.Drive.*;
  */
 public class Drive extends AbstractDrive
 {
-    private DifferentialDrivePoseEstimator mPoseEstimator;
 
     public Drive()
     {
@@ -46,8 +42,6 @@ public class Drive extends AbstractDrive
         mRightMotor.setStatorCurrentLimit(kMaxStatorCurrent);
         mLeftMotor.getFollower().setStatorCurrentLimit(kMaxStatorCurrent);
         mRightMotor.getFollower().setStatorCurrentLimit(kMaxStatorCurrent);
-
-        mPoseEstimator = new DifferentialDrivePoseEstimator(gyroAngle, initialPoseMeters, stateStdDevs, localMeasurementStdDevs, visionMeasurementStdDevs, nominalDtSeconds)
     }
 
     /** This method will be called once per scheduler run. */
