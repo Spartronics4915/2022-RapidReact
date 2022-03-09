@@ -49,11 +49,11 @@ public class Intake extends SpartronicsSubsystem
 
     //Subsystem methods - actions the robot can take - should be placed here.
 
-   public void startIntake(){
+    public void startIntake(boolean reversed){
         mLeftIntakeArm.set(true);
         mRightIntakeArm.set(true);
-        //showArmState();
-        mIntakeMotor.set(kHarvestSpeed);
+        mIntakeMotor.set(kHarvestSpeed * (reversed ? -1 : 1));
+        mToggleState = true;
         //logInfo("intake running"); - not sure if we need this could be too much for driver to pay attention to
     }
 
@@ -62,6 +62,7 @@ public class Intake extends SpartronicsSubsystem
         mRightIntakeArm.set(false); 
         //showArmState();
         mIntakeMotor.set(0);
+        mToggleState = false;
         //logInfo("intake stopped"); - not sure if we need this, same as above
     }
 
