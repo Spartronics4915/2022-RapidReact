@@ -16,14 +16,16 @@ import com.spartronics4915.lib.util.TriFunction;
  */
 public final class Constants
 {
-    public static final int kTestMotorId = 1;
     public static final class Drive { // TODO: some is a stand in value
         // hardware IDs
         public static final int kPigeonID = 10;
-        public static final int kLeftMotorID = 3;
+
+        //drive motors
         public static final int kRightMotorID = 1;
-        public static final int kLeftFollowerMotorID = 4;
         public static final int kRightFollowerMotorID = 2;
+
+        public static final int kLeftMotorID = 3;
+        public static final int kLeftFollowerMotorID = 4;
 
         // sensor models
         public static final double kWheelDiameter = 0.1524; // in meters
@@ -52,7 +54,7 @@ public final class Constants
     }
 
     public static final class Intake {
-        public static final int kIntakeMotorId = 1;
+        public static final int kIntakeMotorId = 7;
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
         public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
         public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
@@ -77,7 +79,7 @@ public final class Constants
         
     }
     public static class Launcher {
-        public static final int kFlywheelMotorId = 1;
+        public static final int kFlywheelMotorId = 5;
         public static final double kFlywheelRPS = 5;
         public static final double kFlywheelFarRPS = 10;
         
@@ -87,7 +89,7 @@ public final class Constants
             public static final double kV = 0.12112; // 7.18;
             public static final double kA = 0.00295;
         }
-        public static final int kSpinMotorId = 3;
+        public static final int kSpinMotorId = 6;
         public static final double kSpinMotorSpeed = 0.1;
         // public static class Spin {
         //     public static final double kP = 0.03;
@@ -98,7 +100,7 @@ public final class Constants
     }
     public static final class Climber
     {
-        public static final int kClimberMotorId = -1; // we dk
+        public static final int kClimberMotorId = 10; // we dk
         public static final double kClimberMotorSpeed = 1.0;
         public static final boolean kMotorIsInverted = false;
         public static final int kClimberSolenoidId = -1;

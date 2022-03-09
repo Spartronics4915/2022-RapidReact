@@ -11,12 +11,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeCommands 
 {
     private final Intake mIntake;
-    private final Joystick mArcadeController;
 
-    public IntakeCommands(Intake intake, Joystick arcadeController)
+    public IntakeCommands(Intake intake)
     {
         mIntake = intake;
-        mArcadeController = arcadeController;
     }
 
     public class EjectIntake extends CommandBase 
