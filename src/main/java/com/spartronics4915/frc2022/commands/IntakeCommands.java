@@ -58,7 +58,7 @@ public class IntakeCommands
         @Override
         public void initialize() {
             if (mIntake.toggleIntake()) {
-                mIntake.startIntake();
+                mIntake.startIntake(false);
             } else {
                 mIntake.stopIntake();
             }
