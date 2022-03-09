@@ -124,7 +124,8 @@ public class ConveyorCommands {
             addCommands(
                 new InstantCommand(() -> mConveyor.setMotors(1, 1)),
                 new WaitCommand(Constants.Conveyor.kTopConveyorTime + Constants.Conveyor.kBottomConveyorTime),
-                new InstantCommand(() -> mConveyor.setMotors(0, 0))
+                new InstantCommand(() -> mConveyor.setMotors(0, 0)),
+                new FillConveyors()
             );
 
             addRequirements(mConveyor);
