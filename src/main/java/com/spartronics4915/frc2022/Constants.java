@@ -72,7 +72,8 @@ public final class Constants
     }
     public static class Launcher {
         public static final int kFlywheelMotorId = 1;
-        // public static final double kFlywheelRPS = 5;
+        public static final double kFlywheelRPS = 5;
+        public static final double kFlywheelFarRPS = 10;
         
         public static class Flywheel {
             public static final double kP = 0.062237;
@@ -93,7 +94,14 @@ public final class Constants
     {
         public static final int kClimberMotorId = -1; // we dk
         public static final double kClimberMotorSpeed = 1.0;
-        public static final boolean kIsInverted = false;
+        public static final boolean kMotorIsInverted = false;
+        public static final int kClimberSolenoidId = -1;
+        public static final boolean kSolenoidIsInverted = false;
+        /**
+         * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
+         * engaging the ratchet.
+         */
+        public static final double kDelay = 0.1; // adjust 1st number for ms
     }
 
     public static final class OIConstants {
@@ -106,6 +114,7 @@ public final class Constants
 
         public static final int kLauncherShootButton = 6;
         public static final int kLauncherToggleButton = 8;
+        public static final int kLauncherShootFarButton = 7;
         
         public static final int kIntakeToggleButton = 2;
         public static final int kIntakeReverseButton = 1;
@@ -116,8 +125,17 @@ public final class Constants
     }
 
     public static final class Trajectory {
+        //TODO: obtén TODOS los valores
         public static final double kMaxVelocity = 2;
         public static final double kMaxAcceleration = .05;
+        
+        //Feedforward constants (will get from SysId)
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+
+        //Robot size (meters)
+        public static final double kTrackWidth = 1; 
     }
 
 }

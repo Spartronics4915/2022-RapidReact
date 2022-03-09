@@ -1,11 +1,16 @@
 package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.OIConstants.*;
+
 import static com.spartronics4915.frc2022.Constants.Climber.*;
+
 import com.spartronics4915.frc2022.subsystems.Climber;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 
 public class ClimberCommands
@@ -19,55 +24,53 @@ public class ClimberCommands
         mArcadeController = arcadeController;
     }
 
-    public class ExtendCommand extends CommandBase
+    public class WaitUntilReleasedCommand extends CommandBase
     {
-        public ExtendCommand()
-        {
-            addRequirements(mClimber);
-        }
+        private int mButton;
 
-        @Override
-        public void initialize()
+        public WaitUntilReleasedCommand(int button)
         {
-            mClimber.setMotor(kClimberMotorSpeed);
+            mButton = button;
         }
 
         @Override
         public boolean isFinished()
         {
-            return !mArcadeController.getRawButton(kClimberExtendButton);
-        }
-
-        @Override
-        public void end(boolean interrupted)
-        {
-            mClimber.setMotor(0);
+            return !mArcadeController.getRawButton(mButton);
         }
     }
 
-    public class RetractCommand extends CommandBase
+    public class ExtendCommand extends SequentialCommandGroup
+    {
+        public ExtendCommand()
+        {
+            addCommands(
+                new InstantCommand(() -> mClimber.setSolenoid(true)),
+                new WaitCommand(kDelay),
+                new InstantCommand(() -> mClimber.setMotor(kClimberMotorSpeed)),
+                new WaitUntilReleasedCommand(kClimberExtendButton),
+                new InstantCommand(() -> mClimber.setMotor(0)),
+                new WaitCommand(kDelay),
+                new InstantCommand(() -> mClimber.setSolenoid(false))
+            );
+            addRequirements(mClimber);
+        }
+    }
+
+    public class RetractCommand extends SequentialCommandGroup
     {
         public RetractCommand()
         {
+            addCommands(
+                new InstantCommand(() -> mClimber.setSolenoid(true)),
+                new WaitCommand(kDelay),
+                new InstantCommand(() -> mClimber.setMotor(-kClimberMotorSpeed)),
+                new WaitUntilReleasedCommand(kClimberRetractButton),
+                new InstantCommand(() -> mClimber.setMotor(0)),
+                new WaitCommand(kDelay),
+                new InstantCommand(() -> mClimber.setSolenoid(false))
+            );
             addRequirements(mClimber);
-        }
-
-        @Override
-        public void initialize()
-        {
-            mClimber.setMotor(-kClimberMotorSpeed);
-        }
-
-        @Override
-        public boolean isFinished()
-        {
-            return !mArcadeController.getRawButton(kClimberRetractButton);
-        }
-
-        @Override
-        public void end(boolean interrupted)
-        {
-            mClimber.setMotor(0);
         }
     }
 }
