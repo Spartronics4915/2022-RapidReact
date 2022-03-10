@@ -17,7 +17,6 @@ public class LauncherCommands
     public LauncherCommands(Launcher subsystem, Joystick mArcadecontroller)
     {
         mLauncher = subsystem;
-        mLauncher.setDefaultCommand(new ToggleLauncher());
     }
 
     public class ToggleLauncher extends CommandBase
