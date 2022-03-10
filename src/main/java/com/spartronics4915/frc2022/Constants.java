@@ -16,14 +16,15 @@ import com.spartronics4915.lib.util.TriFunction;
  */
 public final class Constants
 {
-    public static final int kTestMotorId = 1;
     public static final class Drive { // TODO: some is a stand in value
         // hardware IDs
-        public static final int kPigeonID = 10;
-        public static final int kLeftMotorID = 3;
+        public static final int kPigeonID = 12;
+        
         public static final int kRightMotorID = 1;
-        public static final int kLeftFollowerMotorID = 4;
         public static final int kRightFollowerMotorID = 2;
+
+        public static final int kLeftMotorID = 3;
+        public static final int kLeftFollowerMotorID = 4;
 
         // sensor models
         public static final double kWheelDiameter = 0.1524; // in meters
@@ -52,11 +53,12 @@ public final class Constants
     }
 
     public static final class Intake {
-        public static final int kIntakeMotorId = 1;
+        public static final int kIntakeMotorId = 7;
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
         public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
         public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
-        public static final int kIntakeSolenoidId = 1;
+        public static final int kLeftIntakeSolenoidId = 0;
+        public static final int kRightIntakeSolenoidId = 1;
     }
     public static class ExampleSubsystem {
         public static final int kFlywheelMasterId = 5;
@@ -65,9 +67,16 @@ public final class Constants
     }
     public static class Conveyor {
     
-        public static final int kSparkMaxId = 1;
-        public static final double kP = 1;
-        public static final double kD = 1;
+        public static final int kBottomMotorId = 8;
+        public static final int kTopMotorId = 9;
+
+        public static final int kBeamBreakerId = 0;
+
+        public static final double kMotorSpeed = 1.0;
+        
+        public static final double kTopConveyorTime = 2.0;
+        public static final double kBottomConveyorTime = 1.0;
+        
     }
     public static class Launcher {
         public static final int kFlywheelMotorId = 5;
@@ -91,14 +100,16 @@ public final class Constants
     }
     public static final class Climber
     {
-        public static final int kClimberMotorId = -1; // we dk
+        public static final int kClimberMotorId = 10; // we dk
         public static final double kClimberMotorSpeed = 1.0;
-        public static final boolean kIsInverted = false;
+        public static final boolean kMotorIsInverted = false;
         public static final int kClimberSolenoidId = -1;
+        public static final boolean kSolenoidIsInverted = false;
         /**
-         * The delay in (0.2ms)s between disengaging the ratchet and starting the motor.
+         * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
+         * engaging the ratchet.
          */
-        public static final int kDelay1 = 100 * 5; // adjust 1st number for ms
+        public static final double kDelay = 0.1; // adjust 1st number for ms
     }
 
     public static final class OIConstants {
@@ -122,8 +133,17 @@ public final class Constants
     }
 
     public static final class Trajectory {
+        //TODO: obtén TODOS los valores
         public static final double kMaxVelocity = 2;
         public static final double kMaxAcceleration = .05;
+        
+        //Feedforward constants (will get from SysId)
+        public static final double kS = 0;
+        public static final double kV = 0;
+        public static final double kA = 0;
+
+        //Robot size (meters)
+        public static final double kTrackWidth = 1; 
     }
 
 }

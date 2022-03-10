@@ -11,12 +11,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 public class IntakeCommands 
 {
     private final Intake mIntake;
-    private final Joystick mArcadeController;
 
-    public IntakeCommands(Intake intake, Joystick arcadeController)
+    public IntakeCommands(Intake intake)
     {
         mIntake = intake;
-        mArcadeController = arcadeController;
+        mIntake.setDefaultCommand(new ToggleIntake());
     }
 
     public class EjectIntake extends CommandBase 
@@ -38,12 +37,7 @@ public class IntakeCommands
         public void execute() {
         }
 
-        // Returns true when the command should end.
-        /*@Override
-        public boolean isFinished()
-        {
-            return !mArcadeController.getRawButton(kHoldToEjectIntakeButton);
-        }*/
+        // Called with WhileHeld so no IsFinished necessary
 
         // Called once the command ends or is interrupted.
         @Override
@@ -63,7 +57,7 @@ public class IntakeCommands
         @Override
         public void initialize() {
             if (mIntake.toggleIntake()) {
-                mIntake.startIntake();
+                mIntake.startIntake(false);
             } else {
                 mIntake.stopIntake();
             }

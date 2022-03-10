@@ -13,6 +13,7 @@ import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.frc2022.subsystems.Launcher;
 import com.spartronics4915.frc2022.subsystems.Climber;
 import com.spartronics4915.frc2022.commands.ClimberCommands;
+import com.spartronics4915.frc2022.commands.ConveyorCommands;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -41,6 +42,9 @@ public class RobotContainer
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
 
+    public final Conveyor mConveyor;
+    public final ConveyorCommands mConveyorCommands;
+
     public final Launcher mLauncher;
     public final LauncherCommands mLauncherCommands;
   
@@ -54,17 +58,19 @@ public class RobotContainer
         //mExampleSubsystem = new ExampleSubsystem();
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
         mIntake = new Intake();
-        mIntakeCommands = new IntakeCommands(mIntake, mArcadeController);
+        mIntakeCommands = new IntakeCommands(mIntake);
 
         mLauncher = new Launcher();
         mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
-        //mConveyor = new Conveyor();
 
         mDrive = new Drive();
         mDriveCommands = new DriveCommands(mDrive, mDriverController);
 
         mClimber = new Climber();
         mClimberCommands = new ClimberCommands(mClimber, mArcadeController);
+
+        mConveyor = new Conveyor();
+        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
 
         configureButtonBindings();
     }
@@ -75,36 +81,23 @@ public class RobotContainer
             .whenPressed(mIntakeCommands.new ToggleIntake());
         new JoystickButton(mArcadeController, OIConstants.kIntakeReverseButton)
             .whileHeld(mIntakeCommands.new EjectIntake());
+        new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
+            .whileHeld(mConveyorCommands.new ReverseBoth())
+            .whenReleased(mConveyorCommands.new FillConveyors());
+        new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBottomButton)
+            .whileHeld(mConveyorCommands.new ReverseBottom())
+            .whenReleased(mConveyorCommands.new FillConveyors());
+            
+        new JoystickButton(mArcadeController, OIConstants.kLauncherShootButton)
+            .whenPressed(mConveyorCommands.new Shoot1() /* or ShootAll() once we're good enough */);
         new JoystickButton(mArcadeController, OIConstants.kLauncherToggleButton)
             .whenPressed(mLauncherCommands.new ToggleLauncher());
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
             .whileHeld(mLauncherCommands.new ShootFar());
-        /*new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
-            .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
-        new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
-            .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
-        new JoystickButton(mArcadeController, OIConstants.kStartFlywheelButton)
-                                .whenPressed(new InstantCommand(mLauncher::testStartFlywheel, mLauncher));
-        new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
-                                .whenPressed(new InstantCommand(mLauncher::testStopFlywheel, mLauncher));
-    //TODO: need spin buttons separate from the start flywheel buttons?
-        new JoystickButton(mArcadeController, OIConstants.kStartFlywheelButton)
-                                .whenPressed(new InstantCommand(mLauncher::testStartSpin, mLauncher));
-        new JoystickButton(mArcadeController, OIConstants.kStopFlywheelButton)
-                                .whenPressed(new InstantCommand(mLauncher::testStopSpin, mLauncher));
-        new JoystickButton(mArcadeController, OIConstants.kStartConveyorButton)
-        .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
-        new JoystickButton(mArcadeController, OIConstants.kStopConveyorButton)
-        .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));*/
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberExtendButton)
             .whenPressed(mClimberCommands.new ExtendCommand());
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
             .whenPressed(mClimberCommands.new RetractCommand());
-     
-        // new JoystickButton(mArcadeController, Constants.OIConstants.kStartConveyorButton)
-        //     .whenPressed(new InstantCommand(mConveyor::startConveyor, mConveyor));
-        // new JoystickButton(mArcadeController, Constants.OIConstants.kStopConveyorButton)
-        //     .whenPressed(new InstantCommand(mConveyor::stopConveyor, mConveyor));
     }
 
     /**

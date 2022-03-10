@@ -1,57 +1,65 @@
 package com.spartronics4915.frc2022.subsystems;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.spartronics4915.frc2022.Constants;
-import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+
+import static com.spartronics4915.frc2022.Constants.Conveyor.*;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
  * Detailed description of Conveyer.
  */
-public class Conveyor extends SpartronicsSubsystem
-{
+public class Conveyor extends SpartronicsSubsystem {
     // The subsystem's hardware is defined here...
-    private CANSparkMax mMotor;
+    private TalonSRX mBottomMotor;
+    private TalonSRX mTopMotor;
 
-    /** Creates a new Conveyer. */
-    public Conveyor()
-    {
+    private DigitalInput mBeamBreaker;
+
+    /** Creates a new Conveyor. */
+    public Conveyor() {
         boolean success = true;
-        try
-        {
+
+        try {
             // ...and constructed here.
-            //mMotor = new CANSparkMax(Constants.kTestMotorId,MotorType.kBrushless);
-        }
-        catch (Exception exception)
-        {
+            mTopMotor = new TalonSRX(kTopMotorId);
+            mBottomMotor = new TalonSRX(kBottomMotorId);
+
+            mBeamBreaker = new DigitalInput(kBeamBreakerId);
+        } catch (Exception exception) {
             logException("Could not construct hardware: ", exception);
             success = false;
         }
         logInitialized(success);
+
+        mTopMotor.setInverted(false);
+        mBottomMotor.setInverted(false);
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
-public void setSpeed(double speed) {
-        mMotor.set(speed);
-        logInfo("running");
+
+    public boolean hasTopBall() {
+        return mBeamBreaker.get();
     }
 
-    public void startConveyor(){
-        mMotor.set(0.3);
-        logInfo("running");
+    public void setMotors(int bottom, int top) {
+        mTopMotor.set(ControlMode.PercentOutput, top * kMotorSpeed);
+        mBottomMotor.set(ControlMode.PercentOutput, bottom * kMotorSpeed);s
     }
 
-    public void stopConveyor() {
-        mMotor.set(0);
-        logInfo("stopped");}
     /** This method will be called once per scheduler run. */
     @Override
-    public void periodic() {}
+    public void periodic() {
+    }
 
     /** This method will be called once per scheduler run during simulation. */
     @Override
-    public void simulationPeriodic() {}
+    public void simulationPeriodic() {
+    }
 
-    public void outputTelemetry() {}
+    public void outputTelemetry() {
+    }
 }
