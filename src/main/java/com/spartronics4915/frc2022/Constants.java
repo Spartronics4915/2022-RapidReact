@@ -70,7 +70,7 @@ public final class Constants
         public static final double kD = 1;
     }
     public static class Launcher {
-        public static final int kFlywheelMotorId = 1;
+        public static final int kFlywheelMotorId = 5;
         public static final double kFlywheelRPS = 5;
         public static final double kFlywheelFarRPS = 10;
         
@@ -80,7 +80,7 @@ public final class Constants
             public static final double kV = 0.12112; // 7.18;
             public static final double kA = 0.00295;
         }
-        public static final int kSpinMotorId = 3;
+        public static final int kSpinMotorId = 6;
         public static final double kSpinMotorSpeed = 0.1;
         // public static class Spin {
         //     public static final double kP = 0.03;
