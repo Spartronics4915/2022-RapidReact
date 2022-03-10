@@ -81,6 +81,7 @@ public class RobotContainer
             .whenPressed(mIntakeCommands.new ToggleIntake());
         new JoystickButton(mArcadeController, OIConstants.kIntakeReverseButton)
             .whileHeld(mIntakeCommands.new EjectIntake());
+
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
             .whileHeld(mConveyorCommands.new ReverseBoth())
             .whenReleased(mConveyorCommands.new FillConveyors());
@@ -94,6 +95,7 @@ public class RobotContainer
             .whenPressed(mLauncherCommands.new ToggleLauncher());
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
             .whileHeld(mLauncherCommands.new ShootFar());
+            
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberExtendButton)
             .whenPressed(mClimberCommands.new ExtendCommand());
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
