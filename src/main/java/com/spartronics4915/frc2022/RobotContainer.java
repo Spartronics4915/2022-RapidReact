@@ -67,7 +67,7 @@ public class RobotContainer
         mDriveCommands = new DriveCommands(mDrive, mDriverController);
 
         mClimber = new Climber();
-        mClimberCommands = new ClimberCommands(mClimber, mArcadeController);
+        mClimberCommands = new ClimberCommands(mClimber);
 
         mConveyor = new Conveyor();
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
@@ -97,9 +97,11 @@ public class RobotContainer
             .whileHeld(mLauncherCommands.new ShootFar());
             
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberExtendButton)
-            .whenPressed(mClimberCommands.new ExtendCommand());
+            .whenPressed(mClimberCommands.new StartExtend())
+            .whenReleased(mClimberCommands.new StopExtend());
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
-            .whenPressed(mClimberCommands.new RetractCommand());
+            .whenPressed(mClimberCommands.new StartRetract())
+            .whenReleased(mClimberCommands.new StopRetract());
     }
 
     /**
