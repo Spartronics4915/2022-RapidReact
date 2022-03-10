@@ -16,14 +16,15 @@ import com.spartronics4915.lib.util.TriFunction;
  */
 public final class Constants
 {
-    public static final int kTestMotorId = 1;
     public static final class Drive { // TODO: some is a stand in value
         // hardware IDs
         public static final int kPigeonID = 12;
-        public static final int kLeftMotorID = 3;
+        
         public static final int kRightMotorID = 1;
-        public static final int kLeftFollowerMotorID = 4;
         public static final int kRightFollowerMotorID = 2;
+
+        public static final int kLeftMotorID = 3;
+        public static final int kLeftFollowerMotorID = 4;
 
         // sensor models
         public static final double kWheelDiameter = 0.1524; // in meters
