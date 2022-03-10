@@ -32,7 +32,7 @@ public class Intake extends SpartronicsSubsystem
         {
             // ...and constructed here.
            mIntakeMotor = new CANSparkMax(kIntakeMotorId,MotorType.kBrushless);
-           mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, kLeftIntakeSolenoidId);
+           mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, kIntakeSolenoidId);
            mToggleState = false;
            //switchState = new DigitalInput(0);
 

@@ -57,8 +57,7 @@ public final class Constants
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
         public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
         public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
-        public static final int kLeftIntakeSolenoidId = 0;
-        public static final int kRightIntakeSolenoidId = 1;
+        public static final int kIntakeSolenoidId = 0;
     }
     public static class ExampleSubsystem {
         public static final int kFlywheelMasterId = 5;
@@ -103,7 +102,7 @@ public final class Constants
         public static final int kClimberMotorId = 10; // we dk
         public static final double kClimberMotorSpeed = 1.0;
         public static final boolean kMotorIsInverted = false;
-        public static final int kClimberSolenoidId = -1;
+        public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
         /**
          * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
