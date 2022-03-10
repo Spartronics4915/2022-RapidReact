@@ -47,7 +47,7 @@ public class Conveyor extends SpartronicsSubsystem {
 
     public void setMotors(int bottom, int top) {
         mTopMotor.set(ControlMode.PercentOutput, top * kMotorSpeed);
-        mBottomMotor.set(ControlMode.PercentOutput, bottom * kMotorSpeed);s
+        mBottomMotor.set(ControlMode.PercentOutput, bottom * kMotorSpeed);
     }
 
     /** This method will be called once per scheduler run. */
