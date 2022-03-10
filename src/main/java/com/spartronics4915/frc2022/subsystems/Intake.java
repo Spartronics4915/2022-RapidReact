@@ -18,7 +18,8 @@ public class Intake extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
     private CANSparkMax mIntakeMotor;
-    private Solenoid mIntakeArm;
+    private Solenoid mLeftIntakeArm;
+    private Solenoid mRightIntakeArm;
 
     private boolean mToggleState;
     //private DigitalInput switchState;
@@ -32,12 +33,11 @@ public class Intake extends SpartronicsSubsystem
         {
             // ...and constructed here.
            mIntakeMotor = new CANSparkMax(kIntakeMotorId,MotorType.kBrushless);
-           mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, kIntakeSolenoidId);
+           mLeftIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, kLeftIntakeSolenoidId);
+           mRightIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, kRightIntakeSolenoidId);
            mToggleState = false;
            //switchState = new DigitalInput(0);
-           //setting starting values
-           //mIntakeArm.set(true);
-           //mIntakeMotor.set(0);
+
         }
         catch (Exception exception)
         {
@@ -50,14 +50,17 @@ public class Intake extends SpartronicsSubsystem
     //Subsystem methods - actions the robot can take - should be placed here.
 
     public void startIntake(boolean reversed){
-        mIntakeArm.set(true);
+        mLeftIntakeArm.set(true);
+        mRightIntakeArm.set(true);
         mIntakeMotor.set(kHarvestSpeed * (reversed ? -1 : 1));
         mToggleState = true;
         //logInfo("intake running"); - not sure if we need this could be too much for driver to pay attention to
     }
 
     public void stopIntake() {
-        mIntakeArm.set(false); 
+        mLeftIntakeArm.set(false);
+        mRightIntakeArm.set(false); 
+        //showArmState();
         mIntakeMotor.set(0);
         mToggleState = false;
         //logInfo("intake stopped"); - not sure if we need this, same as above
