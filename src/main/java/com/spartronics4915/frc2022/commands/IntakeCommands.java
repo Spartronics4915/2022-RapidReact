@@ -15,7 +15,6 @@ public class IntakeCommands
     public IntakeCommands(Intake intake)
     {
         mIntake = intake;
-        mIntake.setDefaultCommand(new ToggleIntake());
     }
 
     public class EjectIntake extends CommandBase 

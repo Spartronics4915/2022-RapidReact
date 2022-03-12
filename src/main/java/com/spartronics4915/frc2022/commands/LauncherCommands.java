@@ -17,7 +17,24 @@ public class LauncherCommands
     public LauncherCommands(Launcher subsystem, Joystick mArcadecontroller)
     {
         mLauncher = subsystem;
-        mLauncher.setDefaultCommand(new ToggleLauncher());
+        mLauncher.setDefaultCommand(new RunLauncher());
+    }
+
+    public class RunLauncher extends CommandBase {
+        private double mSpeed = 0.0;
+
+        public RunLauncher() {
+            addRequirements(mLauncher);
+        }
+
+        @Override
+        public void execute() {
+            double sliderValue = mLauncher.getToggled() ? mLauncher.getSliderValue() : 0.0;
+            if (mSpeed != sliderValue) {
+                mSpeed = sliderValue;
+                mLauncher.setMotorSpeed(mSpeed);
+            }
+        }
     }
 
     public class ToggleLauncher extends CommandBase
@@ -28,12 +45,7 @@ public class LauncherCommands
         // Called when the command is initially scheduled.
         @Override
         public void initialize() {
-            if (mLauncher.toggleLauncher()) {
-                mLauncher.setMotorSpeed(mLauncher.getSliderValue());
-            }
-            else {
-                mLauncher.setMotorSpeed(0);
-            }
+            mLauncher.toggleLauncher();
         }
 
         // Called every time the scheduler runs while the command is scheduled.
@@ -62,7 +74,8 @@ public class LauncherCommands
         // Called when the command is initially scheduled.
         @Override
         public void initialize() {
-                mLauncher.setMotorSpeed(kFlywheelFarRPS);
+            mLauncher.setMotorSpeed(Flywheel.kFarRPS);
+            mLauncher.setToggleTrue();
         }
 
         // Called every time the scheduler runs while the command is scheduled.
@@ -77,7 +90,6 @@ public class LauncherCommands
         @Override
         public void end(boolean interrupted) {
             mLauncher.setMotorSpeed(mLauncher.getSliderValue());
-            mLauncher.setToggleTrue();
         }
     }
 }

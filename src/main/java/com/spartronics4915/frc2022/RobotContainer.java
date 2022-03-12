@@ -59,9 +59,11 @@ public class RobotContainer
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
         mIntake = new Intake();
         mIntakeCommands = new IntakeCommands(mIntake);
+        (mIntakeCommands.new ToggleIntake()).schedule();
 
         mLauncher = new Launcher();
         mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
+        (mLauncherCommands.new ToggleLauncher()).schedule();
 
         mDrive = new Drive();
         mDriveCommands = new DriveCommands(mDrive, mDriverController);
@@ -71,6 +73,7 @@ public class RobotContainer
 
         mConveyor = new Conveyor();
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+        (mConveyorCommands.new FillConveyors()).schedule();
 
         configureButtonBindings();
     }

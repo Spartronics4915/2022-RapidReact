@@ -37,8 +37,8 @@ public class Launcher extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mFlywheelMotor = SpartronicsMax.makeMotor(kFlywheelMotorId);
-            mSpinMotor = SpartronicsMax.makeMotor(kSpinMotorId);
+            mFlywheelMotor = SpartronicsMax.makeMotor(Flywheel.kId);
+            mSpinMotor = SpartronicsMax.makeMotor(SpinMotor.kId);
         }
         catch (Exception exception)
         {
@@ -47,10 +47,10 @@ public class Launcher extends SpartronicsSubsystem
         }
         logInitialized(success);
 
-       // mFlywheelMotor.setVelocityGains(kP, 0, 0, 0); // ref value is 0.00036
-        mFlywheelMotor.setVelocityGains(Flywheel.kP, 0, 0, 0);//, Flywheel.kS, Flywheel.kV, Flywheel.kA);
- 
-        mFlywheelMotor.setOutputInverted(false);
+        mFlywheelMotor.setVelocityGains(Flywheel.kP, Flywheel.kD);
+        mSpinMotor.setVelocityGains(SpinMotor.kP, SpinMotor.kD);
+        mFlywheelMotor.setOutputInverted(Flywheel.kInverted);
+        mSpinMotor.setOutputInverted(SpinMotor.kInverted);
         mFlywheelEncoder = mFlywheelMotor.getEncoder();
     }
 
@@ -63,6 +63,7 @@ public class Launcher extends SpartronicsSubsystem
     }
     public void setMotorSpeed(double launcherVelocity) {
         mFlywheelMotor.setVelocity(launcherVelocity);
+        mSpinMotor.setPercentOutput(SpinMotor.kSpeed);
         // }
         // else if (mLauncherToggle=false) {
         //     mFlywheelMotor.setVelocity(0);
@@ -73,14 +74,18 @@ public class Launcher extends SpartronicsSubsystem
         mLauncherToggle = true;
     }
 
+    public boolean getToggled() {
+        return mLauncherToggle;
+    }
+
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
         // if (enableFlywheel = true)
         // mFlywheelMotor.setVelocity(FlywheelRPS);
-        //logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+        logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
         //mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0));
-        SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelMotor.getEncoder().getVelocity());
+        SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelEncoder.getVelocity());
     }
 
     /** This method will be called once per scheduler run during simulation. */

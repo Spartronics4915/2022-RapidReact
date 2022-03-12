@@ -19,7 +19,6 @@ public class ConveyorCommands {
     public ConveyorCommands(Conveyor conveyor, Intake intake) {
         mConveyor = conveyor;
         mIntake = intake;
-        mConveyor.setDefaultCommand(new FillConveyors());
     }
 
     public class FillConveyors extends CommandBase {
