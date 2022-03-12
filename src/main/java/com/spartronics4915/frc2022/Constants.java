@@ -55,9 +55,10 @@ public final class Constants
     public static final class Intake {
         public static final int kIntakeMotorId = 7;
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
-        public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
-        public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
+        public static final double kHarvestSpeed = 0.15; //I stole this from Infinite Recharge
+        public static final double kEjectSpeed = -0.15; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 0;
+        public static final boolean kIntakeMotorInverted = true;
     }
     public static class Conveyor {
     
@@ -153,4 +154,5 @@ public final class Constants
         public static final double kTrackWidth = 1; 
     }
 
+    public static final int kPCMId = 11;
 }

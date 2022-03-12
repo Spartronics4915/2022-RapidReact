@@ -83,7 +83,7 @@ public class Launcher extends SpartronicsSubsystem
     public void periodic() {
         // if (enableFlywheel = true)
         // mFlywheelMotor.setVelocity(FlywheelRPS);
-        logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+        // logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
         //mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0));
         SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelEncoder.getVelocity());
     }

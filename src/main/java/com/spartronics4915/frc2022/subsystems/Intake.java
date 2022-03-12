@@ -1,6 +1,7 @@
 package com.spartronics4915.frc2022.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -32,7 +33,7 @@ public class Intake extends SpartronicsSubsystem
         {
             // ...and constructed here.
            mIntakeMotor = new CANSparkMax(kIntakeMotorId,MotorType.kBrushless);
-           mIntakeArm = new Solenoid(PneumaticsModuleType.CTREPCM, kIntakeSolenoidId);
+           mIntakeArm = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kIntakeSolenoidId);
            mToggleState = false;
            //switchState = new DigitalInput(0);
 
@@ -43,6 +44,8 @@ public class Intake extends SpartronicsSubsystem
             success = false;
         }
         logInitialized(success);
+        mIntakeMotor.setInverted(kIntakeMotorInverted);
+           
     }
 
     //Subsystem methods - actions the robot can take - should be placed here.

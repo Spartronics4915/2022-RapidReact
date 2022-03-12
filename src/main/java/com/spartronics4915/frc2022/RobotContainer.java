@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
@@ -59,11 +61,9 @@ public class RobotContainer
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
         mIntake = new Intake();
         mIntakeCommands = new IntakeCommands(mIntake);
-        (mIntakeCommands.new ToggleIntake()).schedule();
 
         mLauncher = new Launcher();
         mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
-        (mLauncherCommands.new ToggleLauncher()).schedule();
 
         mDrive = new Drive();
         mDriveCommands = new DriveCommands(mDrive, mDriverController);
@@ -73,7 +73,6 @@ public class RobotContainer
 
         mConveyor = new Conveyor();
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
-        (mConveyorCommands.new FillConveyors()).schedule();
 
         configureButtonBindings();
     }
@@ -112,8 +111,16 @@ public class RobotContainer
      *
      * @return the command to run in autonomous
      */
-    /*public Command getAutonomousCommand;
+    public Command getAutonomousCommand()
     {
         return null; // -0
-    }*/
+    }
+
+    public Command getTeleopCommand()
+    {
+        return new ParallelCommandGroup(
+            mLauncherCommands.new ToggleLauncher(),
+            mConveyorCommands.new FillConveyors()
+        );
+    }
 }
