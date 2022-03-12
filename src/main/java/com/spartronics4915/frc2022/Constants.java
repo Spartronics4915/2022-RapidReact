@@ -78,18 +78,31 @@ public final class Constants
         
     }
     public static class Launcher {
-        public static final int kFlywheelMotorId = 5;
-        public static final double kFlywheelRPS = 5;
-        public static final double kFlywheelFarRPS = 10;
         
         public static class Flywheel {
-            public static final double kP = 0.062237;
-            public static final double kS = 0.084234; // 0.0654;
-            public static final double kV = 0.12112; // 7.18;
-            public static final double kA = 0.00295;
+            public static final int kId = 5;
+            public static final double kP = 0.03;
+            public static final double kD = 0;
+            
+            //public static final int kId = 5;
+            //public static final double kP = 0.18366;
+            //public static final double kD = 0;
+            public static final boolean kInverted = false;
+            
+            public static final double kRPS = 5;
+            public static final double kFarRPS = 10;
         }
-        public static final int kSpinMotorId = 6;
-        public static final double kSpinMotorSpeed = 0.1;
+
+        public static class SpinMotor {
+            public static final boolean kInverted = false;
+            public static final int kId = 6;
+            public static final double kSpeed = 0.1;
+
+            public static final double kP = 0;
+            public static final double kD = 0;
+            
+            public static final double kSpeedFactor = .5;
+        }
         // public static class Spin {
         //     public static final double kP = 0.03;
         //     public static final double kS = 0.0286; // 0.0654;
