@@ -59,11 +59,6 @@ public final class Constants
         public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 0;
     }
-    public static class ExampleSubsystem {
-        public static final int kFlywheelMasterId = 5;
-        public static final double kHighRPS = 90.0;
-        public static final double kLowRPS = 40.0;
-    }
     public static class Conveyor {
     
         public static final int kBottomMotorId = 8;
