@@ -40,8 +40,8 @@ public class RobotContainer
     public final Climber mClimber;
     public final ClimberCommands mClimberCommands;
     
-    // public final Drive mDrive;
-    // public final DriveCommands mDriveCommands;
+    public final Drive mDrive;
+    public final DriveCommands mDriveCommands;
 
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
