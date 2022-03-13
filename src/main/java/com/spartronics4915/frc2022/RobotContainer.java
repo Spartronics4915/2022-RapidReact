@@ -1,27 +1,21 @@
 package com.spartronics4915.frc2022;
 
-import com.spartronics4915.frc2022.subsystems.Intake;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.spartronics4915.frc2022.Constants.OIConstants;
-import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.frc2022.commands.DriveCommands;
 import com.spartronics4915.frc2022.commands.IntakeCommands;
+import com.spartronics4915.frc2022.commands.ConveyorCommands;
 import com.spartronics4915.frc2022.commands.LauncherCommands;
-import com.spartronics4915.frc2022.subsystems.Conveyor;
+import com.spartronics4915.frc2022.commands.ClimberCommands;
+
 import com.spartronics4915.frc2022.subsystems.Drive;
+import com.spartronics4915.frc2022.subsystems.Intake;
+import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Launcher;
 import com.spartronics4915.frc2022.subsystems.Climber;
-import com.spartronics4915.frc2022.commands.ClimberCommands;
-import com.spartronics4915.frc2022.commands.ConveyorCommands;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import com.spartronics4915.frc2022.Constants.OIConstants;
+
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
