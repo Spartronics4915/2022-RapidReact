@@ -1,5 +1,9 @@
 package com.spartronics4915.frc2022.commands;
 
+import static com.spartronics4915.frc2022.Constants.Conveyor.*;
+
+import javax.lang.model.util.ElementScanner6;
+
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Intake;
 
@@ -21,40 +25,44 @@ public class ConveyorCommands {
         mIntake = intake;
     }
 
-    public class FillConveyors extends CommandBase {
-
-        private int mAccumulator = 0;
-
-        public FillConveyors()
-        {
-            addRequirements(mConveyor, mIntake); // Declares subsystem dependencies
+    public class ToggleFillConveyors extends CommandBase {
+        public ToggleFillConveyors() {
+            addRequirements(mConveyor);
         }
 
         @Override
-        public void execute() {
-            mAccumulator++;
-            int rTime = mAccumulator % Constants.Conveyor.kStopFrequency;
-            if (rTime == 0)
+        public void initialize() {
+            if (mConveyor.anyMotorsRunning())
                 mConveyor.setMotors(0, 0);
-            if (rTime == Constants.Conveyor.kStopLength)
+            else
                 mConveyor.setMotors(1, 0);
         }
-
+        
         @Override
         public boolean isFinished() {
-            return mConveyor.hasTopBall();
+            return true;
         }
+    }
 
-        // Called once the command ends or is interrupted.
-        @Override
-        public void end(boolean interrupted) {
-            mConveyor.setMotors(0, 0);
-            mIntake.stopIntake();
+    public class TryToggleConveyor extends ConditionalCommand{
+        public TryToggleConveyor() {
+            super(
+                new ConditionalCommand(
+                    new ToggleFillConveyors(),
+                    new SequentialCommandGroup(
+                        new WaitCommand(kStopConveyorsDelay),
+                        new ToggleFillConveyors()
+                    ),
+                    mConveyor::hasTopBall
+                ),
+                new ToggleFillConveyors(),
+                mIntake::getToggleState
+            );
         }
     }
 
     public class ReverseBoth extends CommandBase {
-        public ReverseBoth(){
+        public ReverseBoth() {
             addRequirements(mConveyor, mIntake);
         }
 
@@ -65,8 +73,8 @@ public class ConveyorCommands {
         }
 
         @Override
-        public void end(boolean interrupted){
-            mConveyor.setMotors(0, 0);
+        public void end(boolean interrupted) {
+            mConveyor.setMotors(1, 0);
             mIntake.startIntake(false);
         }
     }
@@ -84,7 +92,7 @@ public class ConveyorCommands {
 
         @Override
         public void end(boolean interrupted){
-            mConveyor.setMotors(0,0);
+            mConveyor.setMotors(1, 0);
             mIntake.startIntake(false);
         }
     }
@@ -94,8 +102,8 @@ public class ConveyorCommands {
         public ShootWith1Ball() {
             addCommands(
                 new InstantCommand(() -> mConveyor.setMotors(0, 1)),
-                new WaitCommand(Constants.Conveyor.kTopConveyorTime),
-                new FillConveyors()
+                new WaitCommand(kTopConveyorTime),
+                new InstantCommand(() -> mConveyor.setMotors(0, 0))
             );
 
             addRequirements(mConveyor);
@@ -105,16 +113,14 @@ public class ConveyorCommands {
     public class ShootWith2Balls extends SequentialCommandGroup {
         public ShootWith2Balls() {
             addCommands(
-                new InstantCommand(() -> mConveyor.setMotors(0, 1)),
-                new WaitCommand(Constants.Conveyor.kTopConveyorTime),
-                new InstantCommand(() -> mConveyor.setMotors(1, 0)),
-                new WaitCommand(Constants.Conveyor.kBottomConveyorTime),
-                new FillConveyors()
+                new InstantCommand(() -> mConveyor.setMotors(1, 1)),
+                new WaitCommand(kTopConveyorTime + kBottomConveyorTime),
+                new InstantCommand(() -> mConveyor.setMotors(0, 0))
             );
 
             addRequirements(mConveyor);
         }
-    } 
+    }
 
     public class Shoot1 extends ConditionalCommand {
         public Shoot1(){
@@ -130,9 +136,8 @@ public class ConveyorCommands {
         public ShootAll(){
             addCommands(
                 new InstantCommand(() -> mConveyor.setMotors(1, 1)),
-                new WaitCommand(Constants.Conveyor.kTopConveyorTime + Constants.Conveyor.kBottomConveyorTime),
-                new InstantCommand(() -> mConveyor.setMotors(0, 0)),
-                new FillConveyors()
+                new WaitCommand(kTopConveyorTime + kBottomConveyorTime),
+                new InstantCommand(() -> mConveyor.setMotors(0, 0))
             );
 
             addRequirements(mConveyor);
