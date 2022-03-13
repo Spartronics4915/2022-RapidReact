@@ -45,7 +45,8 @@ public class Intake extends SpartronicsSubsystem
         }
         logInitialized(success);
         mIntakeMotor.setInverted(kIntakeMotorInverted);
-           
+        
+        mIntakeMotor.setSmartCurrentLimit(kMaxCurrent);
     }
 
     //Subsystem methods - actions the robot can take - should be placed here.

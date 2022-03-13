@@ -52,6 +52,9 @@ public class Launcher extends SpartronicsSubsystem
         mFlywheelMotor.setOutputInverted(Flywheel.kInverted);
         mSpinMotor.setOutputInverted(SpinMotor.kInverted);
         mFlywheelEncoder = mFlywheelMotor.getEncoder();
+
+        mFlywheelMotor.setStatorCurrentLimit(Flywheel.kMaxCurrent);
+        mSpinMotor.setStatorCurrentLimit(SpinMotor.kMaxCurrent);
     }
 
     public boolean toggleLauncher() {

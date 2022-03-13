@@ -102,6 +102,9 @@ public class RobotContainer
         new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
             .whenPressed(mClimberCommands.new StartRetract())
             .whenReleased(mClimberCommands.new StopRetract());
+    
+        // new JoystickButton(mArcadeController, Constants.OIConstants.kIntakeReverseButton)
+        //     .whileHeld(mConveyorCommands.new FillConveyors());
     }
 
     /**
@@ -117,7 +120,7 @@ public class RobotContainer
     public Command getTeleopCommand()
     {
         return new ParallelCommandGroup(
-            mLauncherCommands.new ToggleLauncher(),
+            // mLauncherCommands.new ToggleLauncher(),
             mConveyorCommands.new FillConveyors()
         );
     }

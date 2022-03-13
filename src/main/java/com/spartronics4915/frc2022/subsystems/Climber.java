@@ -1,6 +1,7 @@
 package com.spartronics4915.frc2022.subsystems;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.spartronics4915.frc2022.Constants;
@@ -39,6 +40,8 @@ public class Climber extends SpartronicsSubsystem
             success = false;
         }
         logInitialized(success);
+        
+        mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
@@ -49,6 +52,7 @@ public class Climber extends SpartronicsSubsystem
 
     public void setSolenoid(boolean isExtended)
     {
+        // mClimberMotor.get
         mClimberSolenoid.set(isExtended != kSolenoidIsInverted);
     }
 

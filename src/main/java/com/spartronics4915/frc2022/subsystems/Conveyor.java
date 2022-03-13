@@ -1,5 +1,6 @@
 package com.spartronics4915.frc2022.subsystems;
 
+import com.spartronics4915.lib.hardware.motors.SpartronicsSRX;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -37,12 +38,15 @@ public class Conveyor extends SpartronicsSubsystem {
 
         mTopMotor.setInverted(false);
         mBottomMotor.setInverted(false);
+
+        mTopMotor.configPeakCurrentLimit(kMaxCurrent);
+        mBottomMotor.configPeakCurrentLimit(kMaxCurrent);
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
 
     public boolean hasTopBall() {
-        return mBeamBreaker.get();
+        return !mBeamBreaker.get();
     }
 
     public void setMotors(int bottom, int top) {
