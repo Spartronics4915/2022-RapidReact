@@ -37,9 +37,6 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     
-    public final Climber mClimber;
-    public final ClimberCommands mClimberCommands;
-    
     public final Drive mDrive;
     public final DriveCommands mDriveCommands;
 
@@ -51,6 +48,9 @@ public class RobotContainer
 
     public final Launcher mLauncher;
     public final LauncherCommands mLauncherCommands;
+    
+    public final Climber mClimber;
+    public final ClimberCommands mClimberCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -59,20 +59,19 @@ public class RobotContainer
     public RobotContainer()
     {
         // ...and constructed here.
-        //mExampleSubsystem = new ExampleSubsystem();
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
 
-        mLauncher = new Launcher();
-        // mDrive = new Drive();
-        mClimber = new Climber();
-        mConveyor = new Conveyor();
+        mDrive = new Drive();
         mIntake = new Intake();
+        mConveyor = new Conveyor();
+        mLauncher = new Launcher();
+        mClimber = new Climber();
         
-        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
-        // mDriveCommands = new DriveCommands(mDrive, mDriverController);
-        mClimberCommands = new ClimberCommands(mClimber);
-        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+        mDriveCommands = new DriveCommands(mDrive, mDriverController);
         mIntakeCommands = new IntakeCommands(mIntake);
+        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
+        mClimberCommands = new ClimberCommands(mClimber);
 
         configureButtonBindings();
     }
@@ -105,9 +104,6 @@ public class RobotContainer
         new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
             .whenPressed(mClimberCommands.new StartRetract())
             .whenReleased(mClimberCommands.new StopRetract());
-    
-        // new JoystickButton(mArcadeController, Constants.OIConstants.kIntakeReverseButton)
-        //     .whileHeld(mConveyorCommands.new FillConveyors());
     }
 
     /**
