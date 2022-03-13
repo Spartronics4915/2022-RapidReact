@@ -44,7 +44,7 @@ public final class Constants
         public static final double kD = 0;
 
         // current limits
-        public static final int kMaxStatorCurrent = 30; // poof alakazam
+        public static final int kMaxCurrent = 30; // poof alakazam
 
         // controls
         public static final double kSlowModeMultiplier = 0.1;
@@ -58,7 +58,11 @@ public final class Constants
         public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
         public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 0;
+        public static final boolean kIntakeMotorInverted = false;
+
+        public static final int kMaxCurrent = 30;
     }
+
     public static class Conveyor {
     
         public static final int kBottomMotorId = 8;
@@ -66,10 +70,15 @@ public final class Constants
 
         public static final int kBeamBreakerId = 0;
 
-        public static final double kMotorSpeed = 1.0;
+        public static final double kMotorSpeed = 0.45;
         
         public static final double kTopConveyorTime = 2.0;
         public static final double kBottomConveyorTime = 1.0;
+
+        public static final int kStopFrequency = (int)(1 / 0.02);
+        public static final int kStopLength = (int)(0.1 / 0.02);
+
+        public static final int kMaxCurrent = 30;
         
     }
     public static class Launcher {
@@ -84,8 +93,10 @@ public final class Constants
             //public static final double kD = 0;
             public static final boolean kInverted = false;
             
-            public static final double kRPS = 5;
+            public static final double kRPS = 28.07;
             public static final double kFarRPS = 10;
+
+            public static final int kMaxCurrent = 40;
         }
 
         public static class SpinMotor {
@@ -97,6 +108,8 @@ public final class Constants
             public static final double kD = 0;
             
             public static final double kSpeedFactor = .5;
+
+            public static final int kMaxCurrent = 40;
         }
         // public static class Spin {
         //     public static final double kP = 0.03;
@@ -109,7 +122,7 @@ public final class Constants
     {
         public static final int kClimberMotorId = 10; // we dk
         public static final double kClimberMotorSpeed = 1.0;
-        public static final boolean kMotorIsInverted = false;
+        public static final boolean kMotorIsInverted = true;
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
         /**
@@ -117,6 +130,8 @@ public final class Constants
          * engaging the ratchet.
          */
         public static final double kDelay = 0.1; // adjust 1st number for ms
+
+        public static final int kMaxCurrent = 40;
     }
 
     public static final class OIConstants {
@@ -153,4 +168,5 @@ public final class Constants
         public static final double kTrackWidth = 1; 
     }
 
+    public static final int kPCMId = 11;
 }

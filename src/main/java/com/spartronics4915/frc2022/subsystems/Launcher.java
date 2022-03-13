@@ -52,6 +52,9 @@ public class Launcher extends SpartronicsSubsystem
         mFlywheelMotor.setOutputInverted(Flywheel.kInverted);
         mSpinMotor.setOutputInverted(SpinMotor.kInverted);
         mFlywheelEncoder = mFlywheelMotor.getEncoder();
+
+        mFlywheelMotor.setStatorCurrentLimit(Flywheel.kMaxCurrent);
+        mSpinMotor.setStatorCurrentLimit(SpinMotor.kMaxCurrent);
     }
 
     public boolean toggleLauncher() {
@@ -83,7 +86,7 @@ public class Launcher extends SpartronicsSubsystem
     public void periodic() {
         // if (enableFlywheel = true)
         // mFlywheelMotor.setVelocity(FlywheelRPS);
-        logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
+        // logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
         //mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0));
         SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelEncoder.getVelocity());
     }

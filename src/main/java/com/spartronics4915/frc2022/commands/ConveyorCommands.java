@@ -23,19 +23,25 @@ public class ConveyorCommands {
 
     public class FillConveyors extends CommandBase {
 
+        private int mAccumulator = 0;
+
         public FillConveyors()
         {
-            addRequirements(mConveyor); // Declares subsystem dependencies
-        }
-
-        // Called when the command is initially scheduled.
-        @Override
-        public void initialize() {
-            mConveyor.setMotors(1, 0);
+            addRequirements(mConveyor, mIntake); // Declares subsystem dependencies
         }
 
         @Override
-        public boolean isFinished(){
+        public void execute() {
+            mAccumulator++;
+            int rTime = mAccumulator % Constants.Conveyor.kStopFrequency;
+            if (rTime == 0)
+                mConveyor.setMotors(0, 0);
+            if (rTime == Constants.Conveyor.kStopLength)
+                mConveyor.setMotors(1, 0);
+        }
+
+        @Override
+        public boolean isFinished() {
             return mConveyor.hasTopBall();
         }
 
@@ -43,6 +49,7 @@ public class ConveyorCommands {
         @Override
         public void end(boolean interrupted) {
             mConveyor.setMotors(0, 0);
+            mIntake.stopIntake();
         }
     }
 
@@ -59,7 +66,7 @@ public class ConveyorCommands {
 
         @Override
         public void end(boolean interrupted){
-            mConveyor.setMotors(0,0);
+            mConveyor.setMotors(0, 0);
             mIntake.startIntake(false);
         }
     }

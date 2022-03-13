@@ -17,33 +17,6 @@ public class IntakeCommands
         mIntake = intake;
     }
 
-    public class EjectIntake extends CommandBase 
-    {
-    
-        public EjectIntake ()
-        {
-            addRequirements(mIntake); // Declares subsystem dependencies
-        }
-
-        // Called when the command is initially scheduled.
-        @Override
-        public void initialize() {
-            mIntake.eject();
-        }
-
-        // Called every time the scheduler runs while the command is scheduled.
-        @Override
-        public void execute() {
-        }
-
-        // Called with WhileHeld so no IsFinished necessary
-
-        // Called once the command ends or is interrupted.
-        @Override
-        public void end(boolean interrupted) {
-            mIntake.stopIntakeMotor();
-        }
-    }
     public class ToggleIntake extends CommandBase
     {
 
