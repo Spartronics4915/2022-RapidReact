@@ -81,7 +81,7 @@ public final class Constants
 
         public static final int kMaxCurrent = 30;
         
-        public static final double kStopConveyorsDelay = 3.0;
+        public static final double kStopConveyorsDelay = 1.0;
     }
     public static class Launcher {
         

@@ -36,11 +36,12 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    public final DriveCommands mDriveCommands;
+    
+    public final Climber mClimber;
     public final ClimberCommands mClimberCommands;
     
-    public final Drive mDrive;
-    public final Climber mClimber;
+    // public final Drive mDrive;
+    // public final DriveCommands mDriveCommands;
 
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
@@ -62,13 +63,13 @@ public class RobotContainer
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
 
         mLauncher = new Launcher();
-        mDrive = new Drive();
+        // mDrive = new Drive();
         mClimber = new Climber();
         mConveyor = new Conveyor();
         mIntake = new Intake();
         
         mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
-        mDriveCommands = new DriveCommands(mDrive, mDriverController);
+        // mDriveCommands = new DriveCommands(mDrive, mDriverController);
         mClimberCommands = new ClimberCommands(mClimber);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mIntakeCommands = new IntakeCommands(mIntake);
@@ -79,10 +80,9 @@ public class RobotContainer
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
-            .whenPressed(new ParallelCommandGroup(
-                mIntakeCommands.new TryToggleIntake(),
-                mConveyorCommands.new TryToggleConveyor()
-            ));
+            .whenPressed(mIntakeCommands.new TryToggleIntake())
+            .whenPressed(mConveyorCommands.new TryToggleConveyor())
+            .whenPressed(mLauncherCommands.new ToggleLauncher());
 
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
             .whileHeld(mConveyorCommands.new ReverseBoth());
@@ -122,8 +122,6 @@ public class RobotContainer
 
     public Command getTeleopCommand()
     {
-        return new ParallelCommandGroup(
-            // mLauncherCommands.new ToggleLauncher(),
-        );
+        return mLauncherCommands.new ToggleLauncher();
     }
 }

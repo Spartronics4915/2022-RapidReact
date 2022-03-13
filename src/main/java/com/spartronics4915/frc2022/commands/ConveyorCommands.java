@@ -32,15 +32,15 @@ public class ConveyorCommands {
 
         @Override
         public void initialize() {
-            if (mConveyor.toggleConveyors())
-                mConveyor.setMotors(1, 0);
-            else
+            if (mConveyor.anyMotorsRunning())
                 mConveyor.setMotors(0, 0);
+            else
+                mConveyor.setMotors(1, 0);
         }
         
         @Override
         public boolean isFinished() {
-            return false;
+            return true;
         }
     }
 
@@ -62,7 +62,7 @@ public class ConveyorCommands {
     }
 
     public class ReverseBoth extends CommandBase {
-        public ReverseBoth(){
+        public ReverseBoth() {
             addRequirements(mConveyor, mIntake);
         }
 
@@ -120,7 +120,7 @@ public class ConveyorCommands {
 
             addRequirements(mConveyor);
         }
-    } 
+    }
 
     public class Shoot1 extends ConditionalCommand {
         public Shoot1(){
