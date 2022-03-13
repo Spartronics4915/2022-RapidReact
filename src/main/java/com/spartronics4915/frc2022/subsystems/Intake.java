@@ -53,7 +53,7 @@ public class Intake extends SpartronicsSubsystem
 
     public void startIntake(boolean reversed){
         mIntakeArm.set(true);
-        mIntakeMotor.set(reversed ? kHarvestSpeed : kEjectSpeed);
+        mIntakeMotor.set(reversed ?  kEjectSpeed : kHarvestSpeed);
         mToggleState = true;
         //logInfo("intake running"); - not sure if we need this could be too much for driver to pay attention to
     }
