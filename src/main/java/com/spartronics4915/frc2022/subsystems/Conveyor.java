@@ -20,6 +20,12 @@ public class Conveyor extends SpartronicsSubsystem {
 
     private DigitalInput mBeamBreaker;
 
+    private boolean mToggleState;
+    private int mAccumulator = 0;
+
+    private int mTopMotorDirection;
+    private int mBottomMotorDirection;
+
     /** Creates a new Conveyor. */
     public Conveyor() {
         boolean success = true;
@@ -50,13 +56,33 @@ public class Conveyor extends SpartronicsSubsystem {
     }
 
     public void setMotors(int bottom, int top) {
+        mBottomMotorDirection = bottom;
+        mToggleState = bottom != 0 || top != 0;
+    }
+
+    private void setMotorsInternal(int bottom, int top) {
         mTopMotor.set(ControlMode.PercentOutput, top * kMotorSpeed);
         mBottomMotor.set(ControlMode.PercentOutput, bottom * kMotorSpeed);
+    }
+
+    public boolean toggleConveyors() {
+        mToggleState = !mToggleState;
+        return mToggleState;
+    }
+
+    public boolean getToggleState() {
+        return mToggleState;
     }
 
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
+        mAccumulator++;
+        mAccumulator %= kStopFrequency;
+        if (mAccumulator == 0)
+            setMotorsInternal(0, mTopMotorDirection);
+        if (mAccumulator >= kStopLength)
+            setMotorsInternal(mBottomMotorDirection, mTopMotorDirection);
     }
 
     /** This method will be called once per scheduler run during simulation. */

@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -59,20 +60,18 @@ public class RobotContainer
         // ...and constructed here.
         //mExampleSubsystem = new ExampleSubsystem();
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
-        mIntake = new Intake();
-        mIntakeCommands = new IntakeCommands(mIntake);
 
         mLauncher = new Launcher();
-        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
-
         mDrive = new Drive();
-        mDriveCommands = new DriveCommands(mDrive, mDriverController);
-
         mClimber = new Climber();
-        mClimberCommands = new ClimberCommands(mClimber);
-
         mConveyor = new Conveyor();
+        mIntake = new Intake();
+        
+        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
+        mDriveCommands = new DriveCommands(mDrive, mDriverController);
+        mClimberCommands = new ClimberCommands(mClimber);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+        mIntakeCommands = new IntakeCommands(mIntake);
 
         configureButtonBindings();
     }
@@ -80,26 +79,30 @@ public class RobotContainer
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
-            .whenPressed(mIntakeCommands.new ToggleIntake());
+            .whenPressed(new ParallelCommandGroup(
+                mIntakeCommands.new TryToggleIntake(),
+                mConveyorCommands.new TryToggleConveyor()
+            ));
 
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
-            .whileHeld(mConveyorCommands.new ReverseBoth())
-            .whenReleased(mConveyorCommands.new FillConveyors());
+            .whileHeld(mConveyorCommands.new ReverseBoth());
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBottomButton)
-            .whileHeld(mConveyorCommands.new ReverseBottom())
-            .whenReleased(mConveyorCommands.new FillConveyors());
+            .whileHeld(mConveyorCommands.new ReverseBottom());
             
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootButton)
-            .whenPressed(mConveyorCommands.new Shoot1() /* or ShootAll() once we're good enough */);
+            .whenPressed(new SequentialCommandGroup(
+                mIntakeCommands.new RetractIntake(),
+                mConveyorCommands.new Shoot1() /* or ShootAll() once we're good enough */
+            ));
         new JoystickButton(mArcadeController, OIConstants.kLauncherToggleButton)
             .whenPressed(mLauncherCommands.new ToggleLauncher());
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
             .whileHeld(mLauncherCommands.new ShootFar());
             
-        new JoystickButton(mArcadeController, Constants.OIConstants.kClimberExtendButton)
+        new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
             .whenPressed(mClimberCommands.new StartExtend())
             .whenReleased(mClimberCommands.new StopExtend());
-        new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
+        new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
             .whenPressed(mClimberCommands.new StartRetract())
             .whenReleased(mClimberCommands.new StopRetract());
     
@@ -121,7 +124,6 @@ public class RobotContainer
     {
         return new ParallelCommandGroup(
             // mLauncherCommands.new ToggleLauncher(),
-            mConveyorCommands.new FillConveyors()
         );
     }
 }

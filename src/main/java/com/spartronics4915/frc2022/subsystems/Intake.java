@@ -79,6 +79,10 @@ public class Intake extends SpartronicsSubsystem
         mToggleState = !mToggleState;
         return mToggleState;
     }
+
+    public boolean getToggleState() {
+        return mToggleState;
+    }
     
     /** This method will be called once per scheduler run. */
     @Override

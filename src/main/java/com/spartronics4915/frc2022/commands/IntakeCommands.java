@@ -5,8 +5,13 @@ import com.spartronics4915.frc2022.subsystems.Launcher;
 import static com.spartronics4915.frc2022.Constants.Intake.*;
 import static com.spartronics4915.frc2022.Constants.OIConstants.*;
 
+import com.spartronics4915.frc2022.subsystems.Conveyor;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class IntakeCommands 
 {
@@ -35,24 +40,39 @@ public class IntakeCommands
             }
         }
 
-        // Called every time the scheduler runs while the command is scheduled.
-        @Override
-        public void execute() {
-
-        }
-
         // Returns true when the command should end.
         @Override
         public boolean isFinished()
         {
             return true;
         }
-
-        // Called once the command ends or is interrupted.
-        @Override
-        public void end(boolean interrupted) {}
     }
 
+    public class TryToggleIntake extends ConditionalCommand {
+        public TryToggleIntake() {
+            super(
+                new SequentialCommandGroup(
+                    new WaitCommand(kRetractIntakeDelay),
+                    new ToggleIntake()
+                ),
+                new ToggleIntake(),
+                mIntake::getToggleState
+            );
+        }
+    }
+ 
+    public class RetractIntake extends ConditionalCommand {
+        public RetractIntake() {
+            super(
+                new SequentialCommandGroup(
+                    new WaitCommand(kRetractIntakeDelay),
+                    new ToggleIntake()
+                ),
+                new WaitCommand(0),
+                mIntake::getToggleState
+            );
+        }
+    }
 }
 
 

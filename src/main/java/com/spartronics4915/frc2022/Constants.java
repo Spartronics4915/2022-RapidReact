@@ -58,7 +58,8 @@ public final class Constants
         public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
         public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 0;
-        public static final boolean kIntakeMotorInverted = false;
+        public static final boolean kIntakeMotorInverted = true;
+        public static final double kRetractIntakeDelay = 0.3;
 
         public static final int kMaxCurrent = 30;
     }
@@ -80,6 +81,7 @@ public final class Constants
 
         public static final int kMaxCurrent = 30;
         
+        public static final double kStopConveyorsDelay = 3.0;
     }
     public static class Launcher {
         
