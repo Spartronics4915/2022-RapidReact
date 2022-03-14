@@ -31,8 +31,8 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     
-    public final Drive mDrive;
-    public final DriveCommands mDriveCommands;
+    // public final Drive mDrive;
+    // public final DriveCommands mDriveCommands;
 
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
@@ -55,14 +55,14 @@ public class RobotContainer
         // ...and constructed here.
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
 
-        mDrive = new Drive();
+        // mDrive = new Drive();
         mIntake = new Intake();
         mConveyor = new Conveyor();
         mLauncher = new Launcher();
         mClimber = new Climber();
         
-        mDriveCommands = new DriveCommands(mDrive, mDriverController);
-        mIntakeCommands = new IntakeCommands(mIntake);
+        // mDriveCommands = new DriveCommands(mDrive, mDriverController);
+        mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
@@ -74,7 +74,7 @@ public class RobotContainer
     private void configureButtonBindings() {
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
             .whenPressed(mIntakeCommands.new TryToggleIntake())
-            .whenPressed(mConveyorCommands.new TryToggleConveyor())
+            .whenPressed(mConveyorCommands.new ToggleConveyor())
             .whenPressed(mLauncherCommands.new ToggleLauncher());
 
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)

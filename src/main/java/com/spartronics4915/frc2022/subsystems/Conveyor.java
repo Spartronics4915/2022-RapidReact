@@ -18,12 +18,14 @@ public class Conveyor extends SpartronicsSubsystem {
     private TalonSRX mBottomMotor;
     private TalonSRX mTopMotor;
 
-    private DigitalInput mBeamBreaker;
+    private DigitalInput mTopBeamBreaker;
+    private DigitalInput mBottomBeamBreaker;
 
-    private int mTopMotorDirection;
-    private int mBottomMotorDirection;
+    public enum State {
+        OFF, FILL, REVERSE_BOTH, REVERSE_BOTTOM, SHOOT_FROM_BOTTOM, SHOOT_FROM_TOP
+    };
 
-    private int mAccumulator = 0;
+    private State mState = State.OFF;
 
     /** Creates a new Conveyor. */
     public Conveyor() {
@@ -34,7 +36,8 @@ public class Conveyor extends SpartronicsSubsystem {
             mTopMotor = new TalonSRX(kTopMotorId);
             mBottomMotor = new TalonSRX(kBottomMotorId);
 
-            mBeamBreaker = new DigitalInput(kBeamBreakerId);
+            mTopBeamBreaker = new DigitalInput(kTopBeamBreakerId);
+            mBottomBeamBreaker = new DigitalInput(kBottomBeamBreakerId);
         } catch (Exception exception) {
             logException("Could not construct hardware: ", exception);
             success = false;
@@ -51,47 +54,59 @@ public class Conveyor extends SpartronicsSubsystem {
     // Subsystem methods - actions the robot can take - should be placed here.
 
     public boolean hasTopBall() {
-        return !mBeamBreaker.get();
+        return !mTopBeamBreaker.get();
+    }
+    
+    public boolean hasBottomBall() {
+        return !mBottomBeamBreaker.get();
     }
 
-    public void setMotors(int bottom, int top) {
-        mBottomMotorDirection = bottom;
-        mTopMotorDirection = top;
-    }
-
-    private void setMotorsInternal(int bottom, int top) {
+    private void setMotors(int bottom, int top) {
         mTopMotor.set(ControlMode.PercentOutput, top * kMotorSpeed);
         mBottomMotor.set(ControlMode.PercentOutput, bottom * kMotorSpeed);
     }
 
-    public void runWithoutBottomMotor() {
-        setMotorsInternal(0, mTopMotorDirection);
+    public void setState(State state) {
+        mState = state;
     }
 
-    public void runWithBottomMotor() {
-        setMotorsInternal(mBottomMotorDirection, mTopMotorDirection);
+    public State getState() {
+        return mState;
     }
 
-    public boolean anyMotorsRunning() {
-        return mTopMotorDirection != 0 || mBottomMotorDirection != 0;
+    public boolean isFull() {
+        return hasTopBall() && hasBottomBall();
     }
 
-    public boolean hasMotorStates(int bottom, int top) {
-        return bottom == mBottomMotorDirection && top == mTopMotorDirection;
+    public boolean isActive() {
+        return mState != State.OFF;
     }
 
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
-        boolean filling = hasMotorStates(1, 0);
-        boolean full = hasTopBall();
-
-        mAccumulator++;
-        mAccumulator %= kStopFrequency;
-        if (mAccumulator == 0 || (filling && full))
-            runWithoutBottomMotor();
-        else if (mAccumulator >= kStopLength)
-            runWithBottomMotor();
+        switch (mState) {
+            case OFF:
+                setMotors(0, 0);
+                break;
+            case FILL:
+                if (!hasTopBall()) setMotors(1, 1);
+                else if (!hasBottomBall()) setMotors(0, 1);
+                else setState(State.OFF);
+                break;
+            case REVERSE_BOTTOM:
+                setMotors(-1, 0);
+                break;
+            case REVERSE_BOTH:
+                setMotors(-1, -1);
+                break;
+            case SHOOT_FROM_BOTTOM:
+                setMotors(1, 1);
+                break;
+            case SHOOT_FROM_TOP:
+                setMotors(0, 1);
+                break;
+        }
     }
 
     /** This method will be called once per scheduler run during simulation. */
