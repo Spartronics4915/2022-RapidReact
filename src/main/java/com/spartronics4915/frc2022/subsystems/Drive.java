@@ -38,10 +38,10 @@ public class Drive extends AbstractDrive
         mRightMotor.setVelocityGains(kP, kD);
 
         // stator current limits
-        mLeftMotor.setStatorCurrentLimit(kMaxStatorCurrent);
-        mRightMotor.setStatorCurrentLimit(kMaxStatorCurrent);
-        mLeftMotor.getFollower().setStatorCurrentLimit(kMaxStatorCurrent);
-        mRightMotor.getFollower().setStatorCurrentLimit(kMaxStatorCurrent);
+        mLeftMotor.setStatorCurrentLimit(kMaxCurrent);
+        mRightMotor.setStatorCurrentLimit(kMaxCurrent);
+        mLeftMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
+        mRightMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
     }
 
     /** This method will be called once per scheduler run. */

@@ -8,6 +8,7 @@ public class Robot extends TimedRobot
 {
     private Command mAutonomousCommand;
     private RobotContainer mRobotContainer;
+    private Command mTeleopCommand;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -50,16 +51,16 @@ public class Robot extends TimedRobot
     public void disabledPeriodic() {}
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
-    /*@Override
+    @Override
     public void autonomousInit()
     {
-        mAutonomousCommand = mRobotContainer.getAutonomousCommand;
+        mAutonomousCommand = mRobotContainer.getAutonomousCommand();
 
         if (mAutonomousCommand != null)
         {
             mAutonomousCommand.schedule();
         }
-    }*/
+    }
 
     /** This function is called periodically during autonomous. */
     @Override
@@ -74,6 +75,13 @@ public class Robot extends TimedRobot
         // this line or comment it out.
         if (mAutonomousCommand != null) {
             mAutonomousCommand.cancel();
+        }
+
+        // Run main teleop command
+        mTeleopCommand = mRobotContainer.getTeleopCommand();
+
+        if (mTeleopCommand != null) {
+            mTeleopCommand.schedule();
         }
     }
 

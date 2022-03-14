@@ -1,25 +1,22 @@
 package com.spartronics4915.frc2022;
 
-import com.spartronics4915.frc2022.subsystems.Intake;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.spartronics4915.frc2022.Constants.OIConstants;
-import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.frc2022.commands.DriveCommands;
 import com.spartronics4915.frc2022.commands.IntakeCommands;
+import com.spartronics4915.frc2022.commands.ConveyorCommands;
 import com.spartronics4915.frc2022.commands.LauncherCommands;
-import com.spartronics4915.frc2022.subsystems.Conveyor;
+import com.spartronics4915.frc2022.commands.ClimberCommands;
+
 import com.spartronics4915.frc2022.subsystems.Drive;
+import com.spartronics4915.frc2022.subsystems.Intake;
+import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Launcher;
 import com.spartronics4915.frc2022.subsystems.Climber;
-import com.spartronics4915.frc2022.commands.ClimberCommands;
-import com.spartronics4915.frc2022.commands.ConveyorCommands;
 
-import edu.wpi.first.wpilibj.GenericHID;
+import com.spartronics4915.frc2022.Constants.OIConstants;
+
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
@@ -33,11 +30,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
-    public final DriveCommands mDriveCommands;
-    public final ClimberCommands mClimberCommands;
     
     public final Drive mDrive;
-    public final Climber mClimber;
+    public final DriveCommands mDriveCommands;
 
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
@@ -47,6 +42,9 @@ public class RobotContainer
 
     public final Launcher mLauncher;
     public final LauncherCommands mLauncherCommands;
+    
+    public final Climber mClimber;
+    public final ClimberCommands mClimberCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -55,22 +53,19 @@ public class RobotContainer
     public RobotContainer()
     {
         // ...and constructed here.
-        //mExampleSubsystem = new ExampleSubsystem();
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
-        mIntake = new Intake();
-        mIntakeCommands = new IntakeCommands(mIntake);
-
-        mLauncher = new Launcher();
-        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
 
         mDrive = new Drive();
-        mDriveCommands = new DriveCommands(mDrive, mDriverController);
-
-        mClimber = new Climber();
-        mClimberCommands = new ClimberCommands(mClimber);
-
+        mIntake = new Intake();
         mConveyor = new Conveyor();
+        mLauncher = new Launcher();
+        mClimber = new Climber();
+        
+        mDriveCommands = new DriveCommands(mDrive, mDriverController);
+        mIntakeCommands = new IntakeCommands(mIntake);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
+        mClimberCommands = new ClimberCommands(mClimber);
 
         configureButtonBindings();
     }
@@ -78,28 +73,29 @@ public class RobotContainer
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
-            .whenPressed(mIntakeCommands.new ToggleIntake());
-        new JoystickButton(mArcadeController, OIConstants.kIntakeReverseButton)
-            .whileHeld(mIntakeCommands.new EjectIntake());
+            .whenPressed(mIntakeCommands.new TryToggleIntake())
+            .whenPressed(mConveyorCommands.new TryToggleConveyor())
+            .whenPressed(mLauncherCommands.new ToggleLauncher());
 
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
-            .whileHeld(mConveyorCommands.new ReverseBoth())
-            .whenReleased(mConveyorCommands.new FillConveyors());
+            .whileHeld(mConveyorCommands.new ReverseBoth());
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBottomButton)
-            .whileHeld(mConveyorCommands.new ReverseBottom())
-            .whenReleased(mConveyorCommands.new FillConveyors());
+            .whileHeld(mConveyorCommands.new ReverseBottom());
             
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootButton)
-            .whenPressed(mConveyorCommands.new Shoot1() /* or ShootAll() once we're good enough */);
+            .whenPressed(new SequentialCommandGroup(
+                mIntakeCommands.new RetractIntake(),
+                mConveyorCommands.new Shoot1() /* or ShootAll() once we're good enough */
+            ));
         new JoystickButton(mArcadeController, OIConstants.kLauncherToggleButton)
             .whenPressed(mLauncherCommands.new ToggleLauncher());
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
             .whileHeld(mLauncherCommands.new ShootFar());
             
-        new JoystickButton(mArcadeController, Constants.OIConstants.kClimberExtendButton)
+        new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
             .whenPressed(mClimberCommands.new StartExtend())
             .whenReleased(mClimberCommands.new StopExtend());
-        new JoystickButton(mArcadeController, Constants.OIConstants.kClimberRetractButton)
+        new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
             .whenPressed(mClimberCommands.new StartRetract())
             .whenReleased(mClimberCommands.new StopRetract());
     }
@@ -109,8 +105,13 @@ public class RobotContainer
      *
      * @return the command to run in autonomous
      */
-    /*public Command getAutonomousCommand;
+    public Command getAutonomousCommand()
     {
         return null; // -0
-    }*/
+    }
+
+    public Command getTeleopCommand()
+    {
+        return mLauncherCommands.new ToggleLauncher();
+    }
 }

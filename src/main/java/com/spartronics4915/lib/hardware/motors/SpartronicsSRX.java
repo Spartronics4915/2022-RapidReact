@@ -323,6 +323,11 @@ public class SpartronicsSRX implements SpartronicsMotor
     }
 
     @Override
+    public void setStatorCurrentLimit(int limitAmps) {
+        mTalonSRX.configPeakCurrentLimit(limitAmps);
+    }
+
+    @Override
     public SpartronicsMotor getFollower()
     {
         return new SpartronicsSRX(mFollower, mSensorModel, FeedbackDevice.None, null);
