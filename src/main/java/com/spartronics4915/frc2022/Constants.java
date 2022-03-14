@@ -55,8 +55,8 @@ public final class Constants
     public static final class Intake {
         public static final int kIntakeMotorId = 7;
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
-        public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
-        public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
+        public static final double kHarvestSpeed = 0.6; //I stole this from Infinite Recharge
+        public static final double kEjectSpeed = -0.6; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 0;
         public static final boolean kIntakeMotorInverted = true;
         public static final double kRetractIntakeDelay = 0.3;
