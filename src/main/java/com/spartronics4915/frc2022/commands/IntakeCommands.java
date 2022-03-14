@@ -22,6 +22,8 @@ public class IntakeCommands
     {
         mIntake = intake;
         mConveyor = conveyor;
+
+        mIntake.setDefaultCommand(new RunIntake());
     }
 
     public class RunIntake extends CommandBase {

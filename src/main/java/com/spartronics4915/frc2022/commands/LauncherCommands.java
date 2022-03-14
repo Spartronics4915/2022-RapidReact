@@ -7,17 +7,21 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static com.spartronics4915.frc2022.Constants.Launcher.*;
 
+import com.spartronics4915.frc2022.subsystems.Conveyor;
+
 /**
  * Detailed description of ExampleCommand.
  */
 public class LauncherCommands
 {
     private final Launcher mLauncher;
+    private final Conveyor mConveyor;
 
-    public LauncherCommands(Launcher subsystem, Joystick mArcadecontroller)
+    public LauncherCommands(Launcher subsystem, Conveyor conveyor, Joystick mArcadecontroller)
     {
         mLauncher = subsystem;
         mLauncher.setDefaultCommand(new RunLauncher());
+        mConveyor = conveyor;
     }
 
     public class RunLauncher extends CommandBase {
@@ -33,6 +37,10 @@ public class LauncherCommands
             if (mSpeed != sliderValue) {
                 mSpeed = sliderValue;
                 mLauncher.setMotorSpeed(mSpeed);
+            }
+
+            if (!mLauncher.getToggled() && mConveyor.isFull()) {
+                mLauncher.toggleLauncher();
             }
         }
     }

@@ -61,9 +61,9 @@ public class Conveyor extends SpartronicsSubsystem {
         return !mBottomBeamBreaker.get();
     }
 
-    private void setMotors(int bottom, int top) {
-        mTopMotor.set(ControlMode.PercentOutput, top * kMotorSpeed);
-        mBottomMotor.set(ControlMode.PercentOutput, bottom * kMotorSpeed);
+    private void setMotors(double bottomFactor, double topFactor) {
+        mTopMotor.set(ControlMode.PercentOutput, kMotorSpeed * topFactor);
+        mBottomMotor.set(ControlMode.PercentOutput, kMotorSpeed * bottomFactor);
     }
 
     public void setState(State state) {
@@ -90,7 +90,7 @@ public class Conveyor extends SpartronicsSubsystem {
                 setMotors(0, 0);
                 break;
             case FILL:
-                if (!hasTopBall()) setMotors(1, 1);
+                if (!hasTopBall()) setMotors(1, kSlowFactor);
                 else if (!hasBottomBall()) setMotors(0, 1);
                 else setState(State.OFF);
                 break;

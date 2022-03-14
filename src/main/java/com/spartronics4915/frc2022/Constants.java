@@ -73,7 +73,7 @@ public final class Constants
         public static final int kBottomBeamBreakerId = 1;
 
         public static final double kMotorSpeed = 0.45;
-        public static final double kSlowMotorSpeed = 0.15;
+        public static final double kSlowFactor = 0.3333;
         
         public static final double kTopConveyorTime = 2.0;
         public static final double kBottomConveyorTime = 1.0;
