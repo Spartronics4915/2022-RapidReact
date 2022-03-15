@@ -61,8 +61,9 @@ public class Launcher extends SpartronicsSubsystem
         mLauncherToggle = !mLauncherToggle;
         return mLauncherToggle;
     }
-    public double getSliderValue() {
-        return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
+    public double getTargetRPS() {
+        return Flywheel.kRPS;
+        // return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
     }
     public void setMotorSpeed(double launcherVelocity) {
         mFlywheelMotor.setVelocity(launcherVelocity);

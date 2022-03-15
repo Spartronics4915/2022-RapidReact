@@ -43,8 +43,8 @@ public class RobotContainer
     public final Launcher mLauncher;
     public final LauncherCommands mLauncherCommands;
     
-    public final Climber mClimber;
-    public final ClimberCommands mClimberCommands;
+    // public final Climber mClimber;
+    // public final ClimberCommands mClimberCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -59,13 +59,13 @@ public class RobotContainer
         mIntake = new Intake();
         mConveyor = new Conveyor();
         mLauncher = new Launcher();
-        mClimber = new Climber();
+        // mClimber = new Climber();
         
         // mDriveCommands = new DriveCommands(mDrive, mDriverController);
         mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
-        mClimberCommands = new ClimberCommands(mClimber);
+        // mClimberCommands = new ClimberCommands(mClimber);
 
         configureButtonBindings();
     }
@@ -92,12 +92,12 @@ public class RobotContainer
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
             .whileHeld(mLauncherCommands.new ShootFar());
             
-        new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
-            .whenPressed(mClimberCommands.new StartExtend())
-            .whenReleased(mClimberCommands.new StopExtend());
-        new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
-            .whenPressed(mClimberCommands.new StartRetract())
-            .whenReleased(mClimberCommands.new StopRetract());
+        // new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
+        //     .whenPressed(mClimberCommands.new StartExtend())
+        //     .whenReleased(mClimberCommands.new StopExtend());
+        // new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
+        //     .whenPressed(mClimberCommands.new StartRetract())
+        //     .whenReleased(mClimberCommands.new StopRetract());
     }
 
     /**

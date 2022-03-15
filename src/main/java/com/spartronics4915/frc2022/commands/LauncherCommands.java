@@ -20,8 +20,8 @@ public class LauncherCommands
     public LauncherCommands(Launcher subsystem, Conveyor conveyor, Joystick mArcadecontroller)
     {
         mLauncher = subsystem;
-        mLauncher.setDefaultCommand(new RunLauncher());
         mConveyor = conveyor;
+        mLauncher.setDefaultCommand(new RunLauncher());
     }
 
     public class RunLauncher extends CommandBase {
@@ -32,8 +32,13 @@ public class LauncherCommands
         }
 
         @Override
+        public void initialize() {
+            mSpeed = 0.0;
+        }
+
+        @Override
         public void execute() {
-            double sliderValue = mLauncher.getToggled() ? mLauncher.getSliderValue() : 0.0;
+            double sliderValue = mLauncher.getToggled() ? mLauncher.getTargetRPS() : 0.0;
             if (mSpeed != sliderValue) {
                 mSpeed = sliderValue;
                 mLauncher.setMotorSpeed(mSpeed);
@@ -97,7 +102,7 @@ public class LauncherCommands
         // Called once the command ends or is interrupted.
         @Override
         public void end(boolean interrupted) {
-            mLauncher.setMotorSpeed(mLauncher.getSliderValue());
+            mLauncher.setMotorSpeed(mLauncher.getTargetRPS());
         }
     }
 }

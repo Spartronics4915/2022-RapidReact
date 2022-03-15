@@ -91,7 +91,7 @@ public class Conveyor extends SpartronicsSubsystem {
                 break;
             case FILL:
                 if (!hasTopBall()) setMotors(1, kSlowFactor);
-                else if (!hasBottomBall()) setMotors(0, 1);
+                else if (!hasBottomBall()) setMotors(1, 0);
                 else setState(State.OFF);
                 break;
             case REVERSE_BOTTOM:
