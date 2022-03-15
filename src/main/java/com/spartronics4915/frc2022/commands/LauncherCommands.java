@@ -25,7 +25,8 @@ public class LauncherCommands
     }
 
     public class RunLauncher extends CommandBase {
-        private double mSpeed = 0.0;
+        private double mSpeed;
+        private boolean conveyorJustFilled;
 
         public RunLauncher() {
             addRequirements(mLauncher);
@@ -34,19 +35,24 @@ public class LauncherCommands
         @Override
         public void initialize() {
             mSpeed = 0.0;
+            conveyorJustFilled = false;
         }
 
         @Override
         public void execute() {
-            double sliderValue = mLauncher.getToggled() ? mLauncher.getTargetRPS() : 0.0;
-            if (mSpeed != sliderValue) {
-                mSpeed = sliderValue;
-                mLauncher.setMotorSpeed(mSpeed);
-            }
+            double targetRPS = mLauncher.getToggled() ? mLauncher.getTargetRPS() : 0.0;
+            if (mSpeed != targetRPS)
+                mLauncher.setMotorSpeed(mSpeed = targetRPS);
 
-            if (!mLauncher.getToggled() && mConveyor.isFull()) {
+            if (mConveyor.isFull() && !conveyorJustFilled && !mLauncher.getToggled())
                 mLauncher.toggleLauncher();
-            }
+
+            conveyorJustFilled = mConveyor.isFull();
+        }
+
+        @Override
+        public boolean isFinished() {
+            return false;
         }
     }
 
