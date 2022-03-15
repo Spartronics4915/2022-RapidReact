@@ -55,8 +55,8 @@ public final class Constants
     public static final class Intake {
         public static final int kIntakeMotorId = 7;
         public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
-        public static final double kHarvestSpeed = 0.3; //I stole this from Infinite Recharge
-        public static final double kEjectSpeed = -0.3; // Stole this from IR too, I don't know if these numbers are good
+        public static final double kHarvestSpeed = 0.6; //I stole this from Infinite Recharge
+        public static final double kEjectSpeed = -0.6; // Stole this from IR too, I don't know if these numbers are good
         public static final int kIntakeSolenoidId = 0;
         public static final boolean kIntakeMotorInverted = true;
         public static final double kRetractIntakeDelay = 0.3;
@@ -69,9 +69,11 @@ public final class Constants
         public static final int kBottomMotorId = 8;
         public static final int kTopMotorId = 9;
 
-        public static final int kBeamBreakerId = 0;
+        public static final int kTopBeamBreakerId = 0;
+        public static final int kBottomBeamBreakerId = 1;
 
         public static final double kMotorSpeed = 0.45;
+        public static final double kSlowFactor = 0.3333;
         
         public static final double kTopConveyorTime = 2.0;
         public static final double kBottomConveyorTime = 1.0;
@@ -153,6 +155,8 @@ public final class Constants
         
         public static final int kClimberExtendButton = 9;
         public static final int kClimberRetractButton = 10;
+
+        public static final int kSlowModeButton = 0;
 
     }
 

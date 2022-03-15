@@ -16,10 +16,26 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class IntakeCommands 
 {
     private final Intake mIntake;
+    private final Conveyor mConveyor;
 
-    public IntakeCommands(Intake intake)
+    public IntakeCommands(Intake intake, Conveyor conveyor)
     {
         mIntake = intake;
+        mConveyor = conveyor;
+
+        mIntake.setDefaultCommand(new RunIntake());
+    }
+
+    public class RunIntake extends CommandBase {
+        public RunIntake() {
+            addRequirements(mIntake);
+        }
+
+        @Override
+        public void execute() {
+            if (mConveyor.isFull() && mIntake.getToggleState())
+                mIntake.stopIntake();
+        }
     }
 
     public class ToggleIntake extends CommandBase

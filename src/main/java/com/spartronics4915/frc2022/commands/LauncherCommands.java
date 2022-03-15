@@ -7,16 +7,20 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import static com.spartronics4915.frc2022.Constants.Launcher.*;
 
+import com.spartronics4915.frc2022.subsystems.Conveyor;
+
 /**
  * Detailed description of ExampleCommand.
  */
 public class LauncherCommands
 {
     private final Launcher mLauncher;
+    private final Conveyor mConveyor;
 
-    public LauncherCommands(Launcher subsystem, Joystick mArcadecontroller)
+    public LauncherCommands(Launcher subsystem, Conveyor conveyor, Joystick mArcadecontroller)
     {
         mLauncher = subsystem;
+        mConveyor = conveyor;
         mLauncher.setDefaultCommand(new RunLauncher());
     }
 
@@ -28,11 +32,20 @@ public class LauncherCommands
         }
 
         @Override
+        public void initialize() {
+            mSpeed = 0.0;
+        }
+
+        @Override
         public void execute() {
-            double sliderValue = mLauncher.getToggled() ? mLauncher.getSliderValue() : 0.0;
+            double sliderValue = mLauncher.getToggled() ? mLauncher.getTargetRPS() : 0.0;
             if (mSpeed != sliderValue) {
                 mSpeed = sliderValue;
                 mLauncher.setMotorSpeed(mSpeed);
+            }
+
+            if (!mLauncher.getToggled() && mConveyor.isFull()) {
+                mLauncher.toggleLauncher();
             }
         }
     }
@@ -89,7 +102,7 @@ public class LauncherCommands
         // Called once the command ends or is interrupted.
         @Override
         public void end(boolean interrupted) {
-            mLauncher.setMotorSpeed(mLauncher.getSliderValue());
+            mLauncher.setMotorSpeed(mLauncher.getTargetRPS());
         }
     }
 }

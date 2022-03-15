@@ -31,8 +31,8 @@ public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     
-    public final Drive mDrive;
-    public final DriveCommands mDriveCommands;
+    // public final Drive mDrive;
+    // public final DriveCommands mDriveCommands;
 
     public final Intake mIntake;
     public final IntakeCommands mIntakeCommands;
@@ -43,8 +43,8 @@ public class RobotContainer
     public final Launcher mLauncher;
     public final LauncherCommands mLauncherCommands;
     
-    public final Climber mClimber;
-    public final ClimberCommands mClimberCommands;
+    // public final Climber mClimber;
+    // public final ClimberCommands mClimberCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -55,26 +55,30 @@ public class RobotContainer
         // ...and constructed here.
         //mAutoCommand = new ExampleCommand(mExampleSubsystem);
 
-        mDrive = new Drive();
+        // mDrive = new Drive();
         mIntake = new Intake();
         mConveyor = new Conveyor();
         mLauncher = new Launcher();
-        mClimber = new Climber();
+        // mClimber = new Climber();
         
-        mDriveCommands = new DriveCommands(mDrive, mDriverController);
-        mIntakeCommands = new IntakeCommands(mIntake);
+        // mDriveCommands = new DriveCommands(mDrive, mDriverController);
+        mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
-        mLauncherCommands = new LauncherCommands(mLauncher, mArcadeController);
-        mClimberCommands = new ClimberCommands(mClimber);
+        mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
+        // mClimberCommands = new ClimberCommands(mClimber);
 
         configureButtonBindings();
     }
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
+        new JoystickButton(mDriverController, OIConstants.kSlowModeButton)
+            .whenPressed(mDriveCommands.new ToggleSlowModeCommand())
+            .whenReleased(mDriveCommands.new ToggleSlowModeCommand());
+
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
             .whenPressed(mIntakeCommands.new TryToggleIntake())
-            .whenPressed(mConveyorCommands.new TryToggleConveyor())
+            .whenPressed(mConveyorCommands.new ToggleConveyor())
             .whenPressed(mLauncherCommands.new ToggleLauncher());
 
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
@@ -92,12 +96,12 @@ public class RobotContainer
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootFarButton)
             .whileHeld(mLauncherCommands.new ShootFar());
             
-        new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
-            .whenPressed(mClimberCommands.new StartExtend())
-            .whenReleased(mClimberCommands.new StopExtend());
-        new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
-            .whenPressed(mClimberCommands.new StartRetract())
-            .whenReleased(mClimberCommands.new StopRetract());
+        // new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
+        //     .whenPressed(mClimberCommands.new StartExtend())
+        //     .whenReleased(mClimberCommands.new StopExtend());
+        // new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
+        //     .whenPressed(mClimberCommands.new StartRetract())
+        //     .whenReleased(mClimberCommands.new StopRetract());
     }
 
     /**
