@@ -72,6 +72,10 @@ public class RobotContainer
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
+        new JoystickButton(mDriverController, OIConstants.kSlowModeButton)
+            .whenPressed(mDriveCommands.new ToggleSlowModeCommand())
+            .whenReleased(mDriveCommands.new ToggleSlowModeCommand());
+
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
             .whenPressed(mIntakeCommands.new TryToggleIntake())
             .whenPressed(mConveyorCommands.new ToggleConveyor())

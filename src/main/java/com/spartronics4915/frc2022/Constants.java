@@ -156,6 +156,8 @@ public final class Constants
         public static final int kClimberExtendButton = 9;
         public static final int kClimberRetractButton = 10;
 
+        public static final int kSlowModeButton = 0;
+
     }
 
     public static final class Trajectory {
