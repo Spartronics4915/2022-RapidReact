@@ -1,6 +1,8 @@
 package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
+
+import com.spartronics4915.frc2022.subsystems.Climber;
 import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.lib.util.Logger;
 
@@ -69,6 +71,20 @@ public class DriveCommands
         public void initialize()
         {
             mSlowMode = !mSlowMode;
+        }
+
+        @Override
+        public boolean isFinished()
+        {
+            return true;
+        }
+    }
+
+    public class ForceSlowModeOn extends CommandBase {
+        @Override
+        public void initialize()
+        {
+            mSlowMode = true;
         }
 
         @Override
