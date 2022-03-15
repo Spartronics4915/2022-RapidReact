@@ -74,8 +74,8 @@ public class RobotContainer
     private void configureButtonBindings() {
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
             .whenPressed(mIntakeCommands.new TryToggleIntake())
-            .whenPressed(mConveyorCommands.new ToggleConveyor())
-            .whenPressed(mLauncherCommands.new ToggleLauncher());
+            .whenPressed(mLauncherCommands.new TogglePaused())
+            .whenPressed(mConveyorCommands.new ToggleConveyor());
 
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBothButton)
             .whileHeld(mConveyorCommands.new ReverseBoth());

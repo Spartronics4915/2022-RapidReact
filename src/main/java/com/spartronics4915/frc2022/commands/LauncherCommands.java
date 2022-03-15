@@ -12,30 +12,25 @@ import com.spartronics4915.frc2022.subsystems.Conveyor;
 /**
  * Detailed description of ExampleCommand.
  */
-public class LauncherCommands
-{
+public class LauncherCommands {
     private final Launcher mLauncher;
     private final Conveyor mConveyor;
 
-    public LauncherCommands(Launcher subsystem, Conveyor conveyor, Joystick mArcadecontroller)
-    {
+    private boolean mPaused;
+
+    public LauncherCommands(Launcher subsystem, Conveyor conveyor, Joystick mArcadecontroller) {
         mLauncher = subsystem;
         mConveyor = conveyor;
         mLauncher.setDefaultCommand(new RunLauncher());
+        mPaused = false;
     }
 
     public class RunLauncher extends CommandBase {
-        private double mSpeed;
-        private boolean conveyorJustFilled;
+        private double mSpeed = 0.0;
+        private boolean conveyorJustFilled = false;
 
         public RunLauncher() {
             addRequirements(mLauncher);
-        }
-
-        @Override
-        public void initialize() {
-            mSpeed = 0.0;
-            conveyorJustFilled = false;
         }
 
         @Override
@@ -56,11 +51,36 @@ public class LauncherCommands
         }
     }
 
-    public class ToggleLauncher extends CommandBase
-    {
+    public class TogglePaused extends CommandBase {
+        public TogglePaused() {
+            addRequirements(mLauncher);
+        }
+
+        // Called when the command is initially scheduled.
+        @Override
+        public void initialize() {
+            mPaused = !mPaused;
+            mLauncher.setToggled(!mPaused);
+        }
+
+        // Called every time the scheduler runs while the command is scheduled.
+        @Override
+        public void execute() {
+
+        }
+
+        // Returns true when the command should end.
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
+
+    public class ToggleLauncher extends CommandBase {
         public ToggleLauncher() {
             addRequirements(mLauncher);
         }
+
         // Called when the command is initially scheduled.
         @Override
         public void initialize() {
@@ -75,21 +95,21 @@ public class LauncherCommands
 
         // Returns true when the command should end.
         @Override
-        public boolean isFinished()
-        {
+        public boolean isFinished() {
             return true;
         }
 
         // Called once the command ends or is interrupted.
         @Override
-        public void end(boolean interrupted) {}
+        public void end(boolean interrupted) {
+        }
     }
 
-    public class ShootFar extends CommandBase
-    {
+    public class ShootFar extends CommandBase {
         public ShootFar() {
             addRequirements(mLauncher);
         }
+
         // Called when the command is initially scheduled.
         @Override
         public void initialize() {
