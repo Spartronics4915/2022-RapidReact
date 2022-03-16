@@ -3,6 +3,7 @@ package com.spartronics4915.frc2022.subsystems;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
@@ -20,6 +21,7 @@ public class Climber extends SpartronicsSubsystem
     // The subsystem's hardware is defined here...
     private TalonFX mClimberMotor;
     private Solenoid mClimberSolenoid;
+    private TalonFXSensorCollection mMotorSensors;
 
     /** Creates a new Climber. */
     public Climber()
@@ -31,6 +33,8 @@ public class Climber extends SpartronicsSubsystem
             mClimberMotor = new TalonFX(kClimberMotorId);
             mClimberMotor.setInverted(kMotorIsInverted);
             mClimberMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
+
+            //mMotorSensors = new TalonFXSensorCollection()
 
             mClimberSolenoid = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
         }
@@ -54,6 +58,21 @@ public class Climber extends SpartronicsSubsystem
     {
         // mClimberMotor.get
         mClimberSolenoid.set(isExtended != kSolenoidIsInverted);
+    }
+
+    public double getCurrentRotations(){
+        //getIntegratedSensorPosition has 2048 units per rotation
+        return mClimberMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() * kNativeUnitsPerRevolution;
+    }
+
+    public boolean isRotatedTooMuch(){
+        //getIntegratedSensorPosition has 2048 units per rotation
+        return (mClimberMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() * kNativeUnitsPerRevolution >= kMaxRotations);
+    }
+    
+    public boolean isRotatedTooLittle(){
+        //getIntegratedSensorPosition has 2048 units per rotation
+        return (mClimberMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() * kNativeUnitsPerRevolution <= kMinRotations);
     }
 
     /** This method will be called once per scheduler run. */

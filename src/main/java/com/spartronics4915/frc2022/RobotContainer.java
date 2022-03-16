@@ -93,11 +93,10 @@ public class RobotContainer
             .whileHeld(mLauncherCommands.new ShootFar());
             
         new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
-            .whenPressed(mClimberCommands.new StartExtend())
+            .whileHeld(mClimberCommands.new StartExtend())
             .whenReleased(mClimberCommands.new StopExtend());
         new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
-            .whenPressed(mClimberCommands.new StartRetract())
-            .whenReleased(mClimberCommands.new StopRetract());
+            .whileHeld(mClimberCommands.new RetractTheMotor());
     }
 
     /**

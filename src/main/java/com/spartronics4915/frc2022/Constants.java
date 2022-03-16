@@ -129,6 +129,10 @@ public final class Constants
         public static final boolean kMotorIsInverted = true;
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
+
+        public static final double kMaxRotations = 11.883569084; 
+        public static final double kMinRotations = 0;
+        public static final int kNativeUnitsPerRevolution = 2048;
         /**
          * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
          * engaging the ratchet.
