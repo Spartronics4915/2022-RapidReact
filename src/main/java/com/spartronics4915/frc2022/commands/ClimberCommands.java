@@ -1,13 +1,9 @@
 package com.spartronics4915.frc2022.commands;
 
-import static com.spartronics4915.frc2022.Constants.OIConstants.*;
-
 import static com.spartronics4915.frc2022.Constants.Climber.*;
 
 import com.spartronics4915.frc2022.subsystems.Climber;
 
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;

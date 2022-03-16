@@ -1,13 +1,13 @@
 package com.spartronics4915.frc2022.commands;
 
-import com.spartronics4915.frc2022.subsystems.Launcher;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import static com.spartronics4915.frc2022.Constants.Launcher.*;
 
 import com.spartronics4915.frc2022.subsystems.Conveyor;
+import com.spartronics4915.frc2022.subsystems.Launcher;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import edu.wpi.first.wpilibj.Joystick;
 
 public class LauncherCommands {
     private final Launcher mLauncher;

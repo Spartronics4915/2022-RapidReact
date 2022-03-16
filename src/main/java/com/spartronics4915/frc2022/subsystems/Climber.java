@@ -1,17 +1,18 @@
 package com.spartronics4915.frc2022.subsystems;
 
+import static com.spartronics4915.frc2022.Constants.Climber.*;
+import com.spartronics4915.frc2022.Constants;
+
+import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
+
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.spartronics4915.frc2022.Constants;
-import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-
-import static com.spartronics4915.frc2022.Constants.Climber.*;
 
 /**
  * Detailed description of Climber.

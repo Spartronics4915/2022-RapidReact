@@ -2,7 +2,6 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
-import com.spartronics4915.frc2022.subsystems.Climber;
 import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.lib.util.Logger;
 
