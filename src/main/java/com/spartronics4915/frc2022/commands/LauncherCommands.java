@@ -9,9 +9,6 @@ import static com.spartronics4915.frc2022.Constants.Launcher.*;
 
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 
-/**
- * Detailed description of ExampleCommand.
- */
 public class LauncherCommands {
     private final Launcher mLauncher;
     private final Conveyor mConveyor;
@@ -25,6 +22,9 @@ public class LauncherCommands {
         mPaused = false;
     }
 
+    /**
+     * DefaultCommand which makes sure the motor is set to mLauncher.getTargetRPS()
+     */
     public class RunLauncher extends CommandBase {
         private double mSpeed = 0.0;
         private boolean conveyorJustFilled = false;
@@ -76,6 +76,9 @@ public class LauncherCommands {
         }
     }
 
+    /**
+     * Turns the launcher on or off
+     */
     public class ToggleLauncher extends CommandBase {
         public ToggleLauncher() {
             addRequirements(mLauncher);
@@ -105,6 +108,9 @@ public class LauncherCommands {
         }
     }
 
+    /**
+     * Sets the launcher to far shooting speed
+     */
     public class ShootFar extends CommandBase {
         public ShootFar() {
             addRequirements(mLauncher);
