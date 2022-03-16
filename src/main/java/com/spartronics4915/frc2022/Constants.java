@@ -4,6 +4,7 @@ import com.spartronics4915.lib.hardware.motors.SensorModel;
 import com.spartronics4915.lib.hardware.motors.SpartronicsMax;
 import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.util.TriFunction;
+import com.spartronics4915.lib.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -163,19 +164,24 @@ public final class Constants
         public static final int kSlowModeButton = 0;
 
     }
+    public static final class Autonomous {
+        public static final double kDriveDistanceMeters = Units.feetToMeters(7.5);
+        public static final double kDriveSpeedPercent = .3;
 
-    public static final class Trajectory {
-        //TODO: obtén TODOS los valores
-        public static final double kMaxVelocity = 2;
-        public static final double kMaxAcceleration = .05;
-        
-        //Feedforward constants (will get from SysId)
-        public static final double kS = 0;
-        public static final double kV = 0;
-        public static final double kA = 0;
+        public static final class Trajectory {
 
-        //Robot size (meters)
-        public static final double kTrackWidth = 1; 
+            //TODO: obtén TODOS los valores
+            public static final double kMaxVelocity = 2;
+            public static final double kMaxAcceleration = .05;
+            
+            //Feedforward constants (will get from SysId)
+            public static final double kS = 0;
+            public static final double kV = 0;
+            public static final double kA = 0;
+
+            //Robot size (meters)
+            public static final double kTrackWidth = 1; 
+        }
     }
 
     public static final int kPCMId = 11;

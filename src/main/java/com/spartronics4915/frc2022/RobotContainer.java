@@ -4,6 +4,7 @@ import com.spartronics4915.frc2022.commands.DriveCommands;
 import com.spartronics4915.frc2022.commands.IntakeCommands;
 import com.spartronics4915.frc2022.commands.ConveyorCommands;
 import com.spartronics4915.frc2022.commands.LauncherCommands;
+import com.spartronics4915.frc2022.commands.AutonomousCommands;
 import com.spartronics4915.frc2022.commands.ClimberCommands;
 
 import com.spartronics4915.frc2022.subsystems.Drive;
@@ -45,6 +46,8 @@ public class RobotContainer
     
     public final Climber mClimber;
     public final ClimberCommands mClimberCommands;
+
+    public final AutonomousCommands mAutonomousCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -66,16 +69,13 @@ public class RobotContainer
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
+        mAutonomousCommands = new AutonomousCommands(mDrive);
 
         configureButtonBindings();
     }
 
     /** Use this method to define your button ==> command mappings. */
     private void configureButtonBindings() {
-        new JoystickButton(mDriverController, OIConstants.kSlowModeButton)
-            .whenPressed(mDriveCommands.new ToggleSlowModeCommand())
-            .whenReleased(mDriveCommands.new ToggleSlowModeCommand());
-
         new JoystickButton(mArcadeController, OIConstants.kIntakeToggleButton)
             .whenPressed(mIntakeCommands.new TryToggleIntake())
             .whenPressed(mLauncherCommands.new TogglePaused())
@@ -110,7 +110,10 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        return null; // -0
+        return new SequentialCommandGroup(
+            mConveyorCommands.new Shoot1(),
+            mAutonomousCommands.new AutonomousDrive()
+            );
     }
 
     public Command getTeleopCommand()
