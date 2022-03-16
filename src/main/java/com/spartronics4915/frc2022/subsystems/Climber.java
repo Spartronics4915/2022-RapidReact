@@ -47,6 +47,7 @@ public class Climber extends SpartronicsSubsystem
         logInitialized(success);
         
         mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
+        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
@@ -62,18 +63,15 @@ public class Climber extends SpartronicsSubsystem
     }
 
     public double getCurrentRotations(){
-        //getIntegratedSensorPosition has 2048 units per rotation
-        return mClimberMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() * kNativeUnitsPerRevolution;
+        return mClimberMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution;
     }
 
     public boolean isRotatedTooMuch(){
-        //getIntegratedSensorPosition has 2048 units per rotation
-        return (mClimberMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() * kNativeUnitsPerRevolution >= kMaxRotations);
+        return (getCurrentRotations() >= kMaxRotations);
     }
     
     public boolean isRotatedTooLittle(){
-        //getIntegratedSensorPosition has 2048 units per rotation
-        return (mClimberMotor.getSensorCollection().getIntegratedSensorAbsolutePosition() * kNativeUnitsPerRevolution <= kMinRotations);
+        return (getCurrentRotations() <= kMinRotations);
     }
 
     /** This method will be called once per scheduler run. */
