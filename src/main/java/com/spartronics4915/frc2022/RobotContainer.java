@@ -68,7 +68,7 @@ public class RobotContainer
         mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
-        mClimberCommands = new ClimberCommands(mClimber);
+        mClimberCommands = new ClimberCommands(mClimber, mArcadeController);
         mAutonomousCommands = new AutonomousCommands(mDrive);
 
         configureButtonBindings();
@@ -101,6 +101,9 @@ public class RobotContainer
             .whenReleased(mClimberCommands.new StopExtend());
         new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
             .whileHeld(mClimberCommands.new RetractTheMotor());
+
+        new JoystickButton(mDriverController, OIConstants.kSlowModeButton)
+            .whileHeld(mDriveCommands.new SlowMode());
     }
 
     /**

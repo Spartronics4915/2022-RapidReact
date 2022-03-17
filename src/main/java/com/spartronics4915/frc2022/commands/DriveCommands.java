@@ -64,22 +64,31 @@ public class DriveCommands
         }
     }
 
-    public class ToggleSlowModeCommand extends CommandBase
+    public class SlowMode extends CommandBase
     {
-        @Override
-        public void initialize()
-        {
-            mSlowMode = !mSlowMode;
+        public SlowMode() {
+            addRequirements(mDrive);
         }
 
         @Override
-        public boolean isFinished()
+        public void initialize()
         {
-            return true;
+            mDrive.logInfo("SLOW MODE START");
+            mSlowMode = true;
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            mDrive.logInfo("SLOW MODE END");
+            mSlowMode = false;
         }
     }
 
     public class ForceSlowModeOn extends CommandBase {
+        public ForceSlowModeOn() {
+            addRequirements(mDrive);
+        }
+
         @Override
         public void initialize()
         {
@@ -95,6 +104,10 @@ public class DriveCommands
 
     public class ToggleInverted extends CommandBase
     {
+        public ToggleInverted() {
+            addRequirements(mDrive);
+        }
+
         @Override
         public void initialize()
         {
