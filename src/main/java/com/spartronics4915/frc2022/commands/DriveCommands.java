@@ -2,7 +2,6 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
-import com.spartronics4915.frc2022.subsystems.Climber;
 import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.lib.util.Logger;
 
@@ -65,22 +64,31 @@ public class DriveCommands
         }
     }
 
-    public class ToggleSlowModeCommand extends CommandBase
+    public class SlowMode extends CommandBase
     {
-        @Override
-        public void initialize()
-        {
-            mSlowMode = !mSlowMode;
+        public SlowMode() {
+            addRequirements(mDrive);
         }
 
         @Override
-        public boolean isFinished()
+        public void initialize()
         {
-            return true;
+            mDrive.logInfo("SLOW MODE START");
+            mSlowMode = true;
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            mDrive.logInfo("SLOW MODE END");
+            mSlowMode = false;
         }
     }
 
     public class ForceSlowModeOn extends CommandBase {
+        public ForceSlowModeOn() {
+            addRequirements(mDrive);
+        }
+
         @Override
         public void initialize()
         {
@@ -96,6 +104,10 @@ public class DriveCommands
 
     public class ToggleInverted extends CommandBase
     {
+        public ToggleInverted() {
+            addRequirements(mDrive);
+        }
+
         @Override
         public void initialize()
         {

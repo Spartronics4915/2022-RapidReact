@@ -2,20 +2,15 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Conveyor.*;
 
-import javax.lang.model.util.ElementScanner6;
-
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Conveyor.State;
 import com.spartronics4915.frc2022.subsystems.Intake;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandGroupBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-
-import com.spartronics4915.frc2022.Constants;
 
 public class ConveyorCommands {
     private final Conveyor mConveyor;
