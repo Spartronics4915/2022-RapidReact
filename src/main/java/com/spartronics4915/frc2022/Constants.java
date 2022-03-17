@@ -139,7 +139,7 @@ public final class Constants
         /**
          * Distance we can move the climber from being down before breaking it. Calculated by Jack.
          */
-        public static final double kMaxRotations = 11.883569084;
+        public static final double kMaxRotations = 1100.883569084;
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
