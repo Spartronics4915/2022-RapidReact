@@ -15,9 +15,11 @@ import com.spartronics4915.frc2022.subsystems.Climber;
 
 import com.spartronics4915.frc2022.Constants.OIConstants;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
@@ -112,6 +114,7 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         return new SequentialCommandGroup(
+            new WaitCommand(Constants.Autonomous.kShootDelay),
             mConveyorCommands.new Shoot1(),
             mAutonomousCommands.new AutonomousDrive()
             );
