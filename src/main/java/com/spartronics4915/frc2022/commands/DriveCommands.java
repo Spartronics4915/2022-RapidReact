@@ -2,8 +2,12 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
+import static com.spartronics4915.frc2022.Constants.OIConstants;;
+
 import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.lib.util.Logger;
+
+import org.apache.commons.math3.analysis.function.Constant;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -47,7 +51,7 @@ public class DriveCommands
             double y = mJoystick.getY();
             Logger.info(x + ", " + y);
 
-            if (mSlowMode) {
+            if (mJoystick.getRawButton(OIConstants.kSlowModeButton)) {
                 x *= kSlowModeMultiplier;
                 y *= kSlowModeMultiplier;
             }

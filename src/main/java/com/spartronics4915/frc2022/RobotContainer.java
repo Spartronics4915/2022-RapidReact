@@ -68,7 +68,7 @@ public class RobotContainer
         mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
-        mClimberCommands = new ClimberCommands(mClimber, mArcadeController);
+        mClimberCommands = new ClimberCommands(mClimber);
         mAutonomousCommands = new AutonomousCommands(mDrive);
 
         configureButtonBindings();
