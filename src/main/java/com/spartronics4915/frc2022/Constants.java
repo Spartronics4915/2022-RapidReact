@@ -27,7 +27,6 @@ public final class Constants
         public static final int kLeftMotorID = 3;
         public static final int kLeftFollowerMotorID = 4;
 
-        // sensor models
         public static final double kWheelDiameter = 0.1524; // in meters
         public static final double kNativeUnitsPerRevolution = 1;
 
@@ -48,7 +47,8 @@ public final class Constants
         public static final int kMaxCurrent = 30; // poof alakazam
 
         // controls
-        public static final double kSlowModeMultiplier = 0.1;
+        //TODO: test. 2020 was .5.
+        public static final double kSlowModeMultiplier = 0.5;
         public static final double kLinearResponseCurveExponent = 5.0 / 3.0;
         public static final double kJoystickDeadzoneSize = 0.1;
     }
@@ -59,8 +59,8 @@ public final class Constants
 
         public static final boolean kIntakeMotorInverted = true;
 
-        public static final double kHarvestSpeed = 0.6; //I stole this from Infinite Recharge
-        public static final double kEjectSpeed = -0.6; // Stole this from IR too, I don't know if these numbers are good
+        public static final double kHarvestSpeed = 0.6;
+        public static final double kEjectSpeed = -0.6;
         
         public static final double kRetractIntakeDelay = 0.3;
 
@@ -129,7 +129,7 @@ public final class Constants
     }
     public static final class Climber
     {
-        public static final int kClimberMotorId = 10; // we dk
+        public static final int kClimberMotorId = 10;
         public static final double kClimberMotorSpeed = 1.0;
         public static final boolean kMotorIsInverted = true;
 
@@ -139,7 +139,10 @@ public final class Constants
         /**
          * Distance we can move the climber from being down before breaking it. Calculated by Jack.
          */
-        public static final double kMaxRotations = 11.883569084; 
+        public static final double kMaxRotations = 11.883569084;
+        /**
+         * Climber will be put down before every match so that's where 0 is.
+         */
         public static final double kMinRotations = 0;
         /**
          * For Climber encoder -- divide getIntegratedSensorPosition() by this.
@@ -163,6 +166,10 @@ public final class Constants
          * Joystick for driver
          */
         public static final int kJoystickPort = 0;
+        
+        public static final int kSlowModeButton = 0;
+
+        public static final int kIntakeToggleButton = 2;
 
         public static final int kConveyorReverseBothButton = 3;
         public static final int kConveyorReverseBottomButton = 4;
@@ -172,12 +179,8 @@ public final class Constants
         public static final int kLauncherToggleButton = 8;
         public static final int kLauncherShootFarButton = 7;
         
-        public static final int kIntakeToggleButton = 2;
-        
         public static final int kClimberExtendButton = 9;
         public static final int kClimberRetractButton = 10;
-
-        public static final int kSlowModeButton = 0;
 
     }
     public static final class Autonomous {
