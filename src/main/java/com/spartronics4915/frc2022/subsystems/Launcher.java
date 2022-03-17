@@ -62,6 +62,7 @@ public class Launcher extends SpartronicsSubsystem
         return mLauncherToggle;
     }
     public void setToggled(boolean toggle) {
+        logInfo("TOGGLED " + toggle);
         mLauncherToggle = toggle;
     }
     public double getTargetRPS() {
