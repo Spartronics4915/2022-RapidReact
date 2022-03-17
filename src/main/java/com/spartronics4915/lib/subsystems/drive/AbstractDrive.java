@@ -113,6 +113,11 @@ public abstract class AbstractDrive extends SpartronicsSubsystem
         tankDrive(leftMotorOutput, rightMotorOutput);
     }
 
+    /**
+     * Sets motors to these values. Back motors are followers and copy it.
+     * @param leftPercent
+     * @param rightPercent
+     */
     public void tankDrive(double leftPercent, double rightPercent)
     {
         mLeftMotor.setPercentOutput(leftPercent);

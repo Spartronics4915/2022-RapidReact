@@ -128,11 +128,18 @@ public final class Constants
         public static final int kClimberMotorId = 10; // we dk
         public static final double kClimberMotorSpeed = 1.0;
         public static final boolean kMotorIsInverted = true;
+
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
 
+        /**
+         * Distance we can move the climber from being down before breaking it. Calculated by Jack.
+         */
         public static final double kMaxRotations = 11.883569084; 
         public static final double kMinRotations = 0;
+        /**
+         * For Climber encoder -- divide getIntegratedSensorPosition() by this.
+         */
         public static final int kNativeUnitsPerRevolution = 2048;
         /**
          * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
@@ -144,7 +151,13 @@ public final class Constants
     }
 
     public static final class OIConstants {
+        /**
+         * Fight stick for operator
+         */
         public static final int kArcadeStickPort = 1;
+        /**
+         * Joystick for driver
+         */
         public static final int kJoystickPort = 0;
 
         public static final int kConveyorReverseBothButton = 3;
@@ -156,7 +169,6 @@ public final class Constants
         public static final int kLauncherShootFarButton = 7;
         
         public static final int kIntakeToggleButton = 2;
-        public static final int kIntakeReverseButton = 1;
         
         public static final int kClimberExtendButton = 9;
         public static final int kClimberRetractButton = 10;
@@ -165,10 +177,15 @@ public final class Constants
 
     }
     public static final class Autonomous {
+        /**
+         * Number from Jack to move the robot past the line after shooting
+         */
         public static final double kDriveDistanceMeters = Units.feetToMeters(7.5);
+        //TODO: test
         public static final double kDriveSpeedPercent = .3;
 
-        public static final class Trajectory {
+        //Not used for first competition autonomous.
+        /*public static final class Trajectory {
 
             //TODO: obtén TODOS los valores
             public static final double kMaxVelocity = 2;
@@ -181,7 +198,7 @@ public final class Constants
 
             //Robot size (meters)
             public static final double kTrackWidth = 1; 
-        }
+        }*/
     }
 
     public static final int kPCMId = 11;
