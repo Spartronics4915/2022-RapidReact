@@ -136,6 +136,7 @@ public final class Constants
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
 
+        //TODO: janky number might need to be set to a better value
         /**
          * Distance we can move the climber from being down before breaking it. Calculated by Jack.
          */
