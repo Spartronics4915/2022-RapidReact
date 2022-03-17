@@ -11,33 +11,52 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
-
-public class ClimberCommands
-{
+public class ClimberCommands {
     private final Climber mClimber;
+    private final Joystick mArcadeController;
 
-    public ClimberCommands(Climber climber)
-    {
+    public ClimberCommands(Climber climber, Joystick arcadeController) {
         mClimber = climber;
+        mArcadeController = arcadeController;
     }
 
-    public class StartExtend extends SequentialCommandGroup
-    {
-        public StartExtend()
-        {
+    public class ExtendTheMotor extends CommandBase {
+        public ExtendTheMotor() {
+            addRequirements(mClimber);
+        }
+
+        @Override
+        public void initialize() {
+            if (!mClimber.isRotatedTooMuch()) {
+                mClimber.setMotor(kClimberMotorSpeed);
+            }
+        }
+
+        @Override
+        public boolean isFinished() {
+            return mClimber.isRotatedTooMuch() || mArcadeController.getRawButtonReleased(Constants.OIConstants.kClimberExtendButton);
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            mClimber.setMotor(0);
+            mClimber.setSolenoid(false);
+        }
+    }
+
+    public class StartExtend extends SequentialCommandGroup {
+        public StartExtend() {
             addCommands(
                 new InstantCommand(() -> mClimber.setSolenoid(true)),
                 new WaitCommand(kDelay),
-                new InstantCommand(() -> mClimber.setMotor(kClimberMotorSpeed))
+                new ExtendTheMotor()
             );
             addRequirements(mClimber);
         }
     }
 
-    public class StopExtend extends SequentialCommandGroup
-    {
-        public StopExtend()
-        {
+    public class StopExtend extends SequentialCommandGroup {
+        public StopExtend() {
             addCommands(
                 new InstantCommand(() -> mClimber.setMotor(0)),
                 new WaitCommand(kDelay),
@@ -47,33 +66,25 @@ public class ClimberCommands
         }
     }
 
-    
-    public class StartRetract extends InstantCommand
-    {
-        public StartRetract()
-        {
+    public class RetractTheMotor extends CommandBase {
+        public RetractTheMotor() {
             addRequirements(mClimber);
         }
-        
-        @Override
-        public void initialize()
-        {
-            super.initialize();
-            mClimber.setMotor(-kClimberMotorSpeed);
-        }
-    }
 
-    public class StopRetract extends InstantCommand
-    {
-        public StopRetract()
-        {
-            addRequirements(mClimber);
-        }
-        
         @Override
-        public void initialize()
-        {
-            super.initialize();
+        public void initialize() {
+            if (!mClimber.isRotatedTooLittle()) {
+                mClimber.setMotor(-kClimberMotorSpeed);
+            }
+        }
+
+        @Override
+        public boolean isFinished() {
+            return mClimber.isRotatedTooLittle();
+        }
+
+        @Override
+        public void end(boolean interrupted) {
             mClimber.setMotor(0);
         }
     }

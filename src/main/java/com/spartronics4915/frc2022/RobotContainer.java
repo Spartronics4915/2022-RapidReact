@@ -102,8 +102,10 @@ public class RobotContainer
             .whenPressed(mClimberCommands.new StartExtend())
             .whenReleased(mClimberCommands.new StopExtend());
         new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
-            .whenPressed(mClimberCommands.new StartRetract())
-            .whenReleased(mClimberCommands.new StopRetract());
+            .whileHeld(mClimberCommands.new RetractTheMotor());
+
+        new JoystickButton(mDriverController, OIConstants.kSlowModeButton)
+            .whileHeld(mDriveCommands.new SlowMode());
     }
 
     /**

@@ -137,6 +137,18 @@ public final class Constants
         public static final boolean kSolenoidIsInverted = false;
 
         /**
+         * Distance we can move the climber from being down before breaking it. Calculated by Jack.
+         */
+        public static final double kMaxRotations = 1000;//16.1;//11.883569084;
+        /**
+         * Climber will be put down before every match so that's where 0 is.
+         */
+        public static final double kMinRotations = 0;
+        /**
+         * For Climber encoder -- divide getIntegratedSensorPosition() by this.
+         */
+        public static final int kNativeUnitsPerRevolution = 2048;
+        /**
          * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
          * engaging the ratchet.
          */
