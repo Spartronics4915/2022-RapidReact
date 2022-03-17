@@ -55,11 +55,13 @@ public final class Constants
 
     public static final class Intake {
         public static final int kIntakeMotorId = 7;
-        public static final SensorModel kSensorModel = SensorModel.fromMultiplier(1);
+        public static final int kIntakeSolenoidId = 0;
+
+        public static final boolean kIntakeMotorInverted = true;
+
         public static final double kHarvestSpeed = 0.6; //I stole this from Infinite Recharge
         public static final double kEjectSpeed = -0.6; // Stole this from IR too, I don't know if these numbers are good
-        public static final int kIntakeSolenoidId = 0;
-        public static final boolean kIntakeMotorInverted = true;
+        
         public static final double kRetractIntakeDelay = 0.3;
 
         public static final int kMaxCurrent = 30;
@@ -81,21 +83,21 @@ public final class Constants
 
         public static final int kStopFrequency = (int)(1 / 0.02);
         public static final int kStopLength = (int)(0.1 / 0.02);
-
-        public static final int kMaxCurrent = 30;
         
         public static final double kStopConveyorsDelay = 1.0;
+
+        public static final int kMaxCurrent = 30;
     }
     public static class Launcher {
         
         public static class Flywheel {
+            // SysId gave us 0.18366 for kP. Did not work and thought it was broken. However dividing by 6, the encoder
+            //  ratio which we thought it used gave us this. Very close to ATHENA's value (.03) which works because it
+            //  is the same setup.
             public static final int kId = 5;
-            public static final double kP = 0.03;
+            public static final double kP = 0.03061;
             public static final double kD = 0;
-            
-            //public static final int kId = 5;
-            //public static final double kP = 0.18366;
-            //public static final double kD = 0;
+
             public static final boolean kInverted = false;
             
             public static final double kRPS = 28.07;
@@ -105,10 +107,12 @@ public final class Constants
         }
 
         public static class SpinMotor {
-            public static final boolean kInverted = false;
             public static final int kId = 6;
+            
+            public static final boolean kInverted = false;
             public static final double kSpeed = 0.1;
 
+            //Does not use PID currently. Maybe should.
             public static final double kP = 0;
             public static final double kD = 0;
             
@@ -182,12 +186,14 @@ public final class Constants
          */
         public static final double kDriveDistanceMeters = Units.feetToMeters(7.5);
         //TODO: test
+        /**
+         * Speed the robot moves straight backwards during autonomous
+         */
         public static final double kDriveSpeedPercent = .3;
 
         //Not used for first competition autonomous.
         /*public static final class Trajectory {
 
-            //TODO: obtén TODOS los valores
             public static final double kMaxVelocity = 2;
             public static final double kMaxAcceleration = .05;
             
