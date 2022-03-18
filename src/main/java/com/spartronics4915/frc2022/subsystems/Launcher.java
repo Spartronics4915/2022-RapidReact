@@ -55,6 +55,9 @@ public class Launcher extends SpartronicsSubsystem
 
         mFlywheelMotor.setStatorCurrentLimit(Flywheel.kMaxCurrent);
         mSpinMotor.setStatorCurrentLimit(SpinMotor.kMaxCurrent);
+        
+        mFlywheelMotor.setBrakeMode(false);
+        mSpinMotor.setBrakeMode(false);
     }
 
     public boolean toggleLauncher() {
