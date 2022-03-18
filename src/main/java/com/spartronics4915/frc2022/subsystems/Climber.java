@@ -10,6 +10,9 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -20,7 +23,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class Climber extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-    private TalonFX mClimberMotor;
+    private CANSparkMax mClimberMotor;
     private Solenoid mClimberSolenoid;
 
     private double mMotorSpeed;
@@ -32,9 +35,9 @@ public class Climber extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mClimberMotor = new TalonFX(kClimberMotorId);
+            mClimberMotor = new CANSparkMax(kClimberMotorId, MotorType.kBrushless);
             mClimberMotor.setInverted(kMotorIsInverted);
-            mClimberMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
+            mClimberMotor.setIdleMode(IdleMode.kBrake); // set brake mode
 
             //mMotorSensors = new TalonFXSensorCollection()
 
@@ -48,16 +51,15 @@ public class Climber extends SpartronicsSubsystem
         logInitialized(success);
         
         // mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
-        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
+        mClimberMotor.getEncoder().setPosition(0);
 
-        mClimberMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
     public void setMotor(double speed)
     {
         mMotorSpeed = speed;
-        mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
+        mClimberMotor.set(speed);
     }
 
     public void setSolenoid(boolean isExtended)
@@ -68,7 +70,7 @@ public class Climber extends SpartronicsSubsystem
     }
 
     public double getCurrentRotations(){
-        return mClimberMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
+        return mClimberMotor.getEncoder().getPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
     }
 
     /** This method will be called once per scheduler run. */
