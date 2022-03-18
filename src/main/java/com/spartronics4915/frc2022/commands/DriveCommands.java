@@ -62,10 +62,7 @@ public class DriveCommands
             if (mJoystick.getRawButton(OIConstants.kSlowModeButton)) {
                 x *= kSlowModeMultiplier;
                 y *= kSlowModeMultiplier;
-                System.out.println("SLOW MODE IS ON RIGHT NOW: x: " + x + " y: " + y);
             }
-            SmartDashboard.putNumber("y input", y);
-            SmartDashboard.putBoolean("button down", mJoystick.getRawButton(OIConstants.kSlowModeButton));
 
             mDrive.arcadeDrive(applyDeadzone(y), applyDeadzone(x));
         }
@@ -73,44 +70,6 @@ public class DriveCommands
         private double applyDeadzone(double axis)
         {
             return Math.abs(axis) < kJoystickDeadzoneSize ? 0 : axis;
-        }
-    }
-
-    public class SlowMode extends CommandBase
-    {
-        public SlowMode() {
-            addRequirements(mDrive);
-        }
-
-        @Override
-        public void initialize()
-        {
-            mDrive.logInfo("SLOW MODE START");
-            mSlowMode = true;
-        }
-
-        @Override
-        public void end(boolean interrupted) {
-            mDrive.logInfo("SLOW MODE END");
-            mSlowMode = false;
-        }
-    }
-
-    public class ForceSlowModeOn extends CommandBase {
-        public ForceSlowModeOn() {
-            addRequirements(mDrive);
-        }
-
-        @Override
-        public void initialize()
-        {
-            mSlowMode = true;
-        }
-
-        @Override
-        public boolean isFinished()
-        {
-            return true;
         }
     }
 
