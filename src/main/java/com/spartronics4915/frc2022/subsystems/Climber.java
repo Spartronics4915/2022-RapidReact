@@ -22,7 +22,8 @@ public class Climber extends SpartronicsSubsystem
     // The subsystem's hardware is defined here...
     private TalonFX mClimberMotor;
     private Solenoid mClimberSolenoid;
-    private TalonFXSensorCollection mMotorSensors;
+
+    private double mMotorSpeed;
 
     /** Creates a new Climber. */
     public Climber()
@@ -46,37 +47,45 @@ public class Climber extends SpartronicsSubsystem
         }
         logInitialized(success);
         
-        mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
-        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 0);
+        // mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
+        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
+
+        mClimberMotor.setNeutralMode(NeutralMode.Brake);
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
     public void setMotor(double speed)
     {
+        mMotorSpeed = speed;
         mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
     }
 
     public void setSolenoid(boolean isExtended)
     {
+        // logInfo("Set Solenoid to " + isExtended);
         // mClimberMotor.get
         mClimberSolenoid.set(isExtended != kSolenoidIsInverted);
     }
 
     public double getCurrentRotations(){
-        return mClimberMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution;
-    }
-
-    public boolean isRotatedTooMuch(){
-        return (getCurrentRotations() >= kMaxRotations * kClimberGearRation);
-    }
-    
-    public boolean isRotatedTooLittle(){
-        return (getCurrentRotations() <= kMinRotations);
+        return mClimberMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
     }
 
     /** This method will be called once per scheduler run. */
     @Override
-    public void periodic() {}
+    public void periodic() {
+        // logInfo("ROTATIONS " + getCurrentRotations());
+
+        double rotations = getCurrentRotations();
+
+        // logInfo("theta = " + rotations);
+
+        if (mMotorSpeed > 0 && rotations > kMaxRotations)
+            setMotor(0);
+
+        if (mMotorSpeed < 0 && rotations < kMinRotations)
+            setMotor(0);
+    }
 
     /** This method will be called once per scheduler run during simulation. */
     @Override

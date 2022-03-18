@@ -100,7 +100,7 @@ public final class Constants
 
             public static final boolean kInverted = false;
             
-            public static final double kRPS = 28.07;
+            public static final double kRPS = 28.57;
             public static final double kFarRPS = 10;
 
             public static final int kMaxCurrent = 40;
@@ -139,16 +139,17 @@ public final class Constants
         /**
          * Distance we can move the climber from being down before breaking it. Calculated by Jack. Ben gave 16.1. 
          */
-        public static final double kMaxRotations = 11.883569084;
-        /**
-         * Takes 12 rotations of climber to rotate winch.
-         */
-        public static final int kClimberGearRation = 12;
+        public static final double kMaxRotations = 7.388;
 
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
-        public static final double kMinRotations = 0;
+        public static final double kMinRotations = -20000;
+
+        /**
+         * Takes 12 rotations of climber to rotate winch.
+         */
+        public static final double kClimberGearRatio = 12.0;
         /**
          * For Climber encoder -- divide getIntegratedSensorPosition() by this.
          */
