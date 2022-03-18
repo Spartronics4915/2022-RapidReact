@@ -2,7 +2,9 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
-import static com.spartronics4915.frc2022.Constants.OIConstants;;
+import static com.spartronics4915.frc2022.Constants.OIConstants;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.lib.util.Logger;
@@ -19,13 +21,15 @@ public class DriveCommands
     private final Joystick mJoystick;
     private boolean mInvertJoystickY;
     private boolean mSlowMode;
+    private final Joystick mArcadeController;
 
-    public DriveCommands(Drive drive, Joystick joystick)
+    public DriveCommands(Drive drive, Joystick joystick, Joystick arcadeController)
     {
         mDrive = drive;
         mJoystick = joystick;
         mInvertJoystickY = true; // convention is to invert joystick y
         mSlowMode = false;
+        mArcadeController = arcadeController;
         
         mDrive.setDefaultCommand(new TeleOpCommand());
     }
@@ -51,14 +55,18 @@ public class DriveCommands
             double y = mJoystick.getY();
             Logger.info(x + ", " + y);
 
-            if (mJoystick.getRawButton(OIConstants.kSlowModeButton)) {
-                x *= kSlowModeMultiplier;
-                y *= kSlowModeMultiplier;
-            }
-
             if (mInvertJoystickY) y = -y;
 
             y = Math.signum(y) * Math.pow(Math.abs(y), kLinearResponseCurveExponent); // apply response curve
+            
+            if (mJoystick.getRawButton(OIConstants.kSlowModeButton)) {
+                x *= kSlowModeMultiplier;
+                y *= kSlowModeMultiplier;
+                System.out.println("SLOW MODE IS ON RIGHT NOW: x: " + x + " y: " + y);
+            }
+            SmartDashboard.putNumber("y input", y);
+            SmartDashboard.putBoolean("button down", mJoystick.getRawButton(OIConstants.kSlowModeButton));
+
             mDrive.arcadeDrive(applyDeadzone(y), applyDeadzone(x));
         }
 

@@ -137,9 +137,14 @@ public final class Constants
         public static final boolean kSolenoidIsInverted = false;
 
         /**
-         * Distance we can move the climber from being down before breaking it. Calculated by Jack.
+         * Distance we can move the climber from being down before breaking it. Calculated by Jack. Ben gave 16.1. 
          */
-        public static final double kMaxRotations = 1000;//16.1;//11.883569084;
+        public static final double kMaxRotations = 11.883569084;
+        /**
+         * Takes 12 rotations of climber to rotate winch.
+         */
+        public static final int kClimberGearRation = 12;
+
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
@@ -167,7 +172,7 @@ public final class Constants
          */
         public static final int kJoystickPort = 0;
         
-        public static final int kSlowModeButton = 1;
+        public static final int kSlowModeButton = 2;
 
         public static final int kIntakeToggleButton = 2;
 
