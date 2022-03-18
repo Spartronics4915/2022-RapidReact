@@ -30,6 +30,9 @@ public final class Constants
         public static final double kWheelDiameter = 0.1524; // in meters
         public static final double kNativeUnitsPerRevolution = 1;
 
+        //Test this -- to correct for angular drift autonomous
+        public static final double kLeftFactor = .9;
+
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
 
@@ -173,7 +176,7 @@ public final class Constants
          */
         public static final int kJoystickPort = 0;
         
-        public static final int kSlowModeButton = 2;
+        public static final int kSlowModeButton = 1;
 
         public static final int kIntakeToggleButton = 2;
 

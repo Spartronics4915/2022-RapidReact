@@ -58,4 +58,9 @@ public class Drive extends AbstractDrive
     public void simulationPeriodic() {}
 
     public void outputTelemetry() {}
+
+    @Override
+    public void tankDrive(double leftPercent, double rightPercent) {
+        super.tankDrive(leftPercent * kLeftFactor, rightPercent);
+    }
 }
