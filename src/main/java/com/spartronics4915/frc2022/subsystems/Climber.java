@@ -67,7 +67,7 @@ public class Climber extends SpartronicsSubsystem
     }
 
     public boolean isRotatedTooMuch(){
-        return (getCurrentRotations() >= kMaxRotations);
+        return (getCurrentRotations() >= kMaxRotations * kClimberGearRation);
     }
     
     public boolean isRotatedTooLittle(){
