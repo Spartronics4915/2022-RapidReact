@@ -13,35 +13,9 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class ClimberCommands {
     private final Climber mClimber;
-    private final Joystick mArcadeController;
 
-    public ClimberCommands(Climber climber, Joystick arcadeController) {
+    public ClimberCommands(Climber climber) {
         mClimber = climber;
-        mArcadeController = arcadeController;
-    }
-
-    public class ExtendTheMotor extends CommandBase {
-        public ExtendTheMotor() {
-            addRequirements(mClimber);
-        }
-
-        @Override
-        public void initialize() {
-            if (!mClimber.isRotatedTooMuch()) {
-                mClimber.setMotor(kClimberMotorSpeed);
-            }
-        }
-
-        @Override
-        public boolean isFinished() {
-            return mClimber.isRotatedTooMuch() || mArcadeController.getRawButtonReleased(Constants.OIConstants.kClimberExtendButton);
-        }
-
-        @Override
-        public void end(boolean interrupted) {
-            mClimber.setMotor(0);
-            mClimber.setSolenoid(false);
-        }
     }
 
     public class StartExtend extends SequentialCommandGroup {
@@ -49,7 +23,7 @@ public class ClimberCommands {
             addCommands(
                 new InstantCommand(() -> mClimber.setSolenoid(true)),
                 new WaitCommand(kDelay),
-                new ExtendTheMotor()
+                new InstantCommand(() -> mClimber.setMotor(kClimberMotorSpeed))
             );
             addRequirements(mClimber);
         }
@@ -73,19 +47,28 @@ public class ClimberCommands {
 
         @Override
         public void initialize() {
-            if (!mClimber.isRotatedTooLittle()) {
-                mClimber.setMotor(-kClimberMotorSpeed);
-            }
-        }
-
-        @Override
-        public boolean isFinished() {
-            return mClimber.isRotatedTooLittle();
+            mClimber.setMotor(-kClimberMotorSpeed);
         }
 
         @Override
         public void end(boolean interrupted) {
             mClimber.setMotor(0);
+        }
+    }
+
+    public class InitClimber extends CommandBase {
+        public InitClimber() {
+            addRequirements(mClimber);
+        }
+
+        @Override
+        public void initialize() {
+            mClimber.zeroEncoder();
+        }
+
+        @Override
+        public boolean isFinished() {
+            return true;
         }
     }
 }
