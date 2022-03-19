@@ -140,7 +140,7 @@ public final class Constants
         public static final boolean kSolenoidIsInverted = false;
 
         /**
-         * Distance we can move the climber from being down before breaking it. Calculated by Jack. Ben gave 16.1. 
+         * Distance we can rotate the motor from being down before breaking it. Found through testing and logging.
          */
         public static final double kMaxRotations = 7.388;
 
