@@ -15,9 +15,12 @@ import com.spartronics4915.frc2022.subsystems.Climber;
 
 import com.spartronics4915.frc2022.Constants.OIConstants;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
@@ -64,7 +67,7 @@ public class RobotContainer
         mLauncher = new Launcher();
         mClimber = new Climber();
         
-        mDriveCommands = new DriveCommands(mDrive, mDriverController);
+        mDriveCommands = new DriveCommands(mDrive, mDriverController, mArcadeController);
         mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
@@ -101,6 +104,7 @@ public class RobotContainer
             .whenReleased(mClimberCommands.new StopExtend());
         new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
             .whileHeld(mClimberCommands.new RetractTheMotor());
+
     }
 
     /**
@@ -111,6 +115,7 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         return new SequentialCommandGroup(
+            new WaitCommand(Constants.Autonomous.kShootDelay),
             mConveyorCommands.new Shoot1(),
             mAutonomousCommands.new AutonomousDrive()
             );
@@ -118,6 +123,9 @@ public class RobotContainer
 
     public Command getTeleopCommand()
     {
-        return mLauncherCommands.new ToggleLauncher();
+        return new ParallelCommandGroup(
+            mLauncherCommands.new ToggleLauncher(),
+            mClimberCommands.new InitClimber()
+        );
     }
 }

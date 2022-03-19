@@ -30,6 +30,9 @@ public final class Constants
         public static final double kWheelDiameter = 0.1524; // in meters
         public static final double kNativeUnitsPerRevolution = 1;
 
+        //Test this -- to correct for angular drift autonomous
+        public static final double kLeftFactor = .93;
+
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
 
@@ -100,7 +103,7 @@ public final class Constants
 
             public static final boolean kInverted = false;
             
-            public static final double kRPS = 28.07;
+            public static final double kRPS = 29.57;
             public static final double kFarRPS = 10;
 
             public static final int kMaxCurrent = 40;
@@ -138,13 +141,19 @@ public final class Constants
 
         //TODO: janky number might need to be set to a better value
         /**
-         * Distance we can move the climber from being down before breaking it. Calculated by Jack.
+         * Distance we can rotate the motor from being down before breaking it. Found through testing and logging.
          */
-        public static final double kMaxRotations = 1100.883569084;
+        public static final double kMaxRotations = 7.388;
+
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
         public static final double kMinRotations = 0;
+
+        /**
+         * Takes 12 rotations of climber to rotate winch.
+         */
+        public static final double kClimberGearRatio = 12.0;
         /**
          * For Climber encoder -- divide getIntegratedSensorPosition() by this.
          */
@@ -168,7 +177,7 @@ public final class Constants
          */
         public static final int kJoystickPort = 0;
         
-        public static final int kSlowModeButton = 0;
+        public static final int kSlowModeButton = 1;
 
         public static final int kIntakeToggleButton = 2;
 
@@ -194,6 +203,11 @@ public final class Constants
          * Speed the robot moves straight backwards during autonomous
          */
         public static final double kDriveSpeedPercent = .3;
+
+        /**
+         * Delay in seconds between starting Auto and shooting to let the wheel reach its speed
+         */
+        public static final int kShootDelay = 1;
 
         //Not used for first competition autonomous.
         /*public static final class Trajectory {

@@ -37,11 +37,16 @@ public class Drive extends AbstractDrive
         mLeftMotor.setVelocityGains(kP, kD);
         mRightMotor.setVelocityGains(kP, kD);
 
+        mLeftMotor.setBrakeMode(false);
+        mRightMotor.setBrakeMode(false);
+        mLeftMotor.getFollower().setBrakeMode(false);
+        mRightMotor.getFollower().setBrakeMode(false);
+
         // stator current limits
-        mLeftMotor.setStatorCurrentLimit(kMaxCurrent);
-        mRightMotor.setStatorCurrentLimit(kMaxCurrent);
-        mLeftMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
-        mRightMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
+        // mLeftMotor.setStatorCurrentLimit(kMaxCurrent);
+        // mRightMotor.setStatorCurrentLimit(kMaxCurrent);
+        // mLeftMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
+        // mRightMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
     }
 
     /** This method will be called once per scheduler run. */
@@ -53,4 +58,9 @@ public class Drive extends AbstractDrive
     public void simulationPeriodic() {}
 
     public void outputTelemetry() {}
+
+    @Override
+    public void tankDrive(double leftPercent, double rightPercent) {
+        super.tankDrive(leftPercent * kLeftFactor, rightPercent);
+    }
 }
