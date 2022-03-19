@@ -40,6 +40,7 @@ public class ClimberCommands {
         }
     }
 
+    // does ExtendTheMotor keep running during StopExtend?
     public class StartExtend extends SequentialCommandGroup {
         public StartExtend() {
             addCommands(
