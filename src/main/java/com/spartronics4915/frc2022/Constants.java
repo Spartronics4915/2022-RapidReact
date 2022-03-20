@@ -153,7 +153,7 @@ public final class Constants
         /**
          * Takes 12 rotations of climber to rotate winch.
          */
-        public static final double kClimberGearRatio = 12.0;
+        public static final double kClimberGearRatio = 36.0;
         /**
          * For Climber encoder -- divide getIntegratedSensorPosition() by this.
          */
