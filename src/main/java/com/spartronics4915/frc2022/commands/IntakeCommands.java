@@ -68,7 +68,7 @@ public class IntakeCommands
         {
             addCommands(
                 new InstantCommand(() -> mIntake.retractArm()),
-                new WaitCommand(kIntakeMotorDelay),
+                new WaitCommand(kIntakeStopMotorDelay),
                 new InstantCommand(() -> mIntake.stopMotorAndToggle())
                 );
             addRequirements(mIntake); // Declares subsystem dependencies
