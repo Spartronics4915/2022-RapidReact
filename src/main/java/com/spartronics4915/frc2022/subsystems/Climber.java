@@ -47,7 +47,7 @@ public class Climber extends SpartronicsSubsystem
         }
         logInitialized(success);
         
-        // mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
+        mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
 
         mClimberMotor.setNeutralMode(NeutralMode.Brake);
     }

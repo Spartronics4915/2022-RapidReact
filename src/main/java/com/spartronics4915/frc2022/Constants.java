@@ -164,7 +164,8 @@ public final class Constants
          */
         public static final double kDelay = 0.1; // adjust 1st number for ms
 
-        public static final int kMaxCurrent = 40;
+        //set very high to see if it remembered it was at 40??
+        public static final int kMaxCurrent = 100;
     }
 
     public static final class OIConstants {
