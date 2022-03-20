@@ -66,6 +66,7 @@ public final class Constants
         public static final double kEjectSpeed = -0.6;
         
         public static final double kRetractIntakeDelay = 0.3;
+        public static final double kIntakeMotorDelay = .5;
 
         public static final int kMaxCurrent = 30;
     }
