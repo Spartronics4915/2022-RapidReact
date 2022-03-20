@@ -66,8 +66,6 @@ public class ConveyorCommands {
         @Override
         public void end(boolean interrupted) {
             mConveyor.setState(State.OFF);
-            if(!mIntake.getToggleState())
-                mIntake.stopIntake();
         }
     }
 
