@@ -148,7 +148,7 @@ public final class Constants
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
-        public static final double kMinRotations = 0;
+        public static final double kMinRotations = -200000;
 
         /**
          * Takes 12 rotations of climber to rotate winch.
