@@ -119,6 +119,7 @@ public class RobotContainer
         return new SequentialCommandGroup(
             mLauncherCommands.new TurnOnLauncher(),
             new WaitCommand(Constants.Autonomous.kShootDelay),
+            new WaitCommand(7),
             mConveyorCommands.new ShootFromTop(),
             mAutonomousCommands.new AutonomousDrive()
         );
