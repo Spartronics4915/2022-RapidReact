@@ -88,6 +88,8 @@ public class RobotContainer
             .whileHeld(mConveyorCommands.new ReverseBoth());
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBottomButton)
             .whileHeld(mConveyorCommands.new ReverseBottom());
+        new JoystickButton(mArcadeController, OIConstants.kConveyorRunBothButton)
+            .whileHeld(mConveyorCommands.new RunBoth());
             
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootButton)
             .whenPressed(new SequentialCommandGroup(

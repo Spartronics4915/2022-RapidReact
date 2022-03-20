@@ -184,6 +184,7 @@ public final class Constants
         public static final int kConveyorReverseBothButton = 3;
         public static final int kConveyorReverseBottomButton = 4;
         public static final int kConveyorReverseTopButton = 5;
+        public static final int kConveyorRunBothButton = 1;
 
         public static final int kLauncherShootButton = 6;
         public static final int kLauncherToggleButton = 8;
