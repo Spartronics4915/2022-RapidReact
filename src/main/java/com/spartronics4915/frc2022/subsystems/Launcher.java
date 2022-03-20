@@ -89,6 +89,10 @@ public class Launcher extends SpartronicsSubsystem
         return mLauncherToggle;
     }
 
+    public double getSlider() {
+        return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
+    }
+
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
