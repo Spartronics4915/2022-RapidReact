@@ -137,4 +137,28 @@ public class LauncherCommands {
             mLauncher.setMotorSpeed(mLauncher.getTargetRPS());
         }
     }
+    public class TurnOnLauncher extends CommandBase {
+        public TurnOnLauncher() {
+            addRequirements(mLauncher);
+        }
+
+        // Called when the command is initially scheduled.
+        @Override
+        public void initialize() {
+            mLauncher.setMotorSpeed(Flywheel.kRPS);
+            mLauncher.setToggleTrue();
+        }
+
+        // Called every time the scheduler runs while the command is scheduled.
+        @Override
+        public void execute() {
+
+        }
+
+        // Called once the command ends or is interrupted.
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
 }

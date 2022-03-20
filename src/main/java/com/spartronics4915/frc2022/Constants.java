@@ -203,10 +203,12 @@ public final class Constants
          */
         public static final double kDriveSpeedPercent = .3;
 
+        public static final double kDriveGearRatio = 10.57; 
+
         /**
          * Delay in seconds between starting Auto and shooting to let the wheel reach its speed
          */
-        public static final int kShootDelay = 1;
+        public static final double kShootDelay = 1;
 
         //Not used for first competition autonomous.
         /*public static final class Trajectory {

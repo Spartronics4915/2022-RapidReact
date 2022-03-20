@@ -115,16 +115,17 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         return new SequentialCommandGroup(
+            mLauncherCommands.new TurnOnLauncher(),
             new WaitCommand(Constants.Autonomous.kShootDelay),
-            mConveyorCommands.new Shoot1(),
+            mConveyorCommands.new ShootFromTop(),
             mAutonomousCommands.new AutonomousDrive()
-            );
+        );
     }
 
     public Command getTeleopCommand()
     {
         return new ParallelCommandGroup(
-            mLauncherCommands.new ToggleLauncher(),
+            mLauncherCommands.new TurnOnLauncher(),
             mClimberCommands.new InitClimber()
         );
     }
