@@ -53,6 +53,22 @@ public class ConveyorCommands {
         }
     }
 
+    public class RunBoth extends CommandBase{
+        public RunBoth() {
+            addRequirements(mConveyor);
+        }
+
+        @Override
+        public void initialize() {
+            mConveyor.setState(State.RUN_BOTH);
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            mConveyor.setState(State.OFF);
+        }
+    }
+
     public class ReverseBoth extends CommandBase {
         public ReverseBoth() {
             addRequirements(mConveyor, mIntake);

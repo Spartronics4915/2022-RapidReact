@@ -22,7 +22,7 @@ public class Conveyor extends SpartronicsSubsystem {
     private DigitalInput mBottomBeamBreaker;
 
     public enum State {
-        OFF, FILL, REVERSE_BOTH, REVERSE_BOTTOM, SHOOT_FROM_BOTTOM, SHOOT_FROM_TOP
+        OFF, FILL, REVERSE_BOTH, REVERSE_BOTTOM, SHOOT_FROM_BOTTOM, SHOOT_FROM_TOP, RUN_BOTH
     };
 
     private State mState = State.OFF;
@@ -105,6 +105,9 @@ public class Conveyor extends SpartronicsSubsystem {
                 break;
             case SHOOT_FROM_TOP:
                 setMotors(0, 1);
+                break;
+            case RUN_BOTH:
+            setMotors(1, 1);
                 break;
         }
     }

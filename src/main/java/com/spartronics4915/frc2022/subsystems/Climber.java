@@ -47,7 +47,8 @@ public class Climber extends SpartronicsSubsystem
         }
         logInitialized(success);
         
-        // mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
+        //disable current limit with first variable
+        mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(false, kMaxCurrent, kMaxCurrent, 0));
 
         mClimberMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -73,7 +74,7 @@ public class Climber extends SpartronicsSubsystem
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
-        // logInfo("ROTATIONS " + getCurrentRotations());
+        logInfo("ROTATIONS " + getCurrentRotations());
 
         double rotations = getCurrentRotations();
 
