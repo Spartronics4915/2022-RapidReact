@@ -48,7 +48,6 @@ public class Climber extends SpartronicsSubsystem
         logInitialized(success);
         
         // mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
-        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
 
         mClimberMotor.setNeutralMode(NeutralMode.Brake);
     }
@@ -85,6 +84,10 @@ public class Climber extends SpartronicsSubsystem
 
         if (mMotorSpeed < 0 && rotations < kMinRotations)
             setMotor(0);
+    }
+
+    public void zeroEncoder() {
+        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
     }
 
     /** This method will be called once per scheduler run during simulation. */

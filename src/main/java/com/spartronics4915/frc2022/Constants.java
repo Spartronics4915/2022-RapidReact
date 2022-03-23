@@ -31,7 +31,7 @@ public final class Constants
         public static final double kNativeUnitsPerRevolution = 1;
 
         //Test this -- to correct for angular drift autonomous
-        public static final double kLeftFactor = .9;
+        public static final double kLeftFactor = .93;
 
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
@@ -103,7 +103,7 @@ public final class Constants
 
             public static final boolean kInverted = false;
             
-            public static final double kRPS = 28.57;
+            public static final double kRPS = 29.57;
             public static final double kFarRPS = 10;
 
             public static final int kMaxCurrent = 40;
@@ -140,14 +140,14 @@ public final class Constants
         public static final boolean kSolenoidIsInverted = false;
 
         /**
-         * Distance we can move the climber from being down before breaking it. Calculated by Jack. Ben gave 16.1. 
+         * Distance we can rotate the motor from being down before breaking it. Found through testing and logging.
          */
         public static final double kMaxRotations = 7.388;
 
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
-        public static final double kMinRotations = -20000;
+        public static final double kMinRotations = 0;
 
         /**
          * Takes 12 rotations of climber to rotate winch.

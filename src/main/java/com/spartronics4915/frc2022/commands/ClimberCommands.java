@@ -55,4 +55,20 @@ public class ClimberCommands {
             mClimber.setMotor(0);
         }
     }
+
+    public class InitClimber extends CommandBase {
+        public InitClimber() {
+            addRequirements(mClimber);
+        }
+
+        @Override
+        public void initialize() {
+            mClimber.zeroEncoder();
+        }
+
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
 }

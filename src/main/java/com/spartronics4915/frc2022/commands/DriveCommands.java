@@ -63,8 +63,6 @@ public class DriveCommands
                 x *= kSlowModeMultiplier;
                 y *= kSlowModeMultiplier;
             }
-            y = 0;
-            x = 0;
 
             mDrive.arcadeDrive(applyDeadzone(y), applyDeadzone(x));
         }
