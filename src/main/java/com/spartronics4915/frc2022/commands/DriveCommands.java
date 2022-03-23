@@ -2,9 +2,14 @@ package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
-import com.spartronics4915.frc2022.subsystems.Climber;
+import static com.spartronics4915.frc2022.Constants.OIConstants;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.lib.util.Logger;
+
+import org.apache.commons.math3.analysis.function.Constant;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,13 +21,15 @@ public class DriveCommands
     private final Joystick mJoystick;
     private boolean mInvertJoystickY;
     private boolean mSlowMode;
+    private final Joystick mArcadeController;
 
-    public DriveCommands(Drive drive, Joystick joystick)
+    public DriveCommands(Drive drive, Joystick joystick, Joystick arcadeController)
     {
         mDrive = drive;
         mJoystick = joystick;
         mInvertJoystickY = true; // convention is to invert joystick y
         mSlowMode = false;
+        mArcadeController = arcadeController;
         
         mDrive.setDefaultCommand(new TeleOpCommand());
     }
@@ -48,14 +55,15 @@ public class DriveCommands
             double y = mJoystick.getY();
             Logger.info(x + ", " + y);
 
-            if (mSlowMode) {
+            if (mInvertJoystickY) y = -y;
+
+            y = Math.signum(y) * Math.pow(Math.abs(y), kLinearResponseCurveExponent); // apply response curve
+            
+            if (mJoystick.getRawButton(OIConstants.kSlowModeButton)) {
                 x *= kSlowModeMultiplier;
                 y *= kSlowModeMultiplier;
             }
 
-            if (mInvertJoystickY) y = -y;
-
-            y = Math.signum(y) * Math.pow(Math.abs(y), kLinearResponseCurveExponent); // apply response curve
             mDrive.arcadeDrive(applyDeadzone(y), applyDeadzone(x));
         }
 
@@ -65,37 +73,12 @@ public class DriveCommands
         }
     }
 
-    public class ToggleSlowModeCommand extends CommandBase
-    {
-        @Override
-        public void initialize()
-        {
-            mSlowMode = !mSlowMode;
-        }
-
-        @Override
-        public boolean isFinished()
-        {
-            return true;
-        }
-    }
-
-    public class ForceSlowModeOn extends CommandBase {
-        @Override
-        public void initialize()
-        {
-            mSlowMode = true;
-        }
-
-        @Override
-        public boolean isFinished()
-        {
-            return true;
-        }
-    }
-
     public class ToggleInverted extends CommandBase
     {
+        public ToggleInverted() {
+            addRequirements(mDrive);
+        }
+
         @Override
         public void initialize()
         {

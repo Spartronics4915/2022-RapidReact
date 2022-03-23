@@ -55,19 +55,26 @@ public class Launcher extends SpartronicsSubsystem
 
         mFlywheelMotor.setStatorCurrentLimit(Flywheel.kMaxCurrent);
         mSpinMotor.setStatorCurrentLimit(SpinMotor.kMaxCurrent);
+        
+        mFlywheelMotor.setBrakeMode(false);
+        mSpinMotor.setBrakeMode(false);
     }
 
     public boolean toggleLauncher() {
         mLauncherToggle = !mLauncherToggle;
         return mLauncherToggle;
     }
+    public void setToggled(boolean toggle) {
+        // logInfo("TOGGLED " + toggle);
+        mLauncherToggle = toggle;
+    }
     public double getTargetRPS() {
         return Flywheel.kRPS;
-        // return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
+        //return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
     }
     public void setMotorSpeed(double launcherVelocity) {
         mFlywheelMotor.setVelocity(launcherVelocity);
-        mSpinMotor.setPercentOutput(SpinMotor.kSpeed);
+        mSpinMotor.setPercentOutput(SpinMotor.kSpeed * Math.signum(launcherVelocity));
         // }
         // else if (mLauncherToggle=false) {
         //     mFlywheelMotor.setVelocity(0);
@@ -80,6 +87,10 @@ public class Launcher extends SpartronicsSubsystem
 
     public boolean getToggled() {
         return mLauncherToggle;
+    }
+
+    public double getSlider() {
+        return SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 0);
     }
 
     /** This method will be called once per scheduler run. */

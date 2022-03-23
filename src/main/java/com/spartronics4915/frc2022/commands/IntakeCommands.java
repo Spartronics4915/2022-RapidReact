@@ -1,15 +1,13 @@
 package com.spartronics4915.frc2022.commands;
 
-import com.spartronics4915.frc2022.subsystems.Intake;
-import com.spartronics4915.frc2022.subsystems.Launcher;
 import static com.spartronics4915.frc2022.Constants.Intake.*;
-import static com.spartronics4915.frc2022.Constants.OIConstants.*;
 
+import com.spartronics4915.frc2022.subsystems.Intake;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -64,12 +62,25 @@ public class IntakeCommands
         }
     }
 
+    public class RetractIntakeDelayedMotor extends SequentialCommandGroup
+    {
+        public RetractIntakeDelayedMotor()
+        {
+            addCommands(
+                new InstantCommand(() -> mIntake.retractArm()),
+                new WaitCommand(kIntakeStopMotorDelay),
+                new InstantCommand(() -> mIntake.stopMotorAndToggle())
+                );
+            addRequirements(mIntake); // Declares subsystem dependencies
+        }
+    }
+
     public class TryToggleIntake extends ConditionalCommand {
         public TryToggleIntake() {
             super(
                 new SequentialCommandGroup(
                     new WaitCommand(kRetractIntakeDelay),
-                    new ToggleIntake()
+                    new RetractIntakeDelayedMotor()
                 ),
                 new ToggleIntake(),
                 mIntake::getToggleState
