@@ -25,6 +25,8 @@ public class Climber extends SpartronicsSubsystem
 
     private double mMotorSpeed;
 
+    private boolean mIsInitialized;
+
     /** Creates a new Climber. */
     public Climber()
     {
@@ -35,6 +37,7 @@ public class Climber extends SpartronicsSubsystem
             mClimberMotor = new TalonFX(kClimberMotorId);
             mClimberMotor.setInverted(kMotorIsInverted);
             mClimberMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
+            mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(false, kMaxCurrent, kMaxCurrent, 0)); //disable current limit with first variable
 
             //mMotorSensors = new TalonFXSensorCollection()
 
@@ -46,29 +49,35 @@ public class Climber extends SpartronicsSubsystem
             success = false;
         }
         logInitialized(success);
-        
-        //disable current limit with first variable
-        mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(false, kMaxCurrent, kMaxCurrent, 0));
-
-        mClimberMotor.setNeutralMode(NeutralMode.Brake);
+        mIsInitialized = success;
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
     public void setMotor(double speed)
     {
         mMotorSpeed = speed;
-        mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
+        if (mIsInitialized)
+        {
+            mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
+        }
     }
 
     public void setSolenoid(boolean isExtended)
     {
         // logInfo("Set Solenoid to " + isExtended);
         // mClimberMotor.get
-        mClimberSolenoid.set(isExtended != kSolenoidIsInverted);
+        if (mIsInitialized)
+        {
+            mClimberSolenoid.set(isExtended != kSolenoidIsInverted);
+        }
     }
 
     public double getCurrentRotations(){
-        return mClimberMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
+        if (mIsInitialized)
+        {
+            return mClimberMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
+        }
+        return 0.0;
     }
 
     /** This method will be called once per scheduler run. */
@@ -88,7 +97,10 @@ public class Climber extends SpartronicsSubsystem
     }
 
     public void zeroEncoder() {
-        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
+        if (mIsInitialized)
+        {
+            mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
+        }
     }
 
     /** This method will be called once per scheduler run during simulation. */
