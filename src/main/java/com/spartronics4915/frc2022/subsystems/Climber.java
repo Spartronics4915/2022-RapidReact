@@ -20,10 +20,14 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class Climber extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-    private TalonFX mClimberMotor;
-    private Solenoid mClimberSolenoid;
+    private TalonFX mMotor;
+    private TalonFX mFollower;
+    
+    private Solenoid mSolenoid;
 
     private double mMotorSpeed;
+
+    private boolean mIsInitialized;
 
     /** Creates a new Climber. */
     public Climber()
@@ -32,13 +36,17 @@ public class Climber extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mClimberMotor = new TalonFX(kClimberMotorId);
-            mClimberMotor.setInverted(kMotorIsInverted);
-            mClimberMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
+            mMotor = new TalonFX(kClimberMotorId);
+            mFollower = new TalonFX(kClimberFollowerId);
+            mFollower.follow(mMotor);
+            mMotor.setInverted(kMotorIsInverted);
+            mFollower.setInverted(kFollowerIsInverted);
+            mMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
+            mFollower.setNeutralMode(NeutralMode.Brake); // set brake mode
 
             //mMotorSensors = new TalonFXSensorCollection()
 
-            mClimberSolenoid = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
+            mSolenoid = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
         }
         catch (Exception exception)
         {
@@ -46,29 +54,35 @@ public class Climber extends SpartronicsSubsystem
             success = false;
         }
         logInitialized(success);
-        
-        //disable current limit with first variable
-        mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(false, kMaxCurrent, kMaxCurrent, 0));
-
-        mClimberMotor.setNeutralMode(NeutralMode.Brake);
+        mIsInitialized = success;
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
     public void setMotor(double speed)
     {
         mMotorSpeed = speed;
-        mClimberMotor.set(TalonFXControlMode.PercentOutput, speed);
+        if (mIsInitialized)
+        {
+            mMotor.set(TalonFXControlMode.PercentOutput, speed);
+        }
     }
 
     public void setSolenoid(boolean isExtended)
     {
         // logInfo("Set Solenoid to " + isExtended);
         // mClimberMotor.get
-        mClimberSolenoid.set(isExtended != kSolenoidIsInverted);
+        if (mIsInitialized)
+        {
+            mSolenoid.set(isExtended != kSolenoidIsInverted);
+        }
     }
 
     public double getCurrentRotations(){
-        return mClimberMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
+        if (mIsInitialized)
+        {
+            return mMotor.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
+        }
+        return 0.0;
     }
 
     /** This method will be called once per scheduler run. */
@@ -88,7 +102,10 @@ public class Climber extends SpartronicsSubsystem
     }
 
     public void zeroEncoder() {
-        mClimberMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
+        if (mIsInitialized)
+        {
+            mMotor.getSensorCollection().setIntegratedSensorPosition(0, 100);
+        }
     }
 
     /** This method will be called once per scheduler run during simulation. */
