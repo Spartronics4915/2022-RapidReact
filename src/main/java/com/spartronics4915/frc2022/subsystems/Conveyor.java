@@ -67,6 +67,7 @@ public class Conveyor extends SpartronicsSubsystem {
     }
 
     public void setState(State state) {
+        logInfo("state = " + state);
         mState = state;
     }
 
@@ -107,7 +108,7 @@ public class Conveyor extends SpartronicsSubsystem {
                 setMotors(0, 1);
                 break;
             case RUN_BOTH:
-            setMotors(1, 1);
+                setMotors(1, 1);
                 break;
         }
     }
