@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import static com.spartronics4915.frc2022.Constants.Autonomous.*;
 
+import com.spartronics4915.frc2022.Constants.Launcher;
 import com.spartronics4915.frc2022.subsystems.Drive;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -17,22 +18,33 @@ public class AutonomousCommands {
     private Drive mDrive;
 
     private ConveyorCommands mConveyorCommands;
+    private LauncherCommands mLauncherCommands;
 
-    public AutonomousCommands(Drive drive, ConveyorCommands conveyorCommands) {
+    public AutonomousCommands(Drive drive, ConveyorCommands conveyorCommands, LauncherCommands launcherCommands) {
         mDrive = drive;
         mConveyorCommands = conveyorCommands;
-        
-        mCommandAutoModes.put("Short Wait; Shoot; Drive",
+        mLauncherCommands = launcherCommands;
+
+        mCommandAutoModes = new HashMap<>();
+
+        mCommandAutoModes.put(
+            "Shoot; Short Wait; Drive",
             new SequentialCommandGroup(
-                new WaitCommand(kShootDelayShort),
+                mLauncherCommands.new TurnOnLauncher(),
+                new WaitCommand(kSpinUpDelay),
                 mConveyorCommands.new Shoot1(),
+                new WaitCommand(kShootDelayShort),
                 new AutonomousDrive()
             )
         );
-        mCommandAutoModes.put("Long Wait; Shoot; Drive",
+
+        mCommandAutoModes.put(
+            "Shoot; Long Wait; Drive",
             new SequentialCommandGroup(
-                new WaitCommand(kShootDelayLong),
+                mLauncherCommands.new TurnOnLauncher(),
+                new WaitCommand(kSpinUpDelay),
                 mConveyorCommands.new Shoot1(),
+                new WaitCommand(kShootDelayLong),
                 new AutonomousDrive()
             )
         );
@@ -44,7 +56,7 @@ public class AutonomousCommands {
     }
 
     public String[] getAllAutoModes() {
-        return (String[]) mCommandAutoModes.keySet().toArray();
+        return mCommandAutoModes.keySet().toArray(new String[mCommandAutoModes.size()]);
     }
     /**
      * Drives backwards until we leave the tarmac area
