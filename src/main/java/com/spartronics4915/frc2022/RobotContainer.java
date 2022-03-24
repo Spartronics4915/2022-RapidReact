@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
@@ -72,7 +73,14 @@ public class RobotContainer
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
-        mAutonomousCommands = new AutonomousCommands(mDrive);
+
+        mAutonomousCommands = new AutonomousCommands(mDrive, mConveyorCommands);
+
+        {
+            String[] autoModes = mAutonomousCommands.getAllAutoModes();
+            String options = String.join(",", autoModes);
+            SmartDashboard.putString("AutoStrategyOptions", options);
+        };
 
         configureButtonBindings();
     }
@@ -88,6 +96,8 @@ public class RobotContainer
             .whileHeld(mConveyorCommands.new ReverseBoth());
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBottomButton)
             .whileHeld(mConveyorCommands.new ReverseBottom());
+        new JoystickButton(mArcadeController, OIConstants.kConveyorRunBothButton)
+            .whileHeld(mConveyorCommands.new RunBoth());
             
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootButton)
             .whenPressed(new SequentialCommandGroup(
@@ -114,17 +124,14 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        return new SequentialCommandGroup(
-            new WaitCommand(Constants.Autonomous.kShootDelay),
-            mConveyorCommands.new Shoot1(),
-            mAutonomousCommands.new AutonomousDrive()
-            );
+        String commandSelection = SmartDashboard.getString("AutoStrategy", Constants.Autonomous.kDefaultMode);
+        return mAutonomousCommands.getAutoMode(commandSelection);
     }
 
     public Command getTeleopCommand()
     {
         return new ParallelCommandGroup(
-            mLauncherCommands.new ToggleLauncher(),
+            mLauncherCommands.new TurnOnLauncher(),
             mClimberCommands.new InitClimber()
         );
     }

@@ -11,7 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
- * Detailed description of Conveyer.
+ * The two conveyors that pull balls from the intake and into the launcher. Includes two beam breakers to check if balls are inside it.
  */
 public class Conveyor extends SpartronicsSubsystem {
     // The subsystem's hardware is defined here...
@@ -22,7 +22,7 @@ public class Conveyor extends SpartronicsSubsystem {
     private DigitalInput mBottomBeamBreaker;
 
     public enum State {
-        OFF, FILL, REVERSE_BOTH, REVERSE_BOTTOM, SHOOT_FROM_BOTTOM, SHOOT_FROM_TOP
+        OFF, FILL, REVERSE_BOTH, REVERSE_BOTTOM, SHOOT_FROM_BOTTOM, SHOOT_FROM_TOP, RUN_BOTH
     };
 
     private State mState = State.OFF;
@@ -105,6 +105,9 @@ public class Conveyor extends SpartronicsSubsystem {
                 break;
             case SHOOT_FROM_TOP:
                 setMotors(0, 1);
+                break;
+            case RUN_BOTH:
+                setMotors(1, 1);
                 break;
         }
     }

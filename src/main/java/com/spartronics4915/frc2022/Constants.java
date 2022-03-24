@@ -66,6 +66,7 @@ public final class Constants
         public static final double kEjectSpeed = -0.6;
         
         public static final double kRetractIntakeDelay = 0.3;
+        public static final double kIntakeStopMotorDelay = 1;
 
         public static final int kMaxCurrent = 30;
     }
@@ -81,8 +82,8 @@ public final class Constants
         public static final double kMotorSpeed = 0.45;
         public static final double kSlowFactor = 0.3333;
         
-        public static final double kTopConveyorTime = 2.0;
-        public static final double kBottomConveyorTime = 1.0;
+        public static final double kTopConveyorTime = 1.5;
+        public static final double kBottomConveyorTime = .5;
 
         public static final int kStopFrequency = (int)(1 / 0.02);
         public static final int kStopLength = (int)(0.1 / 0.02);
@@ -103,7 +104,7 @@ public final class Constants
 
             public static final boolean kInverted = false;
             
-            public static final double kRPS = 29.57;
+            public static final double kRPS = 30.57;
             public static final double kFarRPS = 10;
 
             public static final int kMaxCurrent = 40;
@@ -133,8 +134,11 @@ public final class Constants
     public static final class Climber
     {
         public static final int kClimberMotorId = 10;
+        public static final int kClimberFollowerId = 13; // TODO -1 is a stand in value
         public static final double kClimberMotorSpeed = 1.0;
         public static final boolean kMotorIsInverted = false;
+        public static final boolean kFollowerIsInverted = true;
+
 
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
@@ -148,12 +152,12 @@ public final class Constants
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
-        public static final double kMinRotations = 0;
+        public static final double kMinRotations = -200000;
 
         /**
          * Takes 12 rotations of climber to rotate winch.
          */
-        public static final double kClimberGearRatio = 12.0;
+        public static final double kClimberGearRatio = 36.0;
         /**
          * For Climber encoder -- divide getIntegratedSensorPosition() by this.
          */
@@ -164,7 +168,8 @@ public final class Constants
          */
         public static final double kDelay = 0.1; // adjust 1st number for ms
 
-        public static final int kMaxCurrent = 40;
+        //set very high to see if it remembered it was at 40??
+        public static final int kMaxCurrent = 100;
     }
 
     public static final class OIConstants {
@@ -184,6 +189,7 @@ public final class Constants
         public static final int kConveyorReverseBothButton = 3;
         public static final int kConveyorReverseBottomButton = 4;
         public static final int kConveyorReverseTopButton = 5;
+        public static final int kConveyorRunBothButton = 1;
 
         public static final int kLauncherShootButton = 6;
         public static final int kLauncherToggleButton = 8;
@@ -204,10 +210,15 @@ public final class Constants
          */
         public static final double kDriveSpeedPercent = .3;
 
+        public static final double kDriveGearRatio = 10.57; 
+
         /**
          * Delay in seconds between starting Auto and shooting to let the wheel reach its speed
          */
-        public static final int kShootDelay = 1;
+        public static final int kShootDelayShort = 1;
+        public static final int kShootDelayLong = 10;
+
+        public static final String kDefaultMode = "Short Wait; Shoot; Drive";
 
         //Not used for first competition autonomous.
         /*public static final class Trajectory {

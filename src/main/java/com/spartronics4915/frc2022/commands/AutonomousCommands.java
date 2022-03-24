@@ -1,36 +1,51 @@
 package com.spartronics4915.frc2022.commands;
 
 import static com.spartronics4915.frc2022.Constants.Autonomous.*;
-import com.spartronics4915.frc2022.Constants;
+
+import java.util.HashMap;
+
+import static com.spartronics4915.frc2022.Constants.Autonomous.*;
 
 import com.spartronics4915.frc2022.subsystems.Drive;
-import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
-import com.spartronics4915.lib.util.Units;
-
-import org.apache.commons.math3.analysis.function.Constant;
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutonomousCommands {
+    private HashMap<String, Command> mCommandAutoModes;
     private Drive mDrive;
 
-    public AutonomousCommands(Drive drive) {
+    private ConveyorCommands mConveyorCommands;
+
+    public AutonomousCommands(Drive drive, ConveyorCommands conveyorCommands) {
         mDrive = drive;
+        mConveyorCommands = conveyorCommands;
+        
+        mCommandAutoModes.put("Short Wait; Shoot; Drive",
+            new SequentialCommandGroup(
+                new WaitCommand(kShootDelayShort),
+                mConveyorCommands.new Shoot1(),
+                new AutonomousDrive()
+            )
+        );
+        mCommandAutoModes.put("Long Wait; Shoot; Drive",
+            new SequentialCommandGroup(
+                new WaitCommand(kShootDelayLong),
+                mConveyorCommands.new Shoot1(),
+                new AutonomousDrive()
+            )
+        );
     }
 
+    public Command getAutoMode(String id)
+    {
+        return mCommandAutoModes.get(id);
+    }
+
+    public String[] getAllAutoModes() {
+        return (String[]) mCommandAutoModes.keySet().toArray();
+    }
     /**
      * Drives backwards until we leave the tarmac area
     */
@@ -48,7 +63,8 @@ public class AutonomousCommands {
 
         @Override
         public boolean isFinished() {
-            return Math.abs(mDrive.getLeftMotor().getEncoder().getPosition()) >= kDriveDistanceMeters && Math.abs(mDrive.getRightMotor().getEncoder().getPosition()) >= kDriveDistanceMeters;
+            return Math.abs(mDrive.getLeftMotor().getEncoder().getPosition() / kDriveGearRatio) >= kDriveDistanceMeters
+                && Math.abs(mDrive.getRightMotor().getEncoder().getPosition() / kDriveGearRatio) >= kDriveDistanceMeters;
         }
 
         @Override

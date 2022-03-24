@@ -13,13 +13,10 @@ public class LauncherCommands {
     private final Launcher mLauncher;
     private final Conveyor mConveyor;
 
-    private boolean mPaused;
-
     public LauncherCommands(Launcher subsystem, Conveyor conveyor, Joystick mArcadecontroller) {
         mLauncher = subsystem;
         mConveyor = conveyor;
         mLauncher.setDefaultCommand(new RunLauncher());
-        mPaused = false;
     }
 
     /**
@@ -40,7 +37,7 @@ public class LauncherCommands {
                 mLauncher.setMotorSpeed(mSpeed = targetRPS);
 
             if (mConveyor.isFull() && !conveyorJustFilled && !mLauncher.getToggled())
-                mLauncher.toggleLauncher();
+                mLauncher.setPaused(false);
 
             conveyorJustFilled = mConveyor.isFull();
         }
@@ -59,8 +56,7 @@ public class LauncherCommands {
         // Called when the command is initially scheduled.
         @Override
         public void initialize() {
-            mPaused = !mPaused;
-            mLauncher.setToggled(!mPaused);
+            mLauncher.togglePaused();
         }
 
         // Called every time the scheduler runs while the command is scheduled.
@@ -135,6 +131,56 @@ public class LauncherCommands {
         @Override
         public void end(boolean interrupted) {
             mLauncher.setMotorSpeed(mLauncher.getTargetRPS());
+        }
+    }
+    
+    public class TurnOnLauncher extends CommandBase {
+        public TurnOnLauncher() {
+            addRequirements(mLauncher);
+        }
+
+        // Called when the command is initially scheduled.
+        @Override
+        public void initialize() {
+            mLauncher.setMotorSpeed(Flywheel.kRPS);
+            mLauncher.setToggleTrue();
+        }
+
+        // Called every time the scheduler runs while the command is scheduled.
+        @Override
+        public void execute() {
+
+        }
+
+        // Called once the command ends or is interrupted.
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
+
+    public class SliderLaunchStart extends CommandBase {
+        public SliderLaunchStart() {
+            addRequirements(mLauncher);
+        }
+
+        // Called when the command is initially scheduled.
+        @Override
+        public void initialize() {
+            mLauncher.setMotorSpeed(mLauncher.getSlider());
+            mLauncher.setToggleTrue();
+        }
+
+        // Called every time the scheduler runs while the command is scheduled.
+        @Override
+        public void execute() {
+
+        }
+
+        // Called once the command ends or is interrupted.
+        @Override
+        public boolean isFinished() {
+            return true;
         }
     }
 }
