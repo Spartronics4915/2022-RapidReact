@@ -30,6 +30,8 @@ public class Launcher extends SpartronicsSubsystem
     // public boolean editRPS = false;
     // public boolean enableFlywheel = false;
 
+    private boolean mPaused;
+
     /** Creates a new Launcher. */
     public Launcher()
     {
@@ -58,6 +60,18 @@ public class Launcher extends SpartronicsSubsystem
         
         mFlywheelMotor.setBrakeMode(false);
         mSpinMotor.setBrakeMode(false);
+
+        mPaused = false;
+    }
+
+    public boolean togglePaused() {
+        setPaused(!mPaused);
+        return mPaused;
+    }
+
+    public void setPaused(boolean paused) {
+        mPaused = paused;
+        setToggled(!mPaused);
     }
 
     public boolean toggleLauncher() {
