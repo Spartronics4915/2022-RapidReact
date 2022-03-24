@@ -96,6 +96,8 @@ public class RobotContainer
             .whileHeld(mConveyorCommands.new ReverseBoth());
         new JoystickButton(mArcadeController, OIConstants.kConveyorReverseBottomButton)
             .whileHeld(mConveyorCommands.new ReverseBottom());
+        new JoystickButton(mArcadeController, OIConstants.kConveyorRunBothButton)
+            .whileHeld(mConveyorCommands.new RunBoth());
             
         new JoystickButton(mArcadeController, OIConstants.kLauncherShootButton)
             .whenPressed(new SequentialCommandGroup(
@@ -122,14 +124,23 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
+<<<<<<< HEAD
         String commandSelection = SmartDashboard.getString("AutoStrategy", Constants.Autonomous.kDefaultMode);
         return mAutonomousCommands.getAutoMode(commandSelection);
+=======
+        return new SequentialCommandGroup(
+            mLauncherCommands.new TurnOnLauncher(),
+            new WaitCommand(Constants.Autonomous.kShootDelay),
+            mConveyorCommands.new ShootFromTop(),
+            mAutonomousCommands.new AutonomousDrive()
+        );
+>>>>>>> 85e203279ac5d2aae3bb64ffe07642e772ce1e58
     }
 
     public Command getTeleopCommand()
     {
         return new ParallelCommandGroup(
-            mLauncherCommands.new ToggleLauncher(),
+            mLauncherCommands.new TurnOnLauncher(),
             mClimberCommands.new InitClimber()
         );
     }

@@ -58,6 +58,15 @@ public class Intake extends SpartronicsSubsystem
         //logInfo("intake running"); - not sure if we need this could be too much for driver to pay attention to
     }
 
+    public void retractArm(){
+        mIntakeArm.set(false);
+    }
+
+    public void stopMotorAndToggle() {
+        mIntakeMotor.set(0);
+        mToggleState = false;
+    }
+
     public void stopIntake() {
         mIntakeArm.set(false);
         mIntakeMotor.set(0);

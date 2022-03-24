@@ -66,6 +66,7 @@ public final class Constants
         public static final double kEjectSpeed = -0.6;
         
         public static final double kRetractIntakeDelay = 0.3;
+        public static final double kIntakeStopMotorDelay = 1;
 
         public static final int kMaxCurrent = 30;
     }
@@ -147,12 +148,12 @@ public final class Constants
         /**
          * Climber will be put down before every match so that's where 0 is.
          */
-        public static final double kMinRotations = 0;
+        public static final double kMinRotations = -200000;
 
         /**
          * Takes 12 rotations of climber to rotate winch.
          */
-        public static final double kClimberGearRatio = 12.0;
+        public static final double kClimberGearRatio = 36.0;
         /**
          * For Climber encoder -- divide getIntegratedSensorPosition() by this.
          */
@@ -163,7 +164,8 @@ public final class Constants
          */
         public static final double kDelay = 0.1; // adjust 1st number for ms
 
-        public static final int kMaxCurrent = 40;
+        //set very high to see if it remembered it was at 40??
+        public static final int kMaxCurrent = 100;
     }
 
     public static final class OIConstants {
@@ -183,6 +185,7 @@ public final class Constants
         public static final int kConveyorReverseBothButton = 3;
         public static final int kConveyorReverseBottomButton = 4;
         public static final int kConveyorReverseTopButton = 5;
+        public static final int kConveyorRunBothButton = 1;
 
         public static final int kLauncherShootButton = 6;
         public static final int kLauncherToggleButton = 8;
@@ -203,13 +206,19 @@ public final class Constants
          */
         public static final double kDriveSpeedPercent = .3;
 
+        public static final double kDriveGearRatio = 10.57; 
+
         /**
          * Delay in seconds between starting Auto and shooting to let the wheel reach its speed
          */
+<<<<<<< HEAD
         public static final int kShootDelayShort = 1;
         public static final int kShootDelayLong = 10;
 
         public static final String kDefaultMode = "Short Wait; Shoot; Drive";
+=======
+        public static final double kShootDelay = 1;
+>>>>>>> 85e203279ac5d2aae3bb64ffe07642e772ce1e58
 
         //Not used for first competition autonomous.
         /*public static final class Trajectory {
