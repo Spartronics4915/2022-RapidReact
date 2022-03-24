@@ -133,9 +133,12 @@ public final class Constants
     }
     public static final class Climber
     {
-        public static final int kClimberMotorId = 10;
+        public static final int kClimberMotor1Id = 10;
+        public static final int kClimberMotor2Id = -1; // TODO -1 is a stand in value
         public static final double kClimberMotorSpeed = 1.0;
-        public static final boolean kMotorIsInverted = false;
+        public static final boolean kMotor1IsInverted = false;
+        public static final boolean kMotor2IsInverted = false;
+
 
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
