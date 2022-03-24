@@ -206,7 +206,10 @@ public final class Constants
         /**
          * Delay in seconds between starting Auto and shooting to let the wheel reach its speed
          */
-        public static final int kShootDelay = 1;
+        public static final int kShootDelayShort = 1;
+        public static final int kShootDelayLong = 10;
+
+        public static final String kDefaultMode = "Short Wait; Shoot; Drive";
 
         //Not used for first competition autonomous.
         /*public static final class Trajectory {
