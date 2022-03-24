@@ -104,7 +104,7 @@ public final class Constants
 
             public static final boolean kInverted = false;
             
-            public static final double kRPS = 30.57;
+            public static final double kRPS = 28.07 + Units.tadsToRPS(5);
             public static final double kFarRPS = 10;
 
             public static final int kMaxCurrent = 40;
