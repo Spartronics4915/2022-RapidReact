@@ -67,7 +67,6 @@ public class Conveyor extends SpartronicsSubsystem {
     }
 
     public void setState(State state) {
-        logInfo("state = " + state);
         mState = state;
     }
 
