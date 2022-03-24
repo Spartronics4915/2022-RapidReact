@@ -23,7 +23,7 @@ public class ClimberCommands {
             addCommands(
                 new InstantCommand(() -> mClimber.setSolenoid(true)),
                 new WaitCommand(kDelay),
-                new InstantCommand(() -> mClimber.setMotors(kClimberMotorSpeed))
+                new InstantCommand(() -> mClimber.setMotor(kClimberMotorSpeed))
             );
             addRequirements(mClimber);
         }
@@ -32,7 +32,7 @@ public class ClimberCommands {
     public class StopExtend extends SequentialCommandGroup {
         public StopExtend() {
             addCommands(
-                new InstantCommand(() -> mClimber.setMotors(0)),
+                new InstantCommand(() -> mClimber.setMotor(0)),
                 new WaitCommand(kDelay),
                 new InstantCommand(() -> mClimber.setSolenoid(false))
             );
@@ -47,12 +47,12 @@ public class ClimberCommands {
 
         @Override
         public void initialize() {
-            mClimber.setMotors(-kClimberMotorSpeed);
+            mClimber.setMotor(-kClimberMotorSpeed);
         }
 
         @Override
         public void end(boolean interrupted) {
-            mClimber.setMotors(0);
+            mClimber.setMotor(0);
         }
     }
 
