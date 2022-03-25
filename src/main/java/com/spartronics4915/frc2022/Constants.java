@@ -84,8 +84,8 @@ public final class Constants
         public static final double kMotorSpeed = 0.45;
         public static final double kSlowFactor = 0.3333;
         
-        public static final double kTopConveyorTime = 1.5;
-        public static final double kBottomConveyorTime = .5;
+        public static final double kTopConveyorTime = 0.3;
+        public static final double kBottomConveyorTime = 0.3;
 
         public static final int kStopFrequency = (int)(1 / 0.02);
         public static final int kStopLength = (int)(0.1 / 0.02);
@@ -124,7 +124,7 @@ public final class Constants
             
             public static final double kSpeedFactor = .5;
 
-            public static final int kMaxCurrent = 40;
+            public static final int kMaxCurrent = 30;
         }
         // public static class Spin {
         //     public static final double kP = 0.03;
@@ -216,10 +216,11 @@ public final class Constants
         /**
          * Delay in seconds between starting Auto and shooting to let the wheel reach its speed
          */
-        public static final int kShootDelayShort = 1;
-        public static final int kShootDelayLong = 10;
+        public static final double kShootDelayShort = 0.3;
+        public static final double kShootDelayLong = 10;
+        public static final double kSpinUpDelay = 1;
 
-        public static final String kDefaultMode = "Short Wait; Shoot; Drive";
+        public static final String kDefaultMode = "Shoot; Short Wait; Drive";
 
         //Not used for first competition autonomous.
         /*public static final class Trajectory {
