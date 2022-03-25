@@ -138,8 +138,8 @@ public final class Constants
         public static final int kClimberMotorId = 10;
         public static final int kClimberFollowerId = 13;
         public static final double kClimberMotorSpeed = 0.05; //0.05 for testing
-        public static final boolean kMotorIsInverted = true;
-        public static final boolean kFollowerFollowsMaster = true;
+        public static final boolean kMasterMotorIsInverted = true;
+        public static final boolean kFollowerFollowsMaster = false;
 
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
