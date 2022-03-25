@@ -54,15 +54,7 @@ public class Climber extends SpartronicsSubsystem
             success = false;
         }
         logInitialized(success);
-<<<<<<< HEAD
-        
-        //disable current limit with first variable
-        // mClimberMotor.configStatorCurrentLimit(new StatorCurrentLimitConfiguration(true, kMaxCurrent, kMaxCurrent, 0));
-
-        mClimberMotor.setNeutralMode(NeutralMode.Brake);
-=======
         mIsInitialized = success;
->>>>>>> 56190353499d7e2a5cb5c531dfc489a2d577ad9b
     }
 
     // Subsystem methods - actions the robot can take - should be placed here.
