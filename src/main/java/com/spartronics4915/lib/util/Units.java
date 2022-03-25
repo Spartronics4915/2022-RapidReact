@@ -3,7 +3,7 @@ package com.spartronics4915.lib.util;
 public class Units
 {
     public static double tadsToRPS(double tads) {
-        return tads;
+        return tads * 0.5;
     }
 
     public static double rpmToRadsPerSec(double rpm)
