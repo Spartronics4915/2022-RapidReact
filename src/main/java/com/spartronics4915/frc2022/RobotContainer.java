@@ -51,7 +51,7 @@ public class RobotContainer
     public final Climber mClimber;
     public final ClimberCommands mClimberCommands;
 
-    public final AutonomousCommands mAutonomousCommands;
+    // public final AutonomousCommands mAutonomousCommands;
   
     public static final Joystick mArcadeController = new Joystick(Constants.OIConstants.kArcadeStickPort);
     public static final Joystick mDriverController = new Joystick(Constants.OIConstants.kJoystickPort);
@@ -74,13 +74,13 @@ public class RobotContainer
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
 
-        mAutonomousCommands = new AutonomousCommands(mDrive, mConveyorCommands);
+        // mAutonomousCommands = new AutonomousCommands(mDrive, mConveyorCommands);
 
-        {
-            String[] autoModes = mAutonomousCommands.getAllAutoModes();
-            String options = String.join(",", autoModes);
-            SmartDashboard.putString("AutoStrategyOptions", options);
-        };
+        // {
+        //     String[] autoModes = mAutonomousCommands.getAllAutoModes();
+        //     String options = String.join(",", autoModes);
+        //     SmartDashboard.putString("AutoStrategyOptions", options);
+        // };
 
         configureButtonBindings();
     }
@@ -124,8 +124,9 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        String commandSelection = SmartDashboard.getString("AutoStrategy", Constants.Autonomous.kDefaultMode);
-        return mAutonomousCommands.getAutoMode(commandSelection);
+        return null;
+        // String commandSelection = SmartDashboard.getString("AutoStrategy", Constants.Autonomous.kDefaultMode);
+        // return mAutonomousCommands.getAutoMode(commandSelection);
     }
 
     public Command getTeleopCommand()

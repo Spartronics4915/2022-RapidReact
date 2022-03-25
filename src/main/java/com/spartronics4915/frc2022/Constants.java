@@ -6,6 +6,8 @@ import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.util.TriFunction;
 import com.spartronics4915.lib.util.Units;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -135,10 +137,9 @@ public final class Constants
     {
         public static final int kClimberMotorId = 10;
         public static final int kClimberFollowerId = 13;
-        public static final double kClimberMotorSpeed = 1.0;
-        public static final boolean kMotorIsInverted = false;
-        public static final boolean kFollowerIsInverted = true;
-
+        public static final double kClimberMotorSpeed = 0.05; //0.05 for testing
+        public static final boolean kMotorIsInverted = true;
+        public static final boolean kFollowerFollowsMaster = true;
 
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;

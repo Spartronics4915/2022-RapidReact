@@ -4,7 +4,7 @@ import static com.spartronics4915.frc2022.Constants.Climber.*;
 import com.spartronics4915.frc2022.Constants;
 
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
-
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
@@ -39,8 +39,8 @@ public class Climber extends SpartronicsSubsystem
             mMotor = new TalonFX(kClimberMotorId);
             mFollower = new TalonFX(kClimberFollowerId);
             mFollower.follow(mMotor);
-            mMotor.setInverted(kMotorIsInverted);
-            mFollower.setInverted(kFollowerIsInverted);
+            mMotor.setInverted(kMasterMotorIsInverted);
+            mFollower.setInverted(kFollowerFollowsMaster ? InvertType.FollowMaster : InvertType.OpposeMaster);
             mMotor.setNeutralMode(NeutralMode.Brake); // set brake mode
             mFollower.setNeutralMode(NeutralMode.Brake); // set brake mode
 
