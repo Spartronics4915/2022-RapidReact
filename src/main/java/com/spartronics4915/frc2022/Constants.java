@@ -137,9 +137,9 @@ public final class Constants
     {
         public static final int kClimberMotorId = 10;
         public static final int kClimberFollowerId = 13;
-        public static final double kClimberMotorSpeed = 0.05; //0.05 for testing
-        public static final boolean kMasterMotorIsInverted = true;
-        public static final boolean kFollowerFollowsMaster = false;
+        public static final double kClimberMotorSpeed = 1; //0.2 for testing
+        public static final boolean kMotor1IsInverted = false;
+        public static final boolean kMotor2IsInverted = false; // false -> inverted vs motor1
 
         public static final int kClimberSolenoidId = 1;
         public static final boolean kSolenoidIsInverted = false;
@@ -148,7 +148,7 @@ public final class Constants
         /**
          * Distance we can rotate the motor from being down before breaking it. Found through testing and logging.
          */
-        public static final double kMaxRotations = 7.388;
+        public static final double kMaxRotations = 200000;
 
         /**
          * Climber will be put down before every match so that's where 0 is.
@@ -156,9 +156,9 @@ public final class Constants
         public static final double kMinRotations = -200000;
 
         /**
-         * Takes 12 rotations of climber to rotate winch.
+         * Takes 21 rotations of climber to rotate winch.
          */
-        public static final double kClimberGearRatio = 36.0;
+        public static final double kClimberGearRatio = 21.0;
         /**
          * For Climber encoder -- divide getIntegratedSensorPosition() by this.
          */
@@ -167,7 +167,7 @@ public final class Constants
          * The delay in seconds between disengaging the ratchet and starting the motor, or stopping the motor and 
          * engaging the ratchet.
          */
-        public static final double kDelay = 0.1; // adjust 1st number for ms
+        public static final double kDelay = 0.3; // adjust 1st number for ms
 
         //set very high to see if it remembered it was at 40??
         public static final int kMaxCurrent = 100;
