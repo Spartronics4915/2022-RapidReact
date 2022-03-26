@@ -107,7 +107,7 @@ public class Conveyor extends SpartronicsSubsystem {
                 setMotors(0, 1);
                 break;
             case RUN_BOTH:
-            setMotors(1, 1);
+                setMotors(1, 1);
                 break;
         }
     }
