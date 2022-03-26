@@ -84,11 +84,9 @@ public final class Constants
         public static final double kMotorSpeed = 0.45;
         public static final double kSlowFactor = 0.3333;
         
+
         public static final double kTopConveyorTime = 0.3;
         public static final double kBottomConveyorTime = 0.3;
-
-        public static final int kStopFrequency = (int)(1 / 0.02);
-        public static final int kStopLength = (int)(0.1 / 0.02);
         
         public static final double kStopConveyorsDelay = 1.0;
 
