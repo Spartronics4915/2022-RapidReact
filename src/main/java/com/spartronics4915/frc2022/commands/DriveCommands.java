@@ -55,6 +55,10 @@ public class DriveCommands
             double y = mJoystick.getY();
             Logger.info(x + ", " + y);
 
+            //putting joystick x/y in smartdashboard
+            SmartDashboard.putNumber("Drive/Joystick X", mJoystick.getX());
+            SmartDashboard.putNumber("Drive/Joystick Y", mJoystick.getY());
+
             if (mInvertJoystickY) y = -y;
 
             y = Math.signum(y) * Math.pow(Math.abs(y), kLinearResponseCurveExponent); // apply response curve
