@@ -71,7 +71,6 @@ public class Climber extends SpartronicsSubsystem
     public void setSolenoid(boolean isExtended)
     {
         // logInfo("Set Solenoid to " + isExtended);
-        // mClimberMotor.get
         if (mIsInitialized)
         {
             mSolenoid.set(isExtended != kSolenoidIsInverted);
@@ -81,7 +80,7 @@ public class Climber extends SpartronicsSubsystem
     public double getCurrentRotations(){
         if (mIsInitialized)
         {
-            return mMotor1.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
+           return mMotor1.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
         }
         return 0.0;
     }
@@ -105,7 +104,7 @@ public class Climber extends SpartronicsSubsystem
     public void zeroEncoder() {
         if (mIsInitialized)
         {
-            mMotor1.getSensorCollection().setIntegratedSensorPosition(0, 100);
+           mMotor1.getSensorCollection().setIntegratedSensorPosition(0, 100);
         }
     }
 
