@@ -54,6 +54,7 @@ public class DriveCommands
             // get -1 to 1 values for X and Y of the joystick
             double x = mJoystick.getX();
             double y = mJoystick.getY();
+            Logger.info(x + ", " + y + "(RAW)");
 
             if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
                 mJoystickFlipped = !mJoystickFlipped;
@@ -63,7 +64,7 @@ public class DriveCommands
                 x = -mJoystick.getY();
                 y = -mJoystick.getX();
             }
-            Logger.info(x + ", " + y);
+            Logger.info(x + ", " + y + "(ADJUSTED)");
 
             //putting joystick x/y in smartdashboard
             SmartDashboard.putNumber("Drive/Joystick X", mJoystick.getX());
