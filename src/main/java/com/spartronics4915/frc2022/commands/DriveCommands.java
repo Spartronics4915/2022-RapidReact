@@ -58,6 +58,14 @@ public class DriveCommands
 
             if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
                 mJoystickFlipped = !mJoystickFlipped;
+
+                //TODO: log joystick to console -- move to subsystem??
+                //if(mJoystickFlipped) {
+                //    log in right way("Corrected joystick!");
+                //}
+                //if(!mJoystickFlipped) {
+                //    log in right way("Reset joystick!");
+                //}
             }
 
             if(mJoystickFlipped) {
