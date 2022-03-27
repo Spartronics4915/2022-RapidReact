@@ -75,8 +75,8 @@ public class DriveCommands
             Logger.info(x + ", " + y + "(ADJUSTED)");
 
             //putting joystick x/y in smartdashboard
-            SmartDashboard.putNumber("Drive/Joystick X", mJoystick.getX());
-            SmartDashboard.putNumber("Drive/Joystick Y", mJoystick.getY());
+            SmartDashboard.putNumber("Drive/Joystick X adjusted", mJoystick.getX());
+            SmartDashboard.putNumber("Drive/Joystick Y adjusted", mJoystick.getY());
 
             if (mInvertJoystickY) y = -y;
 
