@@ -69,8 +69,8 @@ public class DriveCommands
             }
 
             if(mJoystickFlipped) {
-                x = -mJoystick.getY();
-                y = -mJoystick.getX();
+                x = mJoystick.getY();
+                y = mJoystick.getX();
             }
             Logger.info(x + ", " + y + "(ADJUSTED)");
 
