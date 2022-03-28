@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 
@@ -72,7 +73,14 @@ public class RobotContainer
         mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
-        mAutonomousCommands = new AutonomousCommands(mDrive);
+
+        mAutonomousCommands = new AutonomousCommands(mDrive, mConveyorCommands, mLauncherCommands);
+
+        {
+            String[] autoModes = mAutonomousCommands.getAllAutoModes();
+            String options = String.join(",", autoModes);
+            SmartDashboard.putString("AutoStrategyOptions", options);
+        };
 
         configureButtonBindings();
     }
@@ -116,12 +124,8 @@ public class RobotContainer
      */
     public Command getAutonomousCommand()
     {
-        return new SequentialCommandGroup(
-            mLauncherCommands.new TurnOnLauncher(),
-            new WaitCommand(Constants.Autonomous.kShootDelay),
-            mConveyorCommands.new ShootFromTop(),
-            mAutonomousCommands.new AutonomousDrive()
-        );
+        String commandSelection = SmartDashboard.getString("AutoStrategy", Constants.Autonomous.kDefaultMode);
+        return mAutonomousCommands.getAutoMode(commandSelection);
     }
 
     public Command getTeleopCommand()
