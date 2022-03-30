@@ -23,8 +23,8 @@ public class Drive extends AbstractDrive
                 kRightMotorID,
                 SensorModel.fromWheelDiameter(kWheelDiameter, kNativeUnitsPerRevolution),
                 kRightFollowerMotorID
-            )/*,
-            new SpartronicsPigeon(kPigeonID)*/
+            ),
+            new SpartronicsPigeon(kPigeonID)
         );
 
         // output inversion

@@ -149,7 +149,7 @@ public class RobotStateEstimator extends SpartronicsSubsystem
         {
             mSLAMCamera.setPose(pose);
         }
-        //mDrive.setIMUHeading(pose.getRotation());
+        mDrive.setIMUHeading(pose.getRotation());
     }
 
     @Override
@@ -214,18 +214,18 @@ public class RobotStateEstimator extends SpartronicsSubsystem
             final double rightDist = mDrive.getRightMotor().getEncoder().getPosition();
             final double leftDelta = leftDist - mLeftPrevDist;
             final double rightDelta = rightDist - mRightPrevDist;
-            //final Rotation2d heading = mDrive.getIMUHeading();
+            final Rotation2d heading = mDrive.getIMUHeading();
             mLeftPrevDist = leftDist;
             mRightPrevDist = rightDist;
-            //iVal = mKinematics.forwardKinematics(last.pose.getRotation(), leftDelta, rightDelta,
-                //heading);
+            iVal = mKinematics.forwardKinematics(last.pose.getRotation(), leftDelta, rightDelta,
+                heading);
             
             if (mBestEstimatorSource == EstimatorSource.Fused)
             {
-                //var ekfPose = mEKF.update(mCameraStateMap.getLatestFieldToVehicle(), leftDist, rightDist, heading.getRadians() - mPrevHeading, ts);
+                var ekfPose = mEKF.update(mCameraStateMap.getLatestFieldToVehicle(), leftDist, rightDist, heading.getRadians() - mPrevHeading, ts);
                 
-                //mPrevHeading = heading.getRadians();
-                //mFusedStateMap.addObservations(ts, ekfPose);
+                mPrevHeading = heading.getRadians();
+                mFusedStateMap.addObservations(ts, ekfPose);
             }
         }
 
@@ -233,22 +233,22 @@ public class RobotStateEstimator extends SpartronicsSubsystem
          * integrateForward: given a last state and a current velocity,
          * estimate a new state (P2 = P1 + dPdt * dt)
          */
-        //Pose2d nextP = mKinematics.integrateForwardKinematics(last.pose, iVal);
+        Pose2d nextP = mKinematics.integrateForwardKinematics(last.pose, iVal);
 
         /* record the new state estimate */
-        //mEncoderStateMap.addObservations(ts, nextP);
+        mEncoderStateMap.addObservations(ts, nextP);
 
         if (mBestEstimatorSource == EstimatorSource.VisionResetEncoderOdometry)
         {
-            //nextP = mKinematics.integrateForwardKinematics(
-                //mVisionResetEncoderStateMap.getLatestFieldToVehicle(), iVal);
-            //mVisionResetEncoderStateMap.addObservations(ts, nextP);
+            nextP = mKinematics.integrateForwardKinematics(
+                mVisionResetEncoderStateMap.getLatestFieldToVehicle(), iVal);
+            mVisionResetEncoderStateMap.addObservations(ts, nextP);
         }
 
         // We convert meters/loopinterval and radians/loopinterval to meters/sec and
         // radians/sec
         final double loopintervalToSeconds = 1 / (ts - last.timestamp);
-        //final Twist2d normalizedIVal = new Twist2d(iVal.dx * loopintervalToSeconds, iVal.dy * loopintervalToSeconds, iVal.dtheta * loopintervalToSeconds);
+        final Twist2d normalizedIVal = new Twist2d(iVal.dx * loopintervalToSeconds, iVal.dy * loopintervalToSeconds, iVal.dtheta * loopintervalToSeconds);
 
         if (mSLAMCamera != null)
         {
@@ -257,7 +257,7 @@ public class RobotStateEstimator extends SpartronicsSubsystem
                 // Sometimes (for unknown reasons) the native code can't send odometry info.
                 // We throw a Java exception when this happens, but we'd like to ignore that
                 // exception in this situation.
-                //mSLAMCamera.sendOdometry(normalizedIVal);
+                mSLAMCamera.sendOdometry(normalizedIVal);
             }
             catch (CameraJNIException e)
             {
