@@ -33,7 +33,7 @@ public final class Constants
         public static final double kNativeUnitsPerRevolution = 1;
 
         //Test this -- to correct for angular drift autonomous
-        public static final double kLeftFactor = .93;
+        public static final double kLeftFactor = .965;
 
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
