@@ -210,6 +210,7 @@ public final class Constants
          * Speed the robot moves straight backwards during autonomous
          */
         public static final double kDriveSpeedPercent = .3;
+        public static final double kTurnSpeedPercent = .3;
 
         public static final double kDriveGearRatio = 10.57; 
 
