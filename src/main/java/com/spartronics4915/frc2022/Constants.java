@@ -182,6 +182,8 @@ public final class Constants
         public static final int kJoystickPort = 0;
         
         public static final int kSlowModeButton = 1;
+        
+        public static final int kFlipJoystickButton = 6;
 
         public static final int kIntakeToggleButton = 2;
 
