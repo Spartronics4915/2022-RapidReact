@@ -55,6 +55,9 @@ public class DriveCommands
             double x = mJoystick.getX();
             double y = mJoystick.getY();
             // Logger.info(x + ", " + y + "(RAW)");
+            
+            SmartDashboard.putNumber("Drive/Joystick X raw", x);
+            SmartDashboard.putNumber("Drive/Joystick Y raw (inverted y)", -y);
 
             if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
                 mJoystickFlipped = !mJoystickFlipped;
