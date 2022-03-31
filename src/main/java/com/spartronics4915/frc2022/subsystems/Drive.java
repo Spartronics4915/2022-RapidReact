@@ -49,6 +49,12 @@ public class Drive extends AbstractDrive
         // mRightMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
     }
 
+    public void zeroEncoders()
+    {
+        mLeftMotor.getEncoder().setPosition(0);
+        mRightMotor.getEncoder().setPosition(0);
+    }
+
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {}
