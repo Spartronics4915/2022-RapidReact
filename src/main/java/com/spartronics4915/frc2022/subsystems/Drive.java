@@ -67,6 +67,7 @@ public class Drive extends AbstractDrive
 
     @Override
     public void tankDrive(double leftPercent, double rightPercent) {
+        //logInfo(mRightMotor.getEncoder().getVelocity() / mLeftMotor.getEncoder().getVelocity() + "");
         super.tankDrive(leftPercent * kLeftFactor, rightPercent);
     }
 }

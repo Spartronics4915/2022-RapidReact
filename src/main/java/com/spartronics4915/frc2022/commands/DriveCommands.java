@@ -54,29 +54,32 @@ public class DriveCommands
             // get -1 to 1 values for X and Y of the joystick
             double x = mJoystick.getX();
             double y = mJoystick.getY();
-            Logger.info(x + ", " + y + "(RAW)");
+            // Logger.info(x + ", " + y + "(RAW)");
+            
+            SmartDashboard.putNumber("Drive/Joystick X raw", x);
+            SmartDashboard.putNumber("Drive/Joystick Y raw (inverted y)", -y);
 
             if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
                 mJoystickFlipped = !mJoystickFlipped;
 
                 //TODO: log joystick to console -- move to subsystem??
-                //if(mJoystickFlipped) {
-                //    log in right way("Corrected joystick!");
-                //}
-                //if(!mJoystickFlipped) {
-                //    log in right way("Reset joystick!");
-                //}
+                if(mJoystickFlipped) {
+                    mDrive.logInfo("Corrected joystick!");
+                }
+                if(!mJoystickFlipped) {
+                    mDrive.logInfo("Reset joystick!");
+                }
             }
 
             if(mJoystickFlipped) {
                 x = mJoystick.getY();
-                y = mJoystick.getX();
+                y = -mJoystick.getX();
             }
-            Logger.info(x + ", " + y + "(ADJUSTED)");
+            // Logger.info(x + ", " + y + "(ADJUSTED)");
 
             //putting joystick x/y in smartdashboard
-            SmartDashboard.putNumber("Drive/Joystick X adjusted", mJoystick.getX());
-            SmartDashboard.putNumber("Drive/Joystick Y adjusted", mJoystick.getY());
+            SmartDashboard.putNumber("Drive/Joystick X adjusted", x);
+            SmartDashboard.putNumber("Drive/Joystick Y adjusted", y);
 
             if (mInvertJoystickY) y = -y;
 
