@@ -115,6 +115,7 @@ public class Launcher extends SpartronicsSubsystem
         // logInfo(Double.toString(SmartDashboard.getNumber("Launcher/flywheelRPSSlider", 3)));
         //mFlywheelMotor.setVelocity(SmartDashboard.getNumber("/SmartDashboard/Launcher/flywheelRPSSlider", 0));
         SmartDashboard.putNumber("Launcher/flywheelRPS", mFlywheelEncoder.getVelocity());
+        SmartDashboard.putBoolean("Launcher/MotorActive", mLauncherToggle);
     }
 
     /** This method will be called once per scheduler run during simulation. */
