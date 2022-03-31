@@ -11,9 +11,6 @@ import com.ctre.phoenix.motorcontrol.StatorCurrentLimitConfiguration;
 import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -24,9 +21,10 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class Climber extends SpartronicsSubsystem
 {
     // The subsystem's hardware is defined here...
-    private CANSparkMax mMotor1;
+    private TalonFX mMotor1;
+    //private TalonFX mMotor2;
     
-    //private Solenoid mSolenoid;
+    private Solenoid mSolenoid;
 
     private double mMotorSpeed;
 
@@ -39,13 +37,16 @@ public class Climber extends SpartronicsSubsystem
         try
         {
             // ...and constructed here.
-            mMotor1 = new CANSparkMax(kClimberMotorId, MotorType.kBrushless);
+            mMotor1 = new TalonFX(kClimberMotorId);
+            //mMotor2 = new TalonFX(kClimberFollowerId); 
             mMotor1.setInverted(kMotor1IsInverted);
-            mMotor1.setIdleMode(IdleMode.kBrake); // set brake mode
+            //mMotor2.setInverted(kMotor2IsInverted);
+            mMotor1.setNeutralMode(NeutralMode.Brake); // set brake mode
+            //mMotor2.setNeutralMode(NeutralMode.Brake); // set brake mode
 
             //mMotorSensors = new TalonFXSensorCollection()
 
-            //mSolenoid = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
+            mSolenoid = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
         }
         catch (Exception exception)
         {
@@ -62,7 +63,8 @@ public class Climber extends SpartronicsSubsystem
         mMotorSpeed = speed;
         if (mIsInitialized)
         {
-            mMotor1.set(speed);
+            mMotor1.set(TalonFXControlMode.PercentOutput, speed);
+            //mMotor2.set(TalonFXControlMode.PercentOutput, -speed);
         }
     }
 
@@ -71,14 +73,14 @@ public class Climber extends SpartronicsSubsystem
         // logInfo("Set Solenoid to " + isExtended);
         if (mIsInitialized)
         {
-           // mSolenoid.set(isExtended != kSolenoidIsInverted);
+            mSolenoid.set(isExtended != kSolenoidIsInverted);
         }
     }
 
     public double getCurrentRotations(){
         if (mIsInitialized)
         {
-           return mMotor1.getEncoder().getPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
+           return mMotor1.getSensorCollection().getIntegratedSensorPosition() / kNativeUnitsPerRevolution / kClimberGearRatio;
         }
         return 0.0;
     }
@@ -102,7 +104,7 @@ public class Climber extends SpartronicsSubsystem
     public void zeroEncoder() {
         if (mIsInitialized)
         {
-           mMotor1.getEncoder().setPosition(0);
+           mMotor1.getSensorCollection().setIntegratedSensorPosition(0, 100);
         }
     }
 
