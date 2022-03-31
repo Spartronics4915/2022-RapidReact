@@ -60,23 +60,23 @@ public class DriveCommands
                 mJoystickFlipped = !mJoystickFlipped;
 
                 //TODO: log joystick to console -- move to subsystem??
-                //if(mJoystickFlipped) {
-                //    log in right way("Corrected joystick!");
-                //}
-                //if(!mJoystickFlipped) {
-                //    log in right way("Reset joystick!");
-                //}
+                if(mJoystickFlipped) {
+                    mDrive.logInfo("Corrected joystick!");
+                }
+                if(!mJoystickFlipped) {
+                    mDrive.logInfo("Reset joystick!");
+                }
             }
 
             if(mJoystickFlipped) {
                 x = mJoystick.getY();
-                y = mJoystick.getX();
+                y = -mJoystick.getX();
             }
             Logger.info(x + ", " + y + "(ADJUSTED)");
 
             //putting joystick x/y in smartdashboard
-            SmartDashboard.putNumber("Drive/Joystick X adjusted", mJoystick.getX());
-            SmartDashboard.putNumber("Drive/Joystick Y adjusted", mJoystick.getY());
+            SmartDashboard.putNumber("Drive/Joystick X adjusted", x);
+            SmartDashboard.putNumber("Drive/Joystick Y adjusted", y);
 
             if (mInvertJoystickY) y = -y;
 
