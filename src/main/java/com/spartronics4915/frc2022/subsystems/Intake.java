@@ -78,11 +78,6 @@ public class Intake extends SpartronicsSubsystem
         mIntakeMotor.set(0);
     }
 
-    /*public void showArmState(){
-        Boolean arm = mIntakeArm.get();
-        logInfo("current arm state:" + arm.toString());
-    }*/
-
     public boolean toggleIntake() {
         mToggleState = !mToggleState;
         return mToggleState;
