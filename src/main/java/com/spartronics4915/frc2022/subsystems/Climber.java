@@ -26,7 +26,7 @@ public class Climber extends SpartronicsSubsystem
     // The subsystem's hardware is defined here...
     private CANSparkMax mMotor1;
     
-    private Solenoid mSolenoid;
+    //private Solenoid mSolenoid;
 
     private double mMotorSpeed;
 
@@ -45,7 +45,7 @@ public class Climber extends SpartronicsSubsystem
 
             //mMotorSensors = new TalonFXSensorCollection()
 
-            mSolenoid = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
+            //mSolenoid = new Solenoid(Constants.kPCMId, PneumaticsModuleType.CTREPCM, kClimberSolenoidId);
         }
         catch (Exception exception)
         {
@@ -71,7 +71,7 @@ public class Climber extends SpartronicsSubsystem
         // logInfo("Set Solenoid to " + isExtended);
         if (mIsInitialized)
         {
-            mSolenoid.set(isExtended != kSolenoidIsInverted);
+           // mSolenoid.set(isExtended != kSolenoidIsInverted);
         }
     }
 

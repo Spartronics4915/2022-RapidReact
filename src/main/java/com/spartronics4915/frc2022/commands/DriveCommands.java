@@ -22,6 +22,7 @@ public class DriveCommands
     private boolean mInvertJoystickY;
     private boolean mSlowMode;
     private final Joystick mArcadeController;
+    private boolean mJoystickFlipped = false;
 
     public DriveCommands(Drive drive, Joystick joystick, Joystick arcadeController)
     {
@@ -53,7 +54,29 @@ public class DriveCommands
             // get -1 to 1 values for X and Y of the joystick
             double x = mJoystick.getX();
             double y = mJoystick.getY();
-            Logger.info(x + ", " + y);
+            Logger.info(x + ", " + y + "(RAW)");
+
+            if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
+                mJoystickFlipped = !mJoystickFlipped;
+
+                //TODO: log joystick to console -- move to subsystem??
+                //if(mJoystickFlipped) {
+                //    log in right way("Corrected joystick!");
+                //}
+                //if(!mJoystickFlipped) {
+                //    log in right way("Reset joystick!");
+                //}
+            }
+
+            if(mJoystickFlipped) {
+                x = mJoystick.getY();
+                y = mJoystick.getX();
+            }
+            Logger.info(x + ", " + y + "(ADJUSTED)");
+
+            //putting joystick x/y in smartdashboard
+            SmartDashboard.putNumber("Drive/Joystick X adjusted", mJoystick.getX());
+            SmartDashboard.putNumber("Drive/Joystick Y adjusted", mJoystick.getY());
 
             if (mInvertJoystickY) y = -y;
 
