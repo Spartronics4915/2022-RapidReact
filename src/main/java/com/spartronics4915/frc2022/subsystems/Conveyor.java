@@ -44,8 +44,8 @@ public class Conveyor extends SpartronicsSubsystem {
         }
         logInitialized(success);
 
-        mTopMotor.setInverted(false);
-        mBottomMotor.setInverted(false);
+        mTopMotor.setInverted(kTopConveyorInverted);
+        mBottomMotor.setInverted(kBottomConveyorInverted);
 
         mTopMotor.configPeakCurrentLimit(kMaxCurrent);
         mBottomMotor.configPeakCurrentLimit(kMaxCurrent);
