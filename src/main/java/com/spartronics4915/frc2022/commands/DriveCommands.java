@@ -20,18 +20,12 @@ public class DriveCommands
     private final Drive mDrive;
     private final Joystick mJoystick;
     private boolean mInvertJoystickY;
-    private boolean mSlowMode;
-    private final Joystick mArcadeController;
-    private boolean mJoystickFlipped = false;
 
     public DriveCommands(Drive drive, Joystick joystick, Joystick arcadeController)
     {
         mDrive = drive;
         mJoystick = joystick;
         mInvertJoystickY = true; // convention is to invert joystick y
-        mSlowMode = false;
-        mArcadeController = arcadeController;
-        
         mDrive.setDefaultCommand(new TeleOpCommand());
     }
 
@@ -55,33 +49,16 @@ public class DriveCommands
             double x = mJoystick.getX();
             double y = mJoystick.getY();
             // Logger.info(x + ", " + y + "(RAW)");
-            
-            SmartDashboard.putNumber("Drive/Joystick X raw", x);
-            SmartDashboard.putNumber("Drive/Joystick Y raw (inverted y)", -y);
+        
 
             if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
-                mJoystickFlipped = !mJoystickFlipped;
-
-                //TODO: log joystick to console -- move to subsystem??
-                if(mJoystickFlipped) {
-                    mDrive.logInfo("Corrected joystick!");
-                }
-                if(!mJoystickFlipped) {
-                    mDrive.logInfo("Reset joystick!");
-                }
+                mDrive.setUpMotors();
             }
-
-            if(mJoystickFlipped) {
-                x = mJoystick.getY();
-                y = -mJoystick.getX();
-            }
-            // Logger.info(x + ", " + y + "(ADJUSTED)");
-
-            //putting joystick x/y in smartdashboard
-            SmartDashboard.putNumber("Drive/Joystick X adjusted", x);
-            SmartDashboard.putNumber("Drive/Joystick Y adjusted", y);
 
             if (mInvertJoystickY) y = -y;
+
+            SmartDashboard.putNumber("Drive/Joystick X", x);
+            SmartDashboard.putNumber("Drive/Joystick Y (with inverted y)", -y);
 
             y = Math.signum(y) * Math.pow(Math.abs(y), kLinearResponseCurveExponent); // apply response curve
             
