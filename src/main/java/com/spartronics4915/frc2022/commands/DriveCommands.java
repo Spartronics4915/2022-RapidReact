@@ -51,6 +51,7 @@ public class DriveCommands
             // Logger.info(x + ", " + y + "(RAW)");
         
 
+            //should be unnecessary but fallback if the flash is not configured right
             if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
                 mDrive.setUpMotors();
             }
