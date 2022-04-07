@@ -114,8 +114,13 @@ public class RobotContainer
         new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
             .whenPressed(mClimberCommands.new StartExtend())
             .whenReleased(mClimberCommands.new StopExtend());
+
         new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
-            .whileHeld(mClimberCommands.new RetractTheMotor());
+            .whenPressed(mClimberCommands.new StartRetract())
+            .whenReleased(mClimberCommands.new StopRetract());
+
+        /*new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
+            .whileHeld(mClimberCommands.new RetractTheMotor());*/
 
     }
 
