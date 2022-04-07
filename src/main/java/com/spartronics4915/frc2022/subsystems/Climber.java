@@ -106,7 +106,7 @@ public class Climber extends SpartronicsSubsystem
     public void zeroEncoder() {
         if (mIsInitialized)
         {
-           mMotor1.getSensorCollection().setIntegratedSensorPosition(0);
+           mMotor1.getSensorCollection().setIntegratedSensorPosition(0, 100);
         }
     }
 
