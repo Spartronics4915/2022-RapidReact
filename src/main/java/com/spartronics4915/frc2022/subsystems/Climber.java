@@ -86,7 +86,7 @@ public class Climber extends SpartronicsSubsystem
     }
 
     public double getAmps(TalonFX motor) {
-        return motor.getSensorCollection().getStatorCurrent();
+        return motor.getStatorCurrent();
     }
 
     /** This method will be called once per scheduler run. */
