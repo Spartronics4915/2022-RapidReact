@@ -115,7 +115,7 @@ public class LauncherCommands {
         // Called when the command is initially scheduled.
         @Override
         public void initialize() {
-            mLauncher.setMotorSpeed(Flywheel.kFarRPS);
+            mLauncher.setMotorSpeed(mLauncher.getSlider());
             mLauncher.setToggleTrue();
         }
 
