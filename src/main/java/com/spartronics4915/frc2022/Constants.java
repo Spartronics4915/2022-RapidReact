@@ -6,8 +6,6 @@ import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.util.TriFunction;
 import com.spartronics4915.lib.util.Units;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
