@@ -40,6 +40,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * switches conveyor on or off
+     */
     public class ToggleConveyor extends ConditionalCommand{
         public ToggleConveyor() {
             super(
@@ -53,6 +56,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * run both conveyors
+     */
     public class RunBoth extends CommandBase{
         public RunBoth() {
             addRequirements(mConveyor);
@@ -69,6 +75,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * reverse both conveyors
+     */
     public class ReverseBoth extends CommandBase {
         public ReverseBoth() {
             addRequirements(mConveyor, mIntake);
@@ -87,6 +96,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * reverse bottom, stop top
+     */
     public class ReverseBottom extends CommandBase {
         public ReverseBottom(){
             addRequirements(mConveyor, mIntake);
@@ -105,6 +117,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * run top conveyor for .3 seconds then stop 
+     */
     public class ShootFromTop extends SequentialCommandGroup {
         public ShootFromTop() {
             addCommands(
@@ -117,6 +132,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * run both conveyors for .6 seconds then stop 
+     */
     public class ShootFromBottom extends SequentialCommandGroup {
         public ShootFromBottom() {
             addCommands(
@@ -129,6 +147,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * check if top conveyor has a ball. if it does, shoot it; if not, shoot as if there is a bottom ball (does not check if there is one)
+     */
     public class Shoot1 extends ConditionalCommand {
         public Shoot1(){
             super(
