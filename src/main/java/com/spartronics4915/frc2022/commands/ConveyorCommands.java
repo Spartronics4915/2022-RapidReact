@@ -5,6 +5,7 @@ import static com.spartronics4915.frc2022.Constants.Conveyor.*;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Conveyor.State;
 import com.spartronics4915.frc2022.subsystems.Intake;
+import com.spartronics4915.frc2022.subsystems.Launcher;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -15,10 +16,12 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class ConveyorCommands {
     private final Conveyor mConveyor;
     private final Intake mIntake;
+    private final Launcher mLauncher;
     
-    public ConveyorCommands(Conveyor conveyor, Intake intake) {
+    public ConveyorCommands(Conveyor conveyor, Intake intake, Launcher launcher) {
         mConveyor = conveyor;
         mIntake = intake;
+        mLauncher = launcher;
     }
 
     public class SetState extends CommandBase {
@@ -87,12 +90,14 @@ public class ConveyorCommands {
         public void initialize(){
             mConveyor.setState(State.REVERSE_BOTH);
             mIntake.startIntake(true);
+            mLauncher.setPaused(true);
         }
 
         @Override
         public void end(boolean interrupted) {
             mConveyor.setState(State.FILL);
             mIntake.startIntake(false);
+            mLauncher.setPaused(false);
         }
     }
 
@@ -108,12 +113,14 @@ public class ConveyorCommands {
         public void initialize(){
             mConveyor.setState(State.REVERSE_BOTTOM);
             mIntake.startIntake(true);
+            mLauncher.setPaused(false);
         }
 
         @Override
         public void end(boolean interrupted){
             mConveyor.setState(State.FILL);
             mIntake.startIntake(false);
+            mLauncher.setPaused(false);
         }
     }
 

@@ -68,7 +68,7 @@ public class RobotContainer
         
         mDriveCommands = new DriveCommands(mDrive, mDriverController, mArcadeController);
         mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
-        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake, mLauncher);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
 
