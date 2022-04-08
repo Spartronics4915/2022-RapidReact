@@ -69,7 +69,7 @@ public class AutonomousCommands {
                 mIntakeCommands.new ToggleIntake(),
                 new AutonomousRotate(180),
                 new WaitCommand(0.5),
-                new AutonomousDriveForwards(Units.feetToMeters(8)),
+                new AutonomousDriveForwards(Units.feetToMeters(15)),
                 new WaitCommand(0.5),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(0.8),
