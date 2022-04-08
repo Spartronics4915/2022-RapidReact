@@ -30,8 +30,9 @@ public class AutonomousCommands {
     private ConveyorCommands mConveyorCommands;
     private LauncherCommands mLauncherCommands;
 
-    public AutonomousCommands(Drive drive, ConveyorCommands conveyorCommands, LauncherCommands launcherCommands) {
+    public AutonomousCommands(Drive drive, IntakeCommands intakeCommands, ConveyorCommands conveyorCommands, LauncherCommands launcherCommands) {
         mDrive = drive;
+        mIntakeCommands = intakeCommands;
         mConveyorCommands = conveyorCommands;
         mLauncherCommands = launcherCommands;
 
