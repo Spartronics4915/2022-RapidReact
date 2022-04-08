@@ -4,10 +4,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.simulation.SimHooks;
 
 import static com.spartronics4915.frc2022.Constants.Intake.*;
 

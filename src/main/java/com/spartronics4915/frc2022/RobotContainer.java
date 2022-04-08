@@ -11,7 +11,6 @@ import com.spartronics4915.frc2022.subsystems.Drive;
 import com.spartronics4915.frc2022.subsystems.Intake;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Launcher;
-import com.spartronics4915.lib.subsystems.estimator.RobotStateEstimator;
 import com.spartronics4915.frc2022.subsystems.Climber;
 
 import com.spartronics4915.frc2022.Constants.OIConstants;
@@ -19,10 +18,7 @@ import com.spartronics4915.frc2022.Constants.OIConstants;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -72,7 +68,7 @@ public class RobotContainer
         
         mDriveCommands = new DriveCommands(mDrive, mDriverController, mArcadeController);
         mIntakeCommands = new IntakeCommands(mIntake, mConveyor);
-        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake);
+        mConveyorCommands = new ConveyorCommands(mConveyor, mIntake, mLauncher);
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
 
@@ -114,8 +110,13 @@ public class RobotContainer
         new JoystickButton(mArcadeController, OIConstants.kClimberExtendButton)
             .whenPressed(mClimberCommands.new StartExtend())
             .whenReleased(mClimberCommands.new StopExtend());
+
         new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
-            .whileHeld(mClimberCommands.new RetractTheMotor());
+            .whenPressed(mClimberCommands.new StartRetract())
+            .whenReleased(mClimberCommands.new StopRetract());
+
+        /*new JoystickButton(mArcadeController, OIConstants.kClimberRetractButton)
+            .whileHeld(mClimberCommands.new RetractTheMotor());*/
 
     }
 
