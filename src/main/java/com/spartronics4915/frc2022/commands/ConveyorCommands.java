@@ -5,6 +5,7 @@ import static com.spartronics4915.frc2022.Constants.Conveyor.*;
 import com.spartronics4915.frc2022.subsystems.Conveyor;
 import com.spartronics4915.frc2022.subsystems.Conveyor.State;
 import com.spartronics4915.frc2022.subsystems.Intake;
+import com.spartronics4915.frc2022.subsystems.Launcher;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -15,10 +16,12 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 public class ConveyorCommands {
     private final Conveyor mConveyor;
     private final Intake mIntake;
+    private final Launcher mLauncher;
     
-    public ConveyorCommands(Conveyor conveyor, Intake intake) {
+    public ConveyorCommands(Conveyor conveyor, Intake intake, Launcher launcher) {
         mConveyor = conveyor;
         mIntake = intake;
+        mLauncher = launcher;
     }
 
     public class SetState extends CommandBase {
@@ -40,6 +43,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * switches conveyor on or off
+     */
     public class ToggleConveyor extends ConditionalCommand{
         public ToggleConveyor() {
             super(
@@ -53,6 +59,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * run both conveyors
+     */
     public class RunBoth extends CommandBase{
         public RunBoth() {
             addRequirements(mConveyor);
@@ -69,6 +78,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * reverse both conveyors
+     */
     public class ReverseBoth extends CommandBase {
         public ReverseBoth() {
             addRequirements(mConveyor, mIntake);
@@ -78,15 +90,20 @@ public class ConveyorCommands {
         public void initialize(){
             mConveyor.setState(State.REVERSE_BOTH);
             mIntake.startIntake(true);
+            mLauncher.setPaused(true);
         }
 
         @Override
         public void end(boolean interrupted) {
             mConveyor.setState(State.FILL);
             mIntake.startIntake(false);
+            mLauncher.setPaused(false);
         }
     }
 
+    /**
+     * reverse bottom, stop top
+     */
     public class ReverseBottom extends CommandBase {
         public ReverseBottom(){
             addRequirements(mConveyor, mIntake);
@@ -96,15 +113,20 @@ public class ConveyorCommands {
         public void initialize(){
             mConveyor.setState(State.REVERSE_BOTTOM);
             mIntake.startIntake(true);
+            mLauncher.setPaused(false);
         }
 
         @Override
         public void end(boolean interrupted){
             mConveyor.setState(State.FILL);
             mIntake.startIntake(false);
+            mLauncher.setPaused(false);
         }
     }
 
+    /**
+     * run top conveyor for .3 seconds then stop 
+     */
     public class ShootFromTop extends SequentialCommandGroup {
         public ShootFromTop() {
             addCommands(
@@ -117,6 +139,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * run both conveyors for .6 seconds then stop 
+     */
     public class ShootFromBottom extends SequentialCommandGroup {
         public ShootFromBottom() {
             addCommands(
@@ -129,6 +154,9 @@ public class ConveyorCommands {
         }
     }
 
+    /**
+     * check if top conveyor has a ball. if it does, shoot it; if not, shoot as if there is a bottom ball (does not check if there is one)
+     */
     public class Shoot1 extends ConditionalCommand {
         public Shoot1(){
             super(

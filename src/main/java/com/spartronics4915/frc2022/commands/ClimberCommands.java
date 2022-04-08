@@ -40,6 +40,34 @@ public class ClimberCommands {
         }
     }
 
+    public class StartRetract extends SequentialCommandGroup {
+        public StartRetract() {
+            addCommands(
+                new InstantCommand(() -> mClimber.setSolenoid(true)),
+                new WaitCommand(kDelay),
+                new InstantCommand(() -> mClimber.setMotor(-kClimberMotorSpeed))
+            );
+            addRequirements(mClimber);
+        }
+    }
+
+    public class StopRetract extends CommandBase {
+        public StopRetract() {
+            addRequirements(mClimber);
+        }
+        
+        @Override
+        public void initialize() {
+            mClimber.setMotor(0);
+            mClimber.setSolenoid(false);
+        }
+
+        @Override
+        public boolean isFinished() {
+            return true;
+        }
+    }
+
     public class RetractTheMotor extends CommandBase {
         public RetractTheMotor() {
             addRequirements(mClimber);

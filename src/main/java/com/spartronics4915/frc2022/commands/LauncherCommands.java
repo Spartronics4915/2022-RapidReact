@@ -20,7 +20,7 @@ public class LauncherCommands {
     }
 
     /**
-     * DefaultCommand which makes sure the motor is set to mLauncher.getTargetRPS()
+     * DefaultCommand which makes sure the motor is set to mLauncher.getTargetRPS() [returns a constant]
      */
     public class RunLauncher extends CommandBase {
         private double mSpeed = 0.0;
@@ -48,6 +48,9 @@ public class LauncherCommands {
         }
     }
 
+    /**
+     * toggles the launcher being paused
+     */
     public class TogglePaused extends CommandBase {
         public TogglePaused() {
             addRequirements(mLauncher);
@@ -134,6 +137,9 @@ public class LauncherCommands {
         }
     }
     
+    /**
+     * Turns the launcher on
+     */
     public class TurnOnLauncher extends CommandBase {
         public TurnOnLauncher() {
             addRequirements(mLauncher);
@@ -159,6 +165,9 @@ public class LauncherCommands {
         }
     }
 
+    /**
+     * sets the launcher to the slider then ends
+     */
     public class SliderLaunchStart extends CommandBase {
         public SliderLaunchStart() {
             addRequirements(mLauncher);
