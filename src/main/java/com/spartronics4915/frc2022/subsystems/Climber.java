@@ -89,17 +89,17 @@ public class Climber extends SpartronicsSubsystem
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {
-        // logInfo("ROTATIONS " + getCurrentRotations());
+        // // logInfo("ROTATIONS " + getCurrentRotations());
 
-        double rotations = getCurrentRotations();
+        // double rotations = getCurrentRotations();
 
-        // logInfo("theta = " + rotations);
+        // // logInfo("theta = " + rotations);
 
-        if (mMotorSpeed > 0 && rotations > kMaxRotations)
-            setMotor(0);
+        // if (mMotorSpeed > 0 && rotations > kMaxRotations)
+        //     setMotor(0);
 
-        if (mMotorSpeed < 0 && rotations < kMinRotations)
-            setMotor(0);
+        // if (mMotorSpeed < 0 && rotations < kMinRotations)
+        //     setMotor(0);
     }
 
     public void zeroEncoder() {
