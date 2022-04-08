@@ -51,12 +51,20 @@ public class ClimberCommands {
         }
     }
 
-    public class StopRetract extends SequentialCommandGroup {
+    public class StopRetract extends CommandBase {
         public StopRetract() {
-            addCommands(
-                new InstantCommand(() -> mClimber.setSolenoid(false))
-            );
             addRequirements(mClimber);
+        }
+        
+        @Override
+        public void initialize() {
+            mClimber.setMotor(0);
+            mClimber.setSolenoid(false);
+        }
+
+        @Override
+        public boolean isFinished() {
+            return true;
         }
     }
 
