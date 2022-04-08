@@ -18,12 +18,15 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import com.spartronics4915.lib.hardware.motors.SensorModel;
 import com.spartronics4915.lib.hardware.sensors.SpartronicsPigeon;
 import com.spartronics4915.lib.subsystems.drive.AbstractDrive;
+import com.spartronics4915.lib.util.Units;
+
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
 public class AutonomousCommands {
     private HashMap<String, Command> mCommandAutoModes;
     private Drive mDrive;
 
+    private IntakeCommands mIntakeCommands;
     private ConveyorCommands mConveyorCommands;
     private LauncherCommands mLauncherCommands;
 
@@ -41,7 +44,7 @@ public class AutonomousCommands {
                 new WaitCommand(kSpinUpDelay),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(kShootDelayShort),
-                new AutonomousDrive(kDriveDistanceMeters)
+                new AutonomousDriveBackwards(kDriveDistanceMeters)
             )
         );
 
@@ -52,7 +55,21 @@ public class AutonomousCommands {
                 new WaitCommand(kSpinUpDelay),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(kShootDelayLong),
-                new AutonomousDrive(kDriveDistanceMeters)
+                new AutonomousDriveBackwards(kDriveDistanceMeters)
+            )
+        );
+
+        mCommandAutoModes.put( //must start facing away from hub
+            "Drive; Pick Up Ball; Turn; Drive to hub; Shoot (must start with robot facing away from hub)",
+            new SequentialCommandGroup(
+                mIntakeCommands.new ToggleIntake(),
+                mLauncherCommands.new TurnOnLauncher(),
+                new AutonomousDriveForwards(Units.feetToMeters(5)), // TODO: put these numbers in constants
+                new AutonomousRotate(180),
+                new AutonomousDriveForwards(Units.feetToMeters(5)),
+                mConveyorCommands.new Shoot1(),
+                new WaitCommand(0.8),
+                mConveyorCommands.new Shoot1()
             )
         );
     }
@@ -68,9 +85,9 @@ public class AutonomousCommands {
     /**
      * Drives backwards until we leave the tarmac area
     */
-    public class AutonomousDrive extends CommandBase {
+    public class AutonomousDriveBackwards extends CommandBase {
         private double mDistance;
-        public AutonomousDrive(double distance) {
+        public AutonomousDriveBackwards(double distance) {
             addRequirements(mDrive);
             mDistance = distance;
         }
@@ -93,6 +110,33 @@ public class AutonomousCommands {
             mDrive.tankDrive(0, 0);
         }
     }
+
+    public class AutonomousDriveForwards extends CommandBase {
+        private double mDistance;
+        public AutonomousDriveForwards(double distance) {
+            addRequirements(mDrive);
+            mDistance = distance;
+        }
+        
+        @Override
+        public void initialize() {
+            mDrive.getLeftMotor().getEncoder().setPosition(0);
+            mDrive.getRightMotor().getEncoder().setPosition(0);
+            mDrive.tankDrive(kDriveSpeedPercent, kDriveSpeedPercent);
+        }
+
+        @Override
+        public boolean isFinished() {
+            return Math.abs(mDrive.getLeftMotor().getEncoder().getPosition() / kDriveGearRatio) <= mDistance // <= might need to be changed to >=
+                && Math.abs(mDrive.getRightMotor().getEncoder().getPosition() / kDriveGearRatio) <= mDistance;
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            mDrive.tankDrive(0, 0);
+        }
+    }
+
     public class AutonomousRotate extends CommandBase {
         private double mAngle;
         private Rotation2d mInitialAngle;
