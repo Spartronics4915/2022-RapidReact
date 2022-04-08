@@ -65,8 +65,12 @@ public class AutonomousCommands {
                 mIntakeCommands.new ToggleIntake(),
                 mLauncherCommands.new TurnOnLauncher(),
                 new AutonomousDriveForwards(Units.feetToMeters(5)), // TODO: put these numbers in constants
+                new WaitCommand(0.5),
+                mIntakeCommands.new ToggleIntake(),
                 new AutonomousRotate(180),
-                new AutonomousDriveForwards(Units.feetToMeters(5)),
+                new WaitCommand(0.5),
+                new AutonomousDriveForwards(Units.feetToMeters(8)),
+                new WaitCommand(0.5),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(0.8),
                 mConveyorCommands.new Shoot1()
