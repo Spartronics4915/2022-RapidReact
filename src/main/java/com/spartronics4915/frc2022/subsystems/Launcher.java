@@ -69,6 +69,9 @@ public class Launcher extends SpartronicsSubsystem
         return mPaused;
     }
 
+    /**
+     * @param paused -- whether to pause
+     */
     public void setPaused(boolean paused) {
         mPaused = paused;
         setToggled(!mPaused);

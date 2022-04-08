@@ -74,10 +74,16 @@ public class Conveyor extends SpartronicsSubsystem {
         return mState;
     }
 
+    /**
+     * true if both spots are holding balls
+     */
     public boolean isFull() {
         return hasTopBall() && hasBottomBall();
     }
 
+    /**
+     * returns if the conveyor is on or not
+     */
     public boolean isActive() {
         return mState != State.OFF;
     }
