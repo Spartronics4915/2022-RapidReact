@@ -1,6 +1,5 @@
 package com.spartronics4915.frc2022.subsystems;
 
-import com.spartronics4915.lib.hardware.motors.SpartronicsSRX;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 import edu.wpi.first.wpilibj.DigitalInput;

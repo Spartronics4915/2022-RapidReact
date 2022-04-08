@@ -1,7 +1,5 @@
 package com.spartronics4915.frc2022.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,8 +7,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import com.spartronics4915.lib.hardware.motors.SpartronicsEncoder;
 import com.spartronics4915.lib.hardware.motors.SpartronicsMax;
 import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
-import com.spartronics4915.lib.hardware.motors.SpartronicsFalcon;
-import com.spartronics4915.lib.hardware.motors.SpartronicsSimulatedMotor;
 //import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 
 import static com.spartronics4915.frc2022.Constants.Launcher.*;
