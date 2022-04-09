@@ -18,7 +18,10 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import com.spartronics4915.lib.hardware.motors.SensorModel;
 import com.spartronics4915.lib.hardware.sensors.SpartronicsPigeon;
 import com.spartronics4915.lib.subsystems.drive.AbstractDrive;
+import com.spartronics4915.lib.subsystems.estimator.RobotStateMap;
 import com.spartronics4915.lib.util.Units;
+
+import org.opencv.core.Mat;
 
 import static com.spartronics4915.frc2022.Constants.Drive.*;
 
@@ -65,14 +68,21 @@ public class AutonomousCommands {
             new SequentialCommandGroup(
                 mIntakeCommands.new ToggleIntake(),
                 mLauncherCommands.new TurnOnLauncher(),
-                new AutonomousDriveForwards(Units.feetToMeters(3), false), // TODO: put these numbers in constants
+                new AutonomousDrive(Units.feetToMeters(3)), // TODO: put these numbers in constants
                 new WaitCommand(0.5),
                 new AutonomousRotate(-170),
-                new AutonomousDriveForwards(Units.feetToMeters(8.9), true),
+                new AutonomousDrive(Units.feetToMeters(8.9), true),
                 new WaitCommand(0.5),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(0.8),
                 mConveyorCommands.new Shoot1()
+            )
+        );
+
+        mCommandAutoModes.put(
+            "drive backwards 1 foot (test)",
+            new SequentialCommandGroup(
+                new AutonomousDrive(Units.feetToMeters(1))
             )
         );
     }
@@ -85,6 +95,62 @@ public class AutonomousCommands {
     public String[] getAllAutoModes() {
         return mCommandAutoModes.keySet().toArray(new String[mCommandAutoModes.size()]);
     }
+
+    public class AutonomousDrive extends CommandBase {
+        private double mDistance;
+        private double mSpeed;
+        
+        /**
+         * Set speed manually
+         * @param distance
+         * @param speed
+         */
+        public AutonomousDrive(double distance, double speed) {
+            addRequirements(mDrive);
+            mDistance = distance;
+            mSpeed = speed;
+        }
+
+        /**
+         * Use default speed and choose to enable slow mode
+         * @param distance
+         * @param slow
+         */
+        public AutonomousDrive(double distance, boolean slow) {
+            addRequirements(mDrive);
+            mDistance = distance;
+            mSpeed = slow ? kDriveSpeedPercent * kSlowModeMultiplier : kDriveSpeedPercent;
+        }
+
+        /**
+         * Use default speed
+         * @param distance
+         */
+        public AutonomousDrive(double distance) {
+            addRequirements(mDrive);
+            mDistance = distance;
+            mSpeed = kDriveSpeedPercent;
+        }
+
+        @Override
+        public void initialize() {
+            mDrive.getLeftMotor().getEncoder().setPosition(0);
+            mDrive.getRightMotor().getEncoder().setPosition(0);
+            mDrive.tankDrive(Math.copySign(mDistance, mSpeed), Math.copySign(mDistance, mSpeed));
+        }
+
+        @Override
+        public boolean isFinished() {
+            return Math.abs(mDrive.getLeftMotor().getEncoder().getPosition()) / kDriveGearRatio >= Math.abs(mDistance)
+                && Math.abs(mDrive.getRightMotor().getEncoder().getPosition()) / kDriveGearRatio >= Math.abs(mDistance);
+        }
+
+        @Override
+        public void end(boolean interrupted) {
+            mDrive.tankDrive(0, 0);
+        }
+    }
+
     /**
      * Drives backwards until we leave the tarmac area
     */
@@ -149,6 +215,42 @@ public class AutonomousCommands {
         }
     }
 
+    public class AutonomousRotate extends CommandBase {
+        private double mRelativeTargetRotation;
+        private double mInitialBearing;
+        private double mCurrentBearing;
+        private double mCurrentRelativeBearing;
+
+        /**
+         * Positive angle turns clockwise (uses bearing angles)
+         * @param targetRotation
+         */
+        public AutonomousRotate(double targetRotation) {
+            mInitialBearing = -mDrive.getIMUHeading().getDegrees(); // negative because rotation2d uses ccw -> positive but bearing uses cw -> positive
+            mRelativeTargetRotation = targetRotation;
+            mCurrentBearing = mInitialBearing;
+            mCurrentRelativeBearing = 0;
+        }
+
+        public void initialize() {
+            addRequirements(mDrive);
+            mDrive.arcadeDrive(0, Math.copySign(1, mRelativeTargetRotation));
+        }
+
+        public void execute() {
+            mCurrentBearing = -mDrive.getIMUHeading().getDegrees();
+            mCurrentRelativeBearing = mCurrentBearing - mInitialBearing;
+        }
+
+        public boolean isFinished() {
+            return Math.abs(mCurrentRelativeBearing) >= Math.abs(mRelativeTargetRotation);
+        }
+
+        public void end(boolean interrupted) {
+            mDrive.arcadeDrive(0, 0);
+        }
+    }
+
     /**
      * Positive angle turns right
      */
@@ -159,35 +261,35 @@ public class AutonomousCommands {
 
     // move at (direction * speed) until getCurrentAngle-initial >=goal
 
-    public class AutonomousRotate extends CommandBase {
-        private double mAngle;
-        private double mInitialAngle;
-        private double mGoal;
-        private double mDirection;
-        /**
-         * @param angle The bearing angle in degrees
-         */
-        public AutonomousRotate(double angle) {
-            addRequirements(mDrive);
-            mAngle = angle;
-            mInitialAngle = mDrive.getAngle();
-            mGoal = mInitialAngle + mAngle;
-            mDirection = Math.signum(mAngle);
-        }
+    // public class AutonomousRotate extends CommandBase {
+    //     private double mAngle;
+    //     private double mInitialAngle;
+    //     private double mGoal;
+    //     private double mDirection;
+    //     /**
+    //      * @param angle The bearing angle in degrees
+    //      */
+    //     public AutonomousRotate(double angle) {
+    //         addRequirements(mDrive);
+    //         mAngle = angle;
+    //         mInitialAngle = mDrive.getAngle();
+    //         mGoal = mInitialAngle + mAngle;
+    //         mDirection = Math.signum(mAngle);
+    //     }
         
-        @Override
-        public void initialize() {
-            mDrive.arcadeDrive(0, Math.copySign(kTurnSpeedPercent, mDirection));
-        }
+    //     @Override
+    //     public void initialize() {
+    //         mDrive.arcadeDrive(0, Math.copySign(kTurnSpeedPercent, mDirection));
+    //     }
 
-        @Override
-        public boolean isFinished() {
-            return (mDirection == 1) ? (mDrive.getAngle() > mGoal) : (mDrive.getAngle() < mGoal);
-        }
+    //     @Override
+    //     public boolean isFinished() {
+    //         return (mDirection == 1) ? (mDrive.getAngle() > mGoal) : (mDrive.getAngle() < mGoal);
+    //     }
 
-        @Override
-        public void end(boolean interrupted) {
-            mDrive.tankDrive(0, 0);
-        }
-    }
+    //     @Override
+    //     public void end(boolean interrupted) {
+    //         mDrive.tankDrive(0, 0);
+    //     }
+    // }
 }
