@@ -55,6 +55,10 @@ public class Drive extends AbstractDrive
         mRightMotor.getEncoder().setPosition(0);
     }
 
+    public double getAngle() {
+        return getIMUHeading().getDegrees();
+    }
+
     public void setUpMotors() {
         mLeftMotor.setOutputInverted(kLeftOutputInverted);
         mRightMotor.setOutputInverted(kRightOutputInverted);

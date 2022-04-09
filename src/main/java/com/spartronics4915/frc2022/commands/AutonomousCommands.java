@@ -45,7 +45,7 @@ public class AutonomousCommands {
                 new WaitCommand(kSpinUpDelay),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(kShootDelayShort),
-                new AutonomousDriveBackwards(kDriveDistanceMeters)
+                new AutonomousDriveBackwards(kDriveDistanceMeters, false)
             )
         );
 
@@ -56,7 +56,7 @@ public class AutonomousCommands {
                 new WaitCommand(kSpinUpDelay),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(kShootDelayLong),
-                new AutonomousDriveBackwards(kDriveDistanceMeters)
+                new AutonomousDriveBackwards(kDriveDistanceMeters, false)
             )
         );
 
@@ -65,12 +65,11 @@ public class AutonomousCommands {
             new SequentialCommandGroup(
                 mIntakeCommands.new ToggleIntake(),
                 mLauncherCommands.new TurnOnLauncher(),
-                new AutonomousDriveForwards(Units.feetToMeters(5)), // TODO: put these numbers in constants
+                new AutonomousDriveBackwards(Units.feetToMeters(-3), false), // TODO: put these numbers in constants
                 new WaitCommand(0.5),
-                mIntakeCommands.new ToggleIntake(),
-                new AutonomousRotate(180),
+                new AutonomousRotate(-170),
                 new WaitCommand(0.5),
-                new AutonomousDriveForwards(Units.feetToMeters(15)),
+                new AutonomousDriveBackwards(Units.feetToMeters(-8.01), true),
                 new WaitCommand(0.5),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(0.8),
@@ -92,16 +91,18 @@ public class AutonomousCommands {
     */
     public class AutonomousDriveBackwards extends CommandBase {
         private double mDistance;
-        public AutonomousDriveBackwards(double distance) {
+        private double mSpeedPercent;
+        public AutonomousDriveBackwards(double distance, boolean slow) {
             addRequirements(mDrive);
             mDistance = distance;
+            mSpeedPercent = slow ? kSlowModeMultiplier * kDriveSpeedPercent : kDriveSpeedPercent;
         }
         
         @Override
         public void initialize() {
             mDrive.getLeftMotor().getEncoder().setPosition(0);
             mDrive.getRightMotor().getEncoder().setPosition(0);
-            mDrive.tankDrive(-kDriveSpeedPercent, -kDriveSpeedPercent);
+            mDrive.tankDrive(-mSpeedPercent, -mSpeedPercent);
         }
 
         @Override
@@ -118,22 +119,24 @@ public class AutonomousCommands {
 
     public class AutonomousDriveForwards extends CommandBase {
         private double mDistance;
-        public AutonomousDriveForwards(double distance) {
+        private double mSpeedPercent;
+        public AutonomousDriveForwards(double distance, boolean slow) {
             addRequirements(mDrive);
             mDistance = distance;
+            mSpeedPercent = slow ? kSlowModeMultiplier * kDriveSpeedPercent : kDriveSpeedPercent;
         }
         
         @Override
         public void initialize() {
             mDrive.getLeftMotor().getEncoder().setPosition(0);
             mDrive.getRightMotor().getEncoder().setPosition(0);
-            mDrive.tankDrive(kDriveSpeedPercent, kDriveSpeedPercent);
+            mDrive.tankDrive(mSpeedPercent, mSpeedPercent);
         }
 
         @Override
         public boolean isFinished() {
-            return Math.abs(mDrive.getLeftMotor().getEncoder().getPosition() / kDriveGearRatio) <= mDistance // <= might need to be changed to >=
-                && Math.abs(mDrive.getRightMotor().getEncoder().getPosition() / kDriveGearRatio) <= mDistance;
+            return Math.abs(mDrive.getLeftMotor().getEncoder().getPosition() / kDriveGearRatio) >= mDistance // <= might need to be changed to >=
+                && Math.abs(mDrive.getRightMotor().getEncoder().getPosition() / kDriveGearRatio) >= mDistance;
         }
 
         @Override
@@ -142,27 +145,40 @@ public class AutonomousCommands {
         }
     }
 
+    /**
+     * Positive angle turns right
+     */
+
+    // initial = getangle;
+    // goal = abs(getangle+target);
+    // direction = getsign of target ( -1)
+
+    // move at (direction * speed) until getCurrentAngle-initial >=goal
+
     public class AutonomousRotate extends CommandBase {
         private double mAngle;
-        private Rotation2d mInitialAngle;
+        private double mInitialAngle;
+        private double mGoal;
+        private double mDirection;
+        /**
+         * @param angle The bearing angle in degrees
+         */
         public AutonomousRotate(double angle) {
             addRequirements(mDrive);
             mAngle = angle;
-            mInitialAngle = getAngle();
-        }
-
-        public Rotation2d getAngle() {
-            return mDrive.getIMUHeading();
+            mInitialAngle = mDrive.getAngle();
+            mGoal = mInitialAngle + mAngle;
+            mDirection = Math.signum(mAngle);
         }
         
         @Override
         public void initialize() {
-            mDrive.arcadeDrive(0, Math.copySign(kTurnSpeedPercent, mAngle));
+            mDrive.arcadeDrive(0, Math.copySign(kTurnSpeedPercent, mDirection));
         }
 
         @Override
         public boolean isFinished() {
-            return getAngle().minus(mInitialAngle).getDegrees() / mAngle >= 1;
+            return (mDirection == 1) ? (mDrive.getAngle() > mGoal) : (mDrive.getAngle() < mGoal);
         }
 
         @Override
