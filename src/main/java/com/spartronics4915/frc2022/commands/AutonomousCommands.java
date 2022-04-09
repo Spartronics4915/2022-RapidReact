@@ -65,11 +65,10 @@ public class AutonomousCommands {
             new SequentialCommandGroup(
                 mIntakeCommands.new ToggleIntake(),
                 mLauncherCommands.new TurnOnLauncher(),
-                new AutonomousDriveBackwards(Units.feetToMeters(-3), false), // TODO: put these numbers in constants
+                new AutonomousDriveForwards(Units.feetToMeters(3), false), // TODO: put these numbers in constants
                 new WaitCommand(0.5),
                 new AutonomousRotate(-170),
-                new WaitCommand(0.5),
-                new AutonomousDriveBackwards(Units.feetToMeters(-8.91), true),
+                new AutonomousDriveForwards(Units.feetToMeters(8.9), true),
                 new WaitCommand(0.5),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(0.8),
@@ -89,7 +88,7 @@ public class AutonomousCommands {
     /**
      * Drives backwards until we leave the tarmac area
     */
-    public class AutonomousDriveBackwards extends CommandBase {
+    public class AutonomousDriveBackwards extends CommandBase { // TODO: merge with AutonomousDriveForwards
         private double mDistance;
         private double mSpeedPercent;
         public AutonomousDriveBackwards(double distance, boolean slow) {
@@ -131,6 +130,11 @@ public class AutonomousCommands {
             mDrive.getLeftMotor().getEncoder().setPosition(0);
             mDrive.getRightMotor().getEncoder().setPosition(0);
             mDrive.tankDrive(mSpeedPercent, mSpeedPercent);
+        }
+
+        @Override
+        public void execute() {
+            mDrive.logInfo("mDrive.getLeftMotor().getEncoder().getPosition() = " + mDrive.getLeftMotor().getEncoder().getPosition());
         }
 
         @Override
