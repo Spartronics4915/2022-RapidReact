@@ -72,7 +72,7 @@ public class RobotContainer
         mLauncherCommands = new LauncherCommands(mLauncher, mConveyor, mArcadeController);
         mClimberCommands = new ClimberCommands(mClimber);
 
-        mAutonomousCommands = new AutonomousCommands(mDrive, mConveyorCommands, mLauncherCommands);
+        mAutonomousCommands = new AutonomousCommands(mDrive, mIntakeCommands, mConveyorCommands, mLauncherCommands);
 
         {
             String[] autoModes = mAutonomousCommands.getAllAutoModes();
