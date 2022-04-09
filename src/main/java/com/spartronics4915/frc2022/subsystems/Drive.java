@@ -49,6 +49,28 @@ public class Drive extends AbstractDrive
         // mRightMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
     }
 
+    public void zeroEncoders()
+    {
+        mLeftMotor.getEncoder().setPosition(0);
+        mRightMotor.getEncoder().setPosition(0);
+    }
+
+    public double getAngle() {
+        return getIMUHeading().getDegrees();
+    }
+
+    public void setUpMotors() {
+        mLeftMotor.setOutputInverted(kLeftOutputInverted);
+        mRightMotor.setOutputInverted(kRightOutputInverted);
+        mLeftMotor.getFollower().setOutputInverted(kLeftFollowerOutputInverted);
+        mRightMotor.getFollower().setOutputInverted(kRightFollowerOutputInverted);
+
+        mLeftMotor.setBrakeMode(false);
+        mRightMotor.setBrakeMode(false);
+        mLeftMotor.getFollower().setBrakeMode(false);
+        mRightMotor.getFollower().setBrakeMode(false);
+    }
+
     /** This method will be called once per scheduler run. */
     @Override
     public void periodic() {}
@@ -61,6 +83,7 @@ public class Drive extends AbstractDrive
 
     @Override
     public void tankDrive(double leftPercent, double rightPercent) {
+        //logInfo(mRightMotor.getEncoder().getVelocity() / mLeftMotor.getEncoder().getVelocity() + "");
         super.tankDrive(leftPercent * kLeftFactor, rightPercent);
     }
 }

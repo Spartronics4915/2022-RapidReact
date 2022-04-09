@@ -86,6 +86,7 @@ public class CharacterizeDriveBaseCommand implements Command
         mOutputArray[8] = rightVelocity;
         mOutputArray[9] = mDrive.getIMUHeading().getRadians();
 
+
         mTelemetryEntry.setNumberArray(mOutputArray);
     }
 

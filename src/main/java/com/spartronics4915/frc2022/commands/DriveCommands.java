@@ -20,17 +20,12 @@ public class DriveCommands
     private final Drive mDrive;
     private final Joystick mJoystick;
     private boolean mInvertJoystickY;
-    private boolean mSlowMode;
-    private final Joystick mArcadeController;
 
     public DriveCommands(Drive drive, Joystick joystick, Joystick arcadeController)
     {
         mDrive = drive;
         mJoystick = joystick;
         mInvertJoystickY = true; // convention is to invert joystick y
-        mSlowMode = false;
-        mArcadeController = arcadeController;
-        
         mDrive.setDefaultCommand(new TeleOpCommand());
     }
 
@@ -53,9 +48,18 @@ public class DriveCommands
             // get -1 to 1 values for X and Y of the joystick
             double x = mJoystick.getX();
             double y = mJoystick.getY();
-            Logger.info(x + ", " + y);
+            // Logger.info(x + ", " + y + "(RAW)");
+        
+
+            //should be unnecessary but fallback if the flash is not configured right
+            if(mJoystick.getRawButtonReleased(OIConstants.kFlipJoystickButton)) {
+                mDrive.setUpMotors();
+            }
 
             if (mInvertJoystickY) y = -y;
+
+            SmartDashboard.putNumber("Drive/Joystick X", x);
+            SmartDashboard.putNumber("Drive/Joystick Y (with inverted y)", -y);
 
             y = Math.signum(y) * Math.pow(Math.abs(y), kLinearResponseCurveExponent); // apply response curve
             

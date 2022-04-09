@@ -6,8 +6,6 @@ import com.spartronics4915.lib.hardware.motors.SpartronicsMotor;
 import com.spartronics4915.lib.util.TriFunction;
 import com.spartronics4915.lib.util.Units;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -33,7 +31,7 @@ public final class Constants
         public static final double kNativeUnitsPerRevolution = 1;
 
         //Test this -- to correct for angular drift autonomous
-        public static final double kLeftFactor = .93;
+        public static final double kLeftFactor = .965;
 
         // constructors
         public static final TriFunction<Integer, SensorModel, Integer, SpartronicsMotor> kMotorConstructor = SpartronicsMax::makeMotor;
@@ -78,12 +76,14 @@ public final class Constants
         public static final int kBottomMotorId = 8;
         public static final int kTopMotorId = 9;
 
+        public static final boolean kTopConveyorInverted = false;
+        public static final boolean kBottomConveyorInverted = false; 
+
         public static final int kTopBeamBreakerId = 0;
         public static final int kBottomBeamBreakerId = 1;
 
         public static final double kMotorSpeed = 0.45;
         public static final double kSlowFactor = 0.3333;
-        
 
         public static final double kTopConveyorTime = 0.3;
         public static final double kBottomConveyorTime = 0.3;
@@ -133,8 +133,8 @@ public final class Constants
     }
     public static final class Climber
     {
-        public static final int kClimberMotorId = 10;
-        public static final int kClimberFollowerId = 13;
+        public static final int kClimberMotorId = 13;
+        //public static final int kClimberFollowerId = -1; tbd
         public static final double kClimberMotorSpeed = 1; //0.2 for testing
         public static final boolean kMotor1IsInverted = false;
         public static final boolean kMotor2IsInverted = false; // false -> inverted vs motor1
@@ -182,6 +182,8 @@ public final class Constants
         public static final int kJoystickPort = 0;
         
         public static final int kSlowModeButton = 1;
+        
+        public static final int kFlipJoystickButton = 6;
 
         public static final int kIntakeToggleButton = 2;
 
@@ -208,6 +210,7 @@ public final class Constants
          * Speed the robot moves straight backwards during autonomous
          */
         public static final double kDriveSpeedPercent = .3;
+        public static final double kTurnSpeedPercent = .3;
 
         public static final double kDriveGearRatio = 10.57; 
 

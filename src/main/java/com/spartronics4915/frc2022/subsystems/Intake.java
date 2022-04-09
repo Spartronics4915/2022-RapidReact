@@ -4,10 +4,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.spartronics4915.frc2022.Constants;
 import com.spartronics4915.lib.subsystems.SpartronicsSubsystem;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.simulation.SimHooks;
 
 import static com.spartronics4915.frc2022.Constants.Intake.*;
 
@@ -77,11 +75,6 @@ public class Intake extends SpartronicsSubsystem
     public void stopIntakeMotor(){
         mIntakeMotor.set(0);
     }
-
-    /*public void showArmState(){
-        Boolean arm = mIntakeArm.get();
-        logInfo("current arm state:" + arm.toString());
-    }*/
 
     public boolean toggleIntake() {
         mToggleState = !mToggleState;
