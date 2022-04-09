@@ -69,7 +69,7 @@ public class AutonomousCommands {
                 new WaitCommand(0.5),
                 new AutonomousRotate(-170),
                 new WaitCommand(0.5),
-                new AutonomousDriveBackwards(Units.feetToMeters(-8.01), true),
+                new AutonomousDriveBackwards(Units.feetToMeters(-8.91), true),
                 new WaitCommand(0.5),
                 mConveyorCommands.new Shoot1(),
                 new WaitCommand(0.8),
