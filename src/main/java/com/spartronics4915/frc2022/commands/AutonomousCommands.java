@@ -82,7 +82,7 @@ public class AutonomousCommands {
         mCommandAutoModes.put(
             "drive backwards 1 foot (test)",
             new SequentialCommandGroup(
-                new AutonomousDrive(Units.feetToMeters(1))
+                new AutonomousDrive(Units.feetToMeters(1), kDriveSpeedPercent)
             )
         );
     }
