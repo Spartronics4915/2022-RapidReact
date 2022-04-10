@@ -49,6 +49,20 @@ public class Drive extends AbstractDrive
         // mRightMotor.getFollower().setStatorCurrentLimit(kMaxCurrent);
     }
 
+    public void enableBrakeMode() {
+        mLeftMotor.setBrakeMode(true);
+        mRightMotor.setBrakeMode(true);
+        mLeftMotor.getFollower().setBrakeMode(true);
+        mRightMotor.getFollower().setBrakeMode(true);
+    }
+
+    public void disableBrakeMode() {
+        mLeftMotor.setBrakeMode(false);
+        mRightMotor.setBrakeMode(false);
+        mLeftMotor.getFollower().setBrakeMode(false);
+        mRightMotor.getFollower().setBrakeMode(false);
+    }
+
     public void zeroEncoders()
     {
         mLeftMotor.getEncoder().setPosition(0);

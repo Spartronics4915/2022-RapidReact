@@ -16,6 +16,7 @@ import com.spartronics4915.frc2022.subsystems.Climber;
 import com.spartronics4915.frc2022.Constants.OIConstants;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.Joystick;
@@ -135,7 +136,8 @@ public class RobotContainer
     {
         return new ParallelCommandGroup(
             mLauncherCommands.new TurnOnLauncher(),
-            mClimberCommands.new InitClimber()
+            mClimberCommands.new InitClimber(),
+            new InstantCommand(() -> mDrive.disableBrakeMode())
         );
     }
 }

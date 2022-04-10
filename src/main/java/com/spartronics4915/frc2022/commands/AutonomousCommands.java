@@ -12,6 +12,7 @@ import com.spartronics4915.frc2022.subsystems.Drive;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 
@@ -80,11 +81,41 @@ public class AutonomousCommands {
         );
 
         mCommandAutoModes.put(
-            "drive backwards 1 foot (test)",
+            "drive forward 1 foot (test)", // drives 11.5ish in w/o error correction
             new SequentialCommandGroup(
-                new AutonomousDrive(Units.feetToMeters(1), kDriveSpeedPercent)
+                new InstantCommand(() -> mDrive.enableBrakeMode()),
+                new AutonomousDrive(Units.feetToMeters(errorCorrect(1)) * 0.8) // 0.8 is magic number for now
             )
         );
+
+        mCommandAutoModes.put(
+            "drive forward 2 foot (test)", // went 24 ish in w/o error correction
+            new SequentialCommandGroup(
+                new InstantCommand(() -> mDrive.enableBrakeMode()),
+                new AutonomousDrive(Units.feetToMeters(errorCorrect(2)) * 0.8)
+            )
+        );
+
+        mCommandAutoModes.put(
+            "drive forward 3 foot (test)", // went 32 ish w/o error correction
+            new SequentialCommandGroup(
+                new InstantCommand(() -> mDrive.enableBrakeMode()),
+                new AutonomousDrive(Units.feetToMeters(errorCorrect(3)) * 0.8)
+            )
+        );
+
+        // mCommandAutoModes.put(
+        //     "drive 1 foot twice (test)", // went 20 ish w/o error correction
+        //     new SequentialCommandGroup(
+        //         new InstantCommand(() -> mDrive.enableBrakeMode()),
+        //         new AutonomousDrive(Units.feetToMeters(errorCorrect(1)) * 0.8),
+        //         new AutonomousDrive(Units.feetToMeters(errorCorrect(1)) * 0.8)
+        //     )
+        // );
+    }
+
+    public double errorCorrect(double n) {
+        return (24 / 17) * (n - (5 / 9)); 
     }
 
     public Command getAutoMode(String id)
@@ -136,7 +167,7 @@ public class AutonomousCommands {
         public void initialize() {
             mDrive.getLeftMotor().getEncoder().setPosition(0);
             mDrive.getRightMotor().getEncoder().setPosition(0);
-            mDrive.tankDrive(Math.copySign(mDistance, mSpeed), Math.copySign(mDistance, mSpeed));
+            mDrive.tankDrive(Math.copySign(mSpeed, mDistance), Math.copySign(mSpeed, mDistance));
         }
 
         @Override
@@ -154,7 +185,7 @@ public class AutonomousCommands {
     /**
      * Drives backwards until we leave the tarmac area
     */
-    public class AutonomousDriveBackwards extends CommandBase { // TODO: merge with AutonomousDriveForwards
+    public class AutonomousDriveBackwards extends CommandBase {
         private double mDistance;
         private double mSpeedPercent;
         public AutonomousDriveBackwards(double distance, boolean slow) {
@@ -182,7 +213,7 @@ public class AutonomousCommands {
         }
     }
 
-    public class AutonomousDriveForwards extends CommandBase {
+    public class AutonomousDriveForwards extends CommandBase { // doesn't work
         private double mDistance;
         private double mSpeedPercent;
         public AutonomousDriveForwards(double distance, boolean slow) {
